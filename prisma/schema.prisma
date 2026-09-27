@@ -1,0 +1,250 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String          @id @default(uuid())
+  email         String          @unique
+  name          String
+  passwordHash  String?
+  role          String          @default("CLIENT") // ADMIN, MANAGER, DEVELOPER, DESIGNER, SALES, HR, FINANCE, CLIENT
+  avatar        String?
+  phone         String?
+  companyName   String?
+  twoFactorEnabled Boolean     @default(false)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  projects      Project[]       @relation("ClientProjects")
+  assignedTasks Task[]          @relation("TaskAssignee")
+  tickets       SupportTicket[] @relation("UserTickets")
+  messages      Message[]
+  logs          AuditLog[]
+  meetings      Meeting[]
+}
+
+model Client {
+  id            String    @id @default(uuid())
+  companyName   String
+  contactName   String
+  email         String    @unique
+  phone         String?
+  industry      String?
+  status        String    @default("ACTIVE") // ACTIVE, ONBOARDING, INACTIVE
+  tier          String    @default("ENTERPRISE")
+  totalSpent    Float     @default(0.0)
+  createdAt     DateTime  @default(now())
+
+  projects      Project[]
+  contracts     Contract[]
+  invoices      Invoice[]
+}
+
+model Project {
+  id             String    @id @default(uuid())
+  title          String
+  slug           String    @unique
+  description    String
+  clientId       String
+  client         Client    @relation(fields: [clientId], references: [id])
+  userId         String?
+  user           User?     @relation("ClientProjects", fields: [userId], references: [id])
+  status         String    @default("IN_PROGRESS") // PLANNING, IN_PROGRESS, TESTING, DEPLOYED, COMPLETED
+  progressPct    Int       @default(0)
+  startDate      DateTime  @default(now())
+  targetDeadline DateTime  // 30 days default
+  budget         Float
+  techStack      String    // JSON string array
+  githubUrl      String?
+  stagingUrl     String?
+  productionUrl  String?
+  createdAt      DateTime  @default(now())
+
+  tasks          Task[]
+  milestones     Milestone[]
+  invoices       Invoice[]
+  contracts      Contract[]
+  files          ProjectFile[]
+  tickets        SupportTicket[]
+}
+
+model Milestone {
+  id          String   @id @default(uuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id])
+  title       String
+  dayNumber   Int      // e.g. Day 1, Day 7, Day 15, Day 30
+  status      String   @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED
+  dueDate     DateTime
+  deliverable String
+}
+
+model Task {
+  id          String   @id @default(uuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id])
+  title       String
+  description String?
+  status      String   @default("TODO") // TODO, IN_PROGRESS, REVIEW, DONE
+  priority    String   @default("HIGH") // LOW, MEDIUM, HIGH, URGENT
+  assigneeId  String?
+  assignee    User?    @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  dueDate     DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model Lead {
+  id            String   @id @default(uuid())
+  fullName      String
+  email         String
+  company       String?
+  phone         String?
+  budgetRange   String
+  serviceNeeded String
+  projectScope  String
+  aiLeadScore   Int      @default(85)
+  status        String   @default("NEW") // NEW, CONTACTED, PROPOSAL_SENT, CLOSED_WON, CLOSED_LOST
+  createdAt     DateTime @default(now())
+}
+
+model Quote {
+  id             String   @id @default(uuid())
+  leadEmail      String
+  projectType    String
+  features       String   // JSON string
+  estimatedDays  Int      @default(30)
+  estimatedCost  Float
+  techStack      String   // JSON string
+  architecture   String?
+  status         String   @default("GENERATED")
+  createdAt      DateTime @default(now())
+}
+
+model Invoice {
+  id          String   @id @default(uuid())
+  invoiceNo   String   @unique
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id])
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id])
+  amount      Float
+  status      String   @default("PENDING") // PENDING, PAID, OVERDUE
+  dueDate     DateTime
+  paidAt      DateTime?
+  itemsJson   String   // JSON list of line items
+  createdAt   DateTime @default(now())
+}
+
+model Contract {
+  id          String   @id @default(uuid())
+  contractNo  String   @unique
+  clientId    String
+  client      Client   @relation(fields: [clientId], references: [id])
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id])
+  title       String
+  status      String   @default("ACTIVE") // DRAFT, SIGNED, ACTIVE, EXPIRED
+  terms       String
+  signedAt    DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model Blog {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String
+  category    String
+  readTime    String   @default("5 min read")
+  authorName  String
+  authorRole  String
+  coverImage  String
+  publishedAt DateTime @default(now())
+  tags        String   // JSON string
+}
+
+model Portfolio {
+  id          String   @id @default(uuid())
+  title       String
+  slug        String   @unique
+  clientName  String
+  category    String
+  industry    String
+  summary     String
+  challenge   String
+  solution    String
+  impact      String   // JSON key-values e.g. {"conversion": "+300%"}
+  techStack   String   // JSON array
+  durationDays Int     @default(30)
+  image       String
+  demoUrl     String?
+}
+
+model Career {
+  id          String   @id @default(uuid())
+  title       String
+  department  String
+  location    String   @default("Remote / Hybrid")
+  type        String   @default("Full-time")
+  experience  String
+  description String
+  status      String   @default("OPEN")
+  createdAt   DateTime @default(now())
+}
+
+model SupportTicket {
+  id          String   @id @default(uuid())
+  ticketNo    String   @unique
+  userId      String
+  user        User     @relation("UserTickets", fields: [userId], references: [id])
+  projectId   String?
+  project     Project? @relation(fields: [projectId], references: [id])
+  subject     String
+  priority    String   @default("MEDIUM") // LOW, MEDIUM, HIGH, URGENT
+  status      String   @default("OPEN") // OPEN, IN_PROGRESS, RESOLVED, CLOSED
+  createdAt   DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  details   String
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
+
+model Meeting {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  date      DateTime
+  link      String?
+  status    String   @default("SCHEDULED")
+}
+
+model Message {
+  id        String   @id @default(uuid())
+  senderId  String
+  sender    User     @relation(fields: [senderId], references: [id])
+  content   String
+  createdAt DateTime @default(now())
+}
+
+model ProjectFile {
+  id        String   @id @default(uuid())
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id])
+  filename  String
+  fileUrl   String
+  fileSize  String
+  uploadedAt DateTime @default(now())
+}

@@ -1,0 +1,150 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  :root {
+    --background: #070708;
+    --foreground: #f8fafc;
+    --card-bg: rgba(14, 14, 18, 0.75);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --nav-bg: rgba(7, 7, 8, 0.85);
+    --text-muted: #94a3b8;
+    --accent-orange: #FF5500;
+    --accent-pink: #FF007F;
+    --accent-cyan: #00F0FF;
+  }
+
+  .dark {
+    --background: #070708;
+    --foreground: #ffffff;
+    --card-bg: rgba(14, 14, 18, 0.85);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --nav-bg: rgba(7, 7, 8, 0.85);
+    --text-muted: #a1a1aa;
+    --accent-orange: #FF5500;
+    --accent-pink: #FF007F;
+    --accent-cyan: #00F0FF;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Hide default cursor on desktop for custom interactive cursor */
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor-active,
+  body.custom-cursor-active a,
+  body.custom-cursor-active button,
+  body.custom-cursor-active [role="button"] {
+    cursor: none !important;
+  }
+}
+
+/* Trionn Glassmorphism */
+.glass-panel {
+  background: rgba(14, 14, 18, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(255, 85, 0, 0.4);
+  box-shadow: 0 0 30px -5px rgba(255, 85, 0, 0.2);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-nav {
+  background: rgba(7, 7, 8, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Text Gradients */
+.gradient-text-lime {
+  background: linear-gradient(90deg, #FF6B00 0%, #FF8A00 35%, #FFB347 60%, #7C5CFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-cyan {
+  background: linear-gradient(135deg, #7C5CFF 0%, #FF6B00 50%, #FFB347 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-purple {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8A00 50%, #7C5CFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-hero {
+  background: linear-gradient(90deg, #FFFFFF 0%, #FF8A00 40%, #FFB347 70%, #7C5CFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-varunya-text {
+  background: linear-gradient(90deg, #FF6B00 0%, #FF8A00 35%, #FFB347 60%, #7C5CFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-varunya-bg {
+  background: linear-gradient(90deg, #FF6B00 0%, #FF8A00 35%, #FFB347 60%, #7C5CFF 100%);
+}
+
+/* Background Textures */
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+.bg-dots-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070708;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1c1c24;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF5500;
+}
+
+pre, code {
+  font-family: 'JetBrains Mono', Consolas, monospace;
+}

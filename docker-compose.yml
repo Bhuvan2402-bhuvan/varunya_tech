@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://velocity:velocity_secret@postgres:5432/velocity30_db?schema=public
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
+    depends_on:
+      - postgres
+      - redis
+    restart: always
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: velocity_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: velocity
+      POSTGRES_PASSWORD: velocity_secret
+      POSTGRES_DB: velocity30_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    container_name: velocity_redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+volumes:
+  postgres_data:
