@@ -1,20 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
 import { 
-  Calendar, 
   PhoneCall, 
   CheckCircle2, 
-  Clock, 
   ShieldCheck, 
-  FileText, 
-  Send,
-  Users,
-  Code2,
-  Layers,
-  ArrowRight
+  Send
 } from "lucide-react";
 import { ConsultationModal } from "@/components/consultation/ConsultationModal";
 
@@ -60,73 +52,76 @@ export default function ConsultationServicesPage() {
   };
 
   return (
-    <div className="py-16 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="py-16 lg:py-24 space-y-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 font-sans bg-[#FAFAF8] text-[#111215]">
       {/* Header */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <span className="px-3.5 py-1 bg-gradient-to-r from-[#FF6B00]/15 to-[#7C5CFF]/15 border border-[#FF6B00]/30 rounded-full text-xs font-mono text-[#FFB347]">
-          DIRECT CLIENT CONSULTATION
-        </span>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-white font-display">
-          1-on-1 Project <span className="gradient-varunya-text">Discovery & Scoping</span>
+      <div className="border-b border-[#E5E2DB] pb-12 max-w-4xl mx-auto text-center space-y-6">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FFFFFF] border border-[#E5E2DB] rounded-full text-[#4A4D54] text-[11px] font-mono uppercase tracking-[0.2em] shadow-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9]" />
+          Technical Architecture &amp; Scoping
+        </div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-[#111215] tracking-tight font-display">
+          Direct Project <span className="font-editorial italic font-light text-[#519DD9]">Discovery &amp; Scoping</span>
         </h1>
-        <p className="text-slate-300 text-base sm:text-lg leading-relaxed">
-          Skip generic automated estimates. Speak directly with our senior software architects to review your custom requirements, system architecture, and milestone delivery plan.
+        <p className="text-[#4A4D54] text-base sm:text-lg font-light leading-relaxed max-w-2xl mx-auto">
+          Engage directly with senior systems architects to evaluate technical feasibility, database models, cloud topology, and disciplined milestone sprints.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Column: What to expect in 1-on-1 call */}
         <div className="lg:col-span-5 space-y-6">
-          <GlassCard className="p-8 border-slate-800 space-y-6">
-            <h3 className="text-xl font-bold text-white font-display flex items-center gap-2">
-              <PhoneCall className="w-5 h-5 text-[#FF6B00]" /> What Happens on the Call
+          <div className="p-8 border border-[#E5E2DB] bg-[#FFFFFF] rounded-2xl shadow-xs space-y-6">
+            <h3 className="text-xl font-bold text-[#111215] font-display flex items-center gap-2.5">
+              <PhoneCall className="w-5 h-5 text-[#519DD9]" /> 
+              <span>Consultation Protocol</span>
             </h3>
 
             <div className="space-y-4 text-xs font-mono">
-              <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
-                <div className="text-[#FF6B00] font-bold">1. Requirements & User Story Mapping</div>
-                <div className="text-slate-400 text-[11px] font-sans">
-                  We review your business goals, target user workflows, and core feature requirements.
+              <div className="p-5 bg-[#F5F3EF] border border-[#E5E2DB] rounded-xl space-y-1.5">
+                <div className="text-[#111215] font-bold">01 // Domain &amp; Entity Mapping</div>
+                <div className="text-[#4A4D54] text-[11px] font-sans font-light leading-relaxed">
+                  We analyze core business logic, user permission tiers, and integration dependencies.
                 </div>
               </div>
 
-              <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
-                <div className="text-[#FF8A00] font-bold">2. Architecture & Tech Stack Selection</div>
-                <div className="text-slate-400 text-[11px] font-sans">
-                  We determine the ideal database models, frontend frameworks, and cloud hosting architecture.
+              <div className="p-5 bg-[#F5F3EF] border border-[#E5E2DB] rounded-xl space-y-1.5">
+                <div className="text-[#111215] font-bold">02 // Architectural Topology</div>
+                <div className="text-[#4A4D54] text-[11px] font-sans font-light leading-relaxed">
+                  We determine the data store architecture, API latency targets, and deployment environments.
                 </div>
               </div>
 
-              <div className="p-4 bg-slate-900 border border-slate-800 rounded-xl space-y-1">
-                <div className="text-[#7C5CFF] font-bold">3. 30–40 Day Delivery Roadmap</div>
-                <div className="text-slate-400 text-[11px] font-sans">
-                  You receive an itemized milestone schedule with fixed deadlines and post-launch maintenance terms.
+              <div className="p-5 bg-[#F5F3EF] border border-[#E5E2DB] rounded-xl space-y-1.5">
+                <div className="text-[#111215] font-bold">03 // Milestone Delivery Plan</div>
+                <div className="text-[#4A4D54] text-[11px] font-sans font-light leading-relaxed">
+                  You receive an itemized milestone schedule with fixed 30–40 day delivery terms and warranty SLA.
                 </div>
               </div>
             </div>
 
-            <div className="p-4 bg-white/5 border border-white/10 rounded-2xl space-y-2 text-xs">
-              <div className="font-bold text-white flex items-center gap-1.5">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" /> 100% Confidential & Free Consultation
+            <div className="p-5 bg-[#F5F3EF] border border-[#E5E2DB] rounded-xl space-y-2 text-xs">
+              <div className="font-bold text-[#111215] flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#519DD9]" /> 
+                <span>Confidential Architecture Review</span>
               </div>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Zero sales pressure. Direct developer-to-client consultation focused purely on technical feasibility and optimal architecture.
+              <p className="text-[#4A4D54] text-[11px] leading-relaxed font-light">
+                Direct engineer-to-client consultation focused strictly on technical execution, system integrity, and delivery timeline.
               </p>
             </div>
-          </GlassCard>
+          </div>
         </div>
 
         {/* Right Column: Direct Booking Form */}
         <div className="lg:col-span-7">
-          <GlassCard className="p-8 border-slate-800">
+          <div className="p-8 border border-[#E5E2DB] bg-[#FFFFFF] rounded-2xl shadow-xs">
             {submitted ? (
-              <div className="text-center py-12 space-y-4 animate-in fade-in zoom-in-95">
-                <div className="w-16 h-16 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto">
-                  <CheckCircle2 className="w-10 h-10" />
+              <div className="text-center py-16 space-y-4 animate-in fade-in zoom-in-95">
+                <div className="w-16 h-16 bg-[#F5F3EF] border border-[#E5E2DB] rounded-2xl text-[#519DD9] flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-8 h-8 text-[#519DD9]" />
                 </div>
-                <h3 className="text-2xl font-bold text-white font-display">Discovery Call Requested!</h3>
-                <p className="text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
-                  Thank you, <strong className="text-white">{fullName}</strong>. Our engineering lead will review your project scope and email you a calendar booking link shortly.
+                <h3 className="text-2xl font-bold text-[#111215] font-display">Discovery Session Logged</h3>
+                <p className="text-xs text-[#4A4D54] max-w-md mx-auto leading-relaxed font-light">
+                  Thank you, <strong className="text-[#111215]">{fullName}</strong>. Our engineering director will inspect your specifications and forward an architectural calendar link shortly.
                 </p>
                 <div className="pt-4">
                   <Button variant="outline" size="sm" onClick={() => setSubmitted(false)}>
@@ -135,67 +130,67 @@ export default function ConsultationServicesPage() {
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 text-xs font-sans">
-                <div className="border-b border-slate-800 pb-3">
-                  <h3 className="text-lg font-bold text-white font-display">Schedule Your Project Discovery Call</h3>
-                  <p className="text-slate-400 text-[11px]">Fill in your project details to schedule a 1-on-1 consultation.</p>
+              <form onSubmit={handleSubmit} className="space-y-5 text-xs font-sans">
+                <div className="border-b border-[#E5E2DB] pb-4">
+                  <h3 className="text-lg font-bold text-[#111215] font-display">Initiate Architecture Consultation</h3>
+                  <p className="text-[#71757E] text-[11px] font-light">Specify system parameters to prepare discovery documentation.</p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="font-semibold text-slate-300">Your Full Name *</label>
+                  <div className="space-y-1.5">
+                    <label className="font-semibold text-[#111215]">Full Name *</label>
                     <input
                       required
                       type="text"
                       placeholder="Alex Morgan"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-[#FF6B00]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
                     />
                   </div>
-                  <div className="space-y-1">
-                    <label className="font-semibold text-slate-300">Company / Organization</label>
+                  <div className="space-y-1.5">
+                    <label className="font-semibold text-[#111215]">Company / Entity</label>
                     <input
                       type="text"
-                      placeholder="Acme Labs"
+                      placeholder="Acme Systems"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-[#FF6B00]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1">
-                    <label className="font-semibold text-slate-300">Email Address *</label>
+                  <div className="space-y-1.5">
+                    <label className="font-semibold text-[#111215]">Email Address *</label>
                     <input
                       required
                       type="email"
                       placeholder="alex@acme.com"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-[#FF6B00]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
                     />
                   </div>
-                  <div className="space-y-1">
-                    <label className="font-semibold text-slate-300">Phone Number</label>
+                  <div className="space-y-1.5">
+                    <label className="font-semibold text-[#111215]">Phone / Direct Line</label>
                     <input
                       type="tel"
                       placeholder="+1 (555) 000-0000"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-[#FF6B00]"
+                      className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  <div className="space-y-1">
-                    <label className="font-semibold text-slate-300">Service Category</label>
+                  <div className="space-y-1.5">
+                    <label className="font-semibold text-[#111215]">Service Category</label>
                     <select
                       value={serviceNeeded}
                       onChange={(e) => setServiceNeeded(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:border-[#FF6B00]"
+                      className="w-full px-3 py-2 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] text-xs focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
                     >
                       <option value="Custom Web Application">Custom Web Application</option>
                       <option value="ERP / Operational Portal">ERP / Operational Portal</option>
@@ -205,12 +200,12 @@ export default function ConsultationServicesPage() {
                     </select>
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="font-semibold text-slate-300">Timeline</label>
+                  <div className="space-y-1.5">
+                    <label className="font-semibold text-[#111215]">Timeline Expectation</label>
                     <select
                       value={timeline}
                       onChange={(e) => setTimeline(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:border-[#FF6B00]"
+                      className="w-full px-3 py-2 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] text-xs focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
                     >
                       <option value="30–40 Days (Standard)">30–40 Days (Standard)</option>
                       <option value="Under 30 Days">Under 30 Days</option>
@@ -218,12 +213,12 @@ export default function ConsultationServicesPage() {
                     </select>
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="font-semibold text-slate-300">Budget Range</label>
+                  <div className="space-y-1.5">
+                    <label className="font-semibold text-[#111215]">Budget Scope</label>
                     <select
                       value={budget}
                       onChange={(e) => setBudget(e.target.value)}
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:border-[#FF6B00]"
+                      className="w-full px-3 py-2 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] text-xs focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
                     >
                       <option value="$3,000 - $6,000">$3,000 - $6,000</option>
                       <option value="$6,000 - $12,000">$6,000 - $12,000</option>
@@ -233,26 +228,26 @@ export default function ConsultationServicesPage() {
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="font-semibold text-slate-300">Project Scope & Requirements</label>
+                <div className="space-y-1.5">
+                  <label className="font-semibold text-[#111215]">Project Scope &amp; Architecture Notes</label>
                   <textarea
                     required
                     rows={4}
-                    placeholder="Briefly describe what you're building, target users, or key functionalities required..."
+                    placeholder="Describe target system requirements, expected user volume, or critical integrations..."
                     value={scopeDetails}
                     onChange={(e) => setScopeDetails(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-[#FF6B00] resize-none"
+                    className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all resize-none leading-relaxed"
                   />
                 </div>
 
                 <div className="pt-2">
-                  <Button type="submit" variant="gradient" size="lg" className="w-full" icon={<Send className="w-4 h-4" />}>
-                    Request 1-on-1 Consultation
+                  <Button type="submit" variant="primary" size="lg" className="w-full" icon={<Send className="w-4 h-4" />}>
+                    Submit Scoping Request
                   </Button>
                 </div>
               </form>
             )}
-          </GlassCard>
+          </div>
         </div>
       </div>
 

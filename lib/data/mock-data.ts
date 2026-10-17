@@ -80,7 +80,7 @@ export const PORTFOLIO_DATA: PortfolioItem[] = [
     category: "ERP & Management",
     industry: "Enterprise Operations",
     durationDays: 35,
-    heroImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+    heroImage: "/images/products/erp-platform.jpg",
     summary: "A modern ERP platform designed to streamline organizational operations with role-based access, centralized management, and an intuitive dashboard.",
     challenge: "Managing fragmented operational workflows and distributed user access across multiple organizational departments without centralized control.",
     solution: "Built a centralized, role-based enterprise management system with dynamic analytics dashboards and encrypted authentication.",
@@ -137,7 +137,7 @@ export const PORTFOLIO_DATA: PortfolioItem[] = [
     category: "EdTech Platform",
     industry: "Education & Learning",
     durationDays: 35,
-    heroImage: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
+    heroImage: "/images/products/fun-with-abacus.jpg",
     summary: "An interactive educational platform designed to make learning abacus engaging and accessible through digital practice and intuitive user interfaces.",
     challenge: "Transitioning traditional physical abacus mental math exercises into an intuitive, engaging digital learning web environment for students.",
     solution: "Designed and developed a student-friendly, highly responsive interactive learning suite with smooth touch-enabled visual feedback.",
@@ -165,7 +165,7 @@ export const PORTFOLIO_DATA: PortfolioItem[] = [
     category: "Web Application",
     industry: "Knowledge & Usability",
     durationDays: 30,
-    heroImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+    heroImage: "/images/products/jignasa.jpg",
     summary: "A modern web application built with a focus on usability, responsive design, and an engaging user experience.",
     challenge: "Architecting a multi-device web experience prioritizing effortless content navigation and swift page load speed.",
     solution: "Delivered a clean, highly optimized web application featuring intuitive navigation architecture and mobile-first responsiveness.",
@@ -541,6 +541,26 @@ export const SERVICES_DATA: ServiceItem[] = [
 
 export const INDUSTRIES_DATA: IndustryItem[] = [
   {
+    id: "ind5",
+    slug: "education",
+    title: "EdTech & Learning Platforms",
+    iconName: "GraduationCap",
+    tagline: "Interactive LMS portals, virtual classrooms, and gamified student analytics.",
+    challenges: [
+      "Low student engagement in traditional recorded video courses",
+      "Scalability crashes during online exam quiz submissions",
+      "Difficult progress tracking for corporate training managers"
+    ],
+    solutions: [
+      "Gamified learning management system (LMS) with interactive quizzes",
+      "Live interactive web video classroom with screen sharing",
+      "AI tutor bot offering personalized homework guidance 24/7"
+    ],
+    techStack: ["Next.js", "WebRTC", "Prisma", "Tailwind CSS", "OpenAI API"],
+    compliance: ["FERPA Compliant", "COPPA", "WCAG 2.1 AA"],
+    metrics: ["+180% Course Completion", "10,000+ Concurrent Students", "4.9/5 Student Rating"]
+  },
+  {
     id: "ind1",
     slug: "healthcare",
     title: "Healthcare & MedTech",
@@ -619,26 +639,6 @@ export const INDUSTRIES_DATA: IndustryItem[] = [
     techStack: ["React Native", "Mapbox API", "Node.js", "PostgreSQL", "WebSockets"],
     compliance: ["DOT Regulations", "ISO 9001", "SOC2"],
     metrics: ["-25% Fuel Expenditure", "Real-Time Driver Tracking", "Zero Lost Shipments"]
-  },
-  {
-    id: "ind5",
-    slug: "education",
-    title: "EdTech & Learning Platforms",
-    iconName: "GraduationCap",
-    tagline: "Interactive LMS portals, virtual classrooms, and gamified student analytics.",
-    challenges: [
-      "Low student engagement in traditional recorded video courses",
-      "Scalability crashes during online exam quiz submissions",
-      "Difficult progress tracking for corporate training managers"
-    ],
-    solutions: [
-      "Gamified learning management system (LMS) with interactive quizzes",
-      "Live interactive web video classroom with screen sharing",
-      "AI tutor bot offering personalized homework guidance 24/7"
-    ],
-    techStack: ["Next.js", "WebRTC", "Prisma", "Tailwind CSS", "OpenAI API"],
-    compliance: ["FERPA Compliant", "COPPA", "WCAG 2.1 AA"],
-    metrics: ["+180% Course Completion", "10,000+ Concurrent Students", "4.9/5 Student Rating"]
   },
   {
     id: "ind6",

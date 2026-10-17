@@ -144,19 +144,19 @@ export interface HomepageConfig {
 export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
   hero: {
     badgeSubtitle: "VARUNYA TECHNOLOGIES",
-    badgeHighlight: "CUSTOM SOFTWARE DEVELOPMENT",
-    headlinePart1: "Building Secure, Scalable &",
-    headlinePart2: "Modern Web Applications",
-    subheading: "We design and develop custom software solutions tailored to business and educational needs. Every application is built with a focus on performance, security, scalability, and user experience. Most projects are delivered within 30–40 days, followed by ongoing support and maintenance.",
+    badgeHighlight: "ARCHITECTURAL DIGITAL SYSTEMS",
+    headlinePart1: "BUILD WHAT",
+    headlinePart2: "COMES NEXT.",
+    subheading: "VarunyaTech designs and architects custom software platforms, high-velocity web applications, and autonomous digital systems built for enterprise scale and operational resilience.",
     highlightDeliveryText: "30–40 days",
-    primaryCtaText: "VIEW OUR WORK",
+    primaryCtaText: "EXPLORE OUR WORK",
     primaryCtaLink: "#works",
-    secondaryCtaText: "START YOUR PROJECT",
+    secondaryCtaText: "OUR APPROACH",
     metrics: [
-      { id: "m1", val: "30–40 DAYS", label: "AVERAGE DELIVERY", color: "text-[#FF6B00]" },
-      { id: "m2", val: "4 COMPLETED", label: "LIVE PUBLIC APPS", color: "text-[#FF8A00]" },
-      { id: "m3", val: "100% SECURE", label: "BEST PRACTICES", color: "text-[#FFB347]" },
-      { id: "m4", val: "ONGOING", label: "POST-LAUNCH SUPPORT", color: "text-[#7C5CFF]" }
+      { id: "m1", val: "30–40 DAYS", label: "DELIVERY CYCLE", color: "text-[#F2F4F6]" },
+      { id: "m2", val: "4 COMPLETED", label: "LIVE PUBLIC APPS", color: "text-[#D6D8DC]" },
+      { id: "m3", val: "ENTERPRISE", label: "SOLID ARCHITECTURE", color: "text-[#C8CDD4]" },
+      { id: "m4", val: "CONTINUOUS", label: "POST-LAUNCH PARTNERSHIP", color: "text-[#9299A3]" }
     ]
   },
   ticker: {
@@ -164,11 +164,11 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
     direction: "left",
     items: [
       "VARUNYA TECHNOLOGIES",
-      "CUSTOM WEB APPLICATIONS",
-      "SECURE & SCALABLE",
-      "30–40 DAY DELIVERY",
-      "POST-LAUNCH SUPPORT",
-      "FULL-STACK EXCELLENCE"
+      "ARCHITECTURAL DIGITAL SYSTEMS",
+      "CUSTOM SOFTWARE PLATFORMS",
+      "30–40 DAY SPRINT CYCLES",
+      "CONTINUOUS CLIENT PARTNERSHIP",
+      "FULL-STACK RESILIENCE"
     ]
   },
   about: {
@@ -177,9 +177,9 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
     titlePart2: "ARE",
     description: "We specialize in building custom web applications that solve real-world problems. From requirement gathering and UI/UX design to development, deployment, and post-launch support, we work closely with clients to deliver reliable, secure, and scalable digital solutions. Our focus is on quality, transparent communication, and long-term partnerships.",
     pillars: [
-      { id: "p1", title: "QUALITY FIRST", description: "Clean, maintainable & secure code architecture", color: "text-[#FF6B00]" },
-      { id: "p2", title: "TRANSPARENT", description: "Clear communication & continuous progress updates", color: "text-[#FF8A00]" },
-      { id: "p3", title: "LONG-TERM", description: "Ongoing post-launch client partnership", color: "text-[#7C5CFF]" }
+      { id: "p1", title: "QUALITY FIRST", description: "Clean, maintainable & secure code architecture", color: "text-[#F2F4F6]" },
+      { id: "p2", title: "TRANSPARENT", description: "Clear communication & continuous progress updates", color: "text-[#D6D8DC]" },
+      { id: "p3", title: "LONG-TERM", description: "Ongoing post-launch client partnership", color: "text-[#9299A3]" }
     ]
   },
   projects: {
@@ -193,7 +193,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
         title: "ERP Platform",
         category: "Enterprise Operations",
         liveDemoUrl: "https://erp-tan-six.vercel.app/",
-        heroImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+        heroImage: "/images/products/erp-platform.jpg",
         description: "A modern ERP platform designed to streamline organizational operations with role-based access, centralized management, and an intuitive dashboard.",
         features: [
           "User Authentication",
@@ -204,7 +204,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
           "Secure Data Handling"
         ],
         techStack: ["Next.js", "React.js", "TypeScript", "Tailwind CSS", "Node.js", "PostgreSQL"],
-        statusBadge: "COMPLETED & LIVE",
+        statusBadge: "RELEASED & LIVE",
         visible: true
       },
       {
@@ -222,7 +222,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
           "Performance Optimized"
         ],
         techStack: ["React.js", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "Vercel"],
-        statusBadge: "COMPLETED & LIVE",
+        statusBadge: "LIVE DEPLOYED",
         visible: true
       },
       {
@@ -230,7 +230,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
         title: "Fun With Abacus",
         category: "Educational Platform",
         liveDemoUrl: "https://funwithabacus.vercel.app/",
-        heroImage: "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=80",
+        heroImage: "/images/products/fun-with-abacus.jpg",
         description: "An interactive educational platform designed to make learning abacus engaging and accessible through digital practice and intuitive user interfaces.",
         features: [
           "Interactive Learning",
@@ -240,7 +240,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
           "Smooth User Experience"
         ],
         techStack: ["Next.js", "React.js", "JavaScript", "HTML5", "Tailwind CSS", "Firebase"],
-        statusBadge: "COMPLETED & LIVE",
+        statusBadge: "RELEASED & LIVE",
         visible: true
       },
       {
@@ -248,7 +248,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
         title: "Jignasa",
         category: "Web Application",
         liveDemoUrl: "https://jignasa.vercel.app/",
-        heroImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
+        heroImage: "/images/products/jignasa.jpg",
         description: "A modern web application built with a focus on usability, responsive design, and an engaging user experience.",
         features: [
           "Modern UI/UX",
@@ -257,7 +257,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
           "Clean Navigation"
         ],
         techStack: ["Next.js", "React.js", "TypeScript", "Tailwind CSS", "Vercel"],
-        statusBadge: "COMPLETED & LIVE",
+        statusBadge: "LIVE DEPLOYED",
         visible: true
       }
     ]
@@ -272,7 +272,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
         id: "tc1",
         category: "Frontend",
         iconName: "Layout",
-        color: "text-[#FF6B00]",
+        color: "text-[#F2F4F6]",
         items: [
           { name: "React.js", desc: "Interactive UI Library" },
           { name: "Next.js", desc: "Full-Stack App Router" },
@@ -287,7 +287,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
         id: "tc2",
         category: "Backend",
         iconName: "Server",
-        color: "text-[#FF8A00]",
+        color: "text-[#D6D8DC]",
         items: [
           { name: "Node.js", desc: "Event-Driven Server Runtime" },
           { name: "Express.js", desc: "Fast Web Middleware" },
@@ -298,7 +298,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
         id: "tc3",
         category: "Databases",
         iconName: "Database",
-        color: "text-[#FFB347]",
+        color: "text-[#C8CDD4]",
         items: [
           { name: "Firebase Firestore", desc: "Realtime Document DB" },
           { name: "Supabase", desc: "Open Source Backend DB" },
@@ -311,7 +311,7 @@ export const DEFAULT_HOMEPAGE_CONFIG: HomepageConfig = {
         id: "tc4",
         category: "Deployment",
         iconName: "Cloud",
-        color: "text-[#7C5CFF]",
+        color: "text-[#3E5065]",
         items: [
           { name: "Vercel", desc: "Edge Global Cloud Network" },
           { name: "Firebase Hosting", desc: "Secure SSL Global Hosting" },

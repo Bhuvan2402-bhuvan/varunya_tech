@@ -1,9 +1,6 @@
 "use client";
 
 import React from "react";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Button } from "@/components/ui/Button";
-import { Clock, CheckCircle2, Code2, ShieldCheck, Terminal, ExternalLink } from "lucide-react";
 
 export default function ClientProjectsPage() {
   const sprintDays = Array.from({ length: 30 }, (_, i) => ({
@@ -13,24 +10,24 @@ export default function ClientProjectsPage() {
   }));
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-[#111215]">
       <div>
-        <h2 className="text-2xl font-bold text-white font-display">30-Day Sprint Tracker</h2>
-        <p className="text-xs text-slate-400">Detailed day-by-day execution tracking for ApexPay Enterprise FinTech Platform.</p>
+        <h2 className="text-2xl font-bold text-[#111215] font-display">30-Day Sprint Tracker</h2>
+        <p className="text-xs text-[#4A4D54]">Detailed day-by-day execution tracking for ApexPay Enterprise FinTech Platform.</p>
       </div>
 
-      <GlassCard className="p-6">
-        <h3 className="text-base font-bold text-white mb-4">30-Day Sprint Calendar Grid</h3>
+      <div className="p-6 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs">
+        <h3 className="text-base font-bold text-[#111215] mb-4">30-Day Sprint Calendar Grid</h3>
         <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
           {sprintDays.map((d) => (
             <div
               key={d.day}
               className={`p-2.5 rounded-xl border text-center font-mono text-xs transition-all ${
                 d.status === "COMPLETED"
-                  ? "bg-cyan-500/20 border-cyan-500/40 text-cyan-300"
+                  ? "bg-[#F5F3EF] border-[#E5E2DB] text-[#519DD9] font-bold"
                   : d.status === "IN_PROGRESS"
-                  ? "bg-purple-500/30 border-purple-500 text-white animate-pulse"
-                  : "bg-slate-900 border-slate-800 text-slate-600"
+                  ? "bg-[#111215] border-[#111215] text-[#FFFFFF] font-bold shadow-xs animate-pulse"
+                  : "bg-[#FAFAF8] border-[#E5E2DB] text-[#8C8F98]"
               }`}
             >
               <div className="font-bold">D{d.day}</div>
@@ -38,7 +35,7 @@ export default function ClientProjectsPage() {
             </div>
           ))}
         </div>
-      </GlassCard>
+      </div>
     </div>
   );
 }

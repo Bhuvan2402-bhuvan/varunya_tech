@@ -1,40 +1,124 @@
-version: '3.8'
+# ==============================================================================
+# VarunyaTech Production Stack — Ubuntu Server Docker Compose
+# Architecture: Next.js Standalone + PostgreSQL 16 + Redis 7 + Cloudflare Tunnel
+# Reference Guide: docs/DEPLOYMENT.md
+# ==============================================================================
 
 services:
+  # ---------------------------------------------------------------------------
+  # Application Service: Next.js 14 Standalone Container
+  # ---------------------------------------------------------------------------
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    image: varunyatech/web:latest
+    container_name: varunya_app
+    restart: unless-stopped
     ports:
-      - "3000:3000"
+      # Bind to 127.0.0.1 by default to prevent unauthorized public exposure
+      - "${HOST_BIND_IP:-127.0.0.1}:${APP_PORT:-3000}:3000"
     environment:
-      - DATABASE_URL=postgresql://velocity:velocity_secret@postgres:5432/velocity30_db?schema=public
-      - REDIS_URL=redis://redis:6379
       - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      - DATABASE_URL=${DATABASE_URL:-postgresql://velocity:velocity_secret@postgres:5432/velocity30_db?schema=public}
+      - REDIS_URL=${REDIS_URL:-redis://redis:6379}
+      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-}
+      - NEXTAUTH_URL=${NEXTAUTH_URL:-https://varunyatech.com}
     depends_on:
-      - postgres
-      - redis
-    restart: always
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - varunya_internal
 
+  # ---------------------------------------------------------------------------
+  # Database Service: PostgreSQL 16 Alpine
+  # ---------------------------------------------------------------------------
   postgres:
     image: postgres:16-alpine
     container_name: velocity_postgres
-    ports:
-      - "5432:5432"
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: velocity
-      POSTGRES_PASSWORD: velocity_secret
-      POSTGRES_DB: velocity30_db
+      POSTGRES_USER: ${POSTGRES_USER:-velocity}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-velocity_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-velocity30_db}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: always
+      # Defaults to named volume 'postgres_data'; on Ubuntu Server NAS override via VARUNYA_POSTGRES_DATA_PATH
+      - ${VARUNYA_POSTGRES_DATA_PATH:-postgres_data}:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-velocity} -d $${POSTGRES_DB:-velocity30_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - varunya_internal
 
+  # ---------------------------------------------------------------------------
+  # Cache & Session Store: Redis 7 Alpine
+  # ---------------------------------------------------------------------------
   redis:
     image: redis:7-alpine
     container_name: velocity_redis
-    ports:
-      - "6379:6379"
-    restart: always
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
+    networks:
+      - varunya_internal
+
+  # ---------------------------------------------------------------------------
+  # Zero Trust Ingress: Cloudflare Tunnel (Optional Profile)
+  # ---------------------------------------------------------------------------
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: velocity_cloudflared
+    restart: unless-stopped
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN:-}
+    command: tunnel --no-autoupdate run
+    depends_on:
+      app:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - varunya_internal
 
 volumes:
   postgres_data:
+    name: varunya_tech_postgres_data
+
+networks:
+  varunya_internal:
+    name: varunya_internal_net
+    driver: bridge

@@ -1,4 +1,4 @@
-name: VELOCITY 30 Production CI/CD Pipeline
+name: VarunyaTech Production CI Pipeline
 
 on:
   push:
@@ -7,41 +7,31 @@ on:
     branches: [ main ]
 
 jobs:
-  audit-and-build:
+  validate-and-build:
+    name: Type-Check, Lint & Production Build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
+      - name: Setup Node.js 20 LTS
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Install Dependencies
+      - name: Clean Dependency Installation
         run: npm ci
 
       - name: Generate Prisma Client
         run: npx prisma generate
 
-      - name: TypeScript Type Check
+      - name: TypeScript Static Type Check
         run: npx tsc --noEmit
 
-      - name: Build Production Next.js App
+      - name: Build Production Next.js Application
         run: npm run build
-
-  deploy-production:
-    needs: audit-and-build
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Deploy to Vercel Production
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.ORG_ID }}
-          vercel-project-id: ${{ secrets.PROJECT_ID }}
-          vercel-args: '--prod'
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
+          NODE_ENV: production

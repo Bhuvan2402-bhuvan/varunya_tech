@@ -1,23 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { ClientLayoutWrapper } from "@/components/layout/ClientLayoutWrapper";
-import { CustomCursor } from "@/components/ui/CustomCursor";
-import { AmbientSound } from "@/components/ui/AmbientSound";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+const editorial = Cormorant_Garamond({ 
+  subsets: ["latin"], 
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-editorial" 
+});
 
 export const metadata: Metadata = {
-  title: "Varunya Technologies | Custom Software & Web Development Company",
-  description: "We design and develop custom software solutions tailored to business and educational needs. Building secure, scalable & modern web applications delivered within 30–40 days with ongoing post-launch support.",
-  keywords: ["Varunya Technologies", "Custom Software Development", "Web Applications", "React.js", "Next.js", "Node.js", "ERP Platform", "EdTech Development"],
+  metadataBase: new URL("https://varunyatech.com"),
+  title: "VarunyaTech | High-End Digital Architecture & Custom Software",
+  description: "VarunyaTech designs and architects custom software platforms, high-velocity web applications, and autonomous digital systems built for enterprise scale and operational resilience.",
+  keywords: ["VarunyaTech", "Custom Software Development", "Enterprise Architecture", "Web Applications", "React.js", "Next.js", "TypeScript", "ERP Platform"],
   openGraph: {
-    title: "Varunya Technologies - Building Secure, Scalable & Modern Web Applications",
-    description: "Custom software development agency delivering secure, scalable digital solutions with continuous client support.",
+    title: "VarunyaTech — High-End Digital Architecture & Custom Software",
+    description: "VarunyaTech designs and architects custom software platforms, high-velocity web applications, and autonomous digital systems.",
     url: "https://varunyatech.com",
-    siteName: "Varunya Technologies",
-    images: [{ url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&q=80" }],
+    siteName: "VarunyaTech",
+    images: [{ url: "/images/architecture/hero-noir.jpg" }],
     type: "website",
   },
 };
@@ -28,10 +31,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth selection:bg-[#FF5500] selection:text-white">
-      <body className={`${inter.variable} ${outfit.variable} antialiased bg-[#070708] text-slate-100 min-h-screen flex flex-col selection:bg-[#FF5500] selection:text-white`}>
-        <CustomCursor />
-        <AmbientSound />
+    <html lang="en" className="scroll-smooth selection:bg-[#E5E2DB] selection:text-[#111215]">
+      <body className={`${inter.variable} ${editorial.variable} antialiased bg-[#FAFAF8] text-[#111215] min-h-screen flex flex-col selection:bg-[#E5E2DB] selection:text-[#111215]`}>
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
     </html>

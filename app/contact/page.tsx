@@ -1,13 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import { GlassCard } from "@/components/ui/GlassCard";
-import { Button } from "@/components/ui/Button";
-import { Mail, Phone, MapPin, Calendar, CheckCircle2, MessageSquare, Clock } from "lucide-react";
+import { Mail, Clock, Check, ShieldCheck } from "lucide-react";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
-  const [showCalendly, setShowCalendly] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,128 +12,143 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="py-16 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <span className="px-3.5 py-1 bg-cyan-500/10 border border-cyan-500/30 rounded-full text-xs font-mono text-cyan-400">
-          START YOUR 30-DAY JOURNEY
-        </span>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-white font-display">
-          Let&apos;s Build Something Incredible
+    <div className="py-16 lg:py-24 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#FAFAF8] text-[#111215]">
+      <div className="space-y-4 max-w-3xl">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FFFFFF] border border-[#E5E2DB] rounded-full font-mono text-[11px] uppercase tracking-[0.2em] text-[#4A4D54] shadow-xs">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9]"></span>
+          Direct Engineering Inquiry
+        </div>
+        <h1 className="text-4xl sm:text-6xl font-black text-[#111215] uppercase tracking-tight leading-[1]">
+          Initiate <br />
+          <span className="font-editorial italic font-light text-[#519DD9] normal-case">Architectural Project.</span>
         </h1>
-        <p className="text-slate-300 text-base sm:text-lg">
-          Ready to turn your idea into a production app in 30 days? Send us a message or schedule a direct technical call.
+        <p className="text-[#4A4D54] text-base sm:text-lg leading-relaxed">
+          Ready to engineer your custom software platform or web application? Send your system specifications directly to our engineering architect.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
         {/* Contact info cards */}
         <div className="lg:col-span-5 space-y-6">
-          <GlassCard className="p-6 space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
-                <Mail className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-white">Email Us Directly</h3>
-                <p className="text-xs text-slate-400 font-mono">hello@velocity30.io</p>
-              </div>
+          <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs space-y-4">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-[#519DD9] font-bold">
+              STUDIO EMAIL
             </div>
-          </GlassCard>
-
-          <GlassCard className="p-6 space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
-                <Phone className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-white">Phone / WhatsApp</h3>
-                <p className="text-xs text-slate-400 font-mono">+1 (800) 555-VELOCITY</p>
-              </div>
+            <div className="flex items-center gap-3">
+              <Mail className="w-5 h-5 text-[#519DD9]" />
+              <a 
+                href="mailto:varunyatech@gmail.com" 
+                className="font-mono text-sm font-semibold text-[#111215] hover:text-[#519DD9] transition-colors"
+              >
+                varunyatech@gmail.com
+              </a>
             </div>
-          </GlassCard>
+            <p className="text-xs text-[#4A4D54] leading-relaxed">
+              We respond to all technical inquiries and architectural scopes within 4 business hours.
+            </p>
+          </div>
 
-          <GlassCard className="p-6 space-y-4">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-                <Calendar className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-white">Calendly Direct Meeting</h3>
-                <p className="text-xs text-slate-400">Book 15 minutes with our CTO</p>
-              </div>
+          <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs space-y-4">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-[#53BAC1] font-bold">
+              DELIVERY STANDARD
             </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full text-xs"
-              onClick={() => setShowCalendly(!showCalendly)}
-            >
-              {showCalendly ? "Hide Scheduler" : "Open Calendly Scheduler"}
-            </Button>
-          </GlassCard>
+            <div className="flex items-center gap-3">
+              <Clock className="w-5 h-5 text-[#53BAC1]" />
+              <span className="font-mono text-sm font-bold text-[#111215]">30–40 Day Sprints</span>
+            </div>
+            <p className="text-xs text-[#4A4D54] leading-relaxed">
+              Strict delivery timelines with continuous client demo access and post-launch maintenance SLA.
+            </p>
+          </div>
 
-          {showCalendly && (
-            <GlassCard className="p-6 border-cyan-500/40 text-center space-y-4 animate-in fade-in duration-300">
-              <Clock className="w-8 h-8 text-cyan-400 mx-auto" />
-              <h4 className="text-sm font-bold text-white">Select a Time Slot</h4>
-              <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                <button onClick={() => alert("Meeting booked for Tomorrow 10:00 AM!")} className="p-2 bg-slate-800 rounded-lg hover:bg-cyan-500/20 text-cyan-300">Tomorrow 10:00 AM</button>
-                <button onClick={() => alert("Meeting booked for Tomorrow 2:00 PM!")} className="p-2 bg-slate-800 rounded-lg hover:bg-cyan-500/20 text-cyan-300">Tomorrow 2:00 PM</button>
-                <button onClick={() => alert("Meeting booked for Thursday 11:30 AM!")} className="p-2 bg-slate-800 rounded-lg hover:bg-cyan-500/20 text-cyan-300">Thursday 11:30 AM</button>
-                <button onClick={() => alert("Meeting booked for Friday 4:00 PM!")} className="p-2 bg-slate-800 rounded-lg hover:bg-cyan-500/20 text-cyan-300">Friday 4:00 PM</button>
-              </div>
-            </GlassCard>
-          )}
+          <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs space-y-4">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-[#E23B52] font-bold">
+              IP OWNERSHIP
+            </div>
+            <div className="flex items-center gap-3">
+              <ShieldCheck className="w-5 h-5 text-[#E23B52]" />
+              <span className="font-mono text-sm font-bold text-[#111215]">100% Repository Transfer</span>
+            </div>
+            <p className="text-xs text-[#4A4D54] leading-relaxed">
+              You own all source code repositories, cloud infrastructure configs, and database schemas.
+            </p>
+          </div>
         </div>
 
         {/* Contact Form */}
         <div className="lg:col-span-7">
-          <GlassCard className="p-8 border-slate-800">
+          <div className="p-8 lg:p-12 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-sm">
             {submitted ? (
-              <div className="py-12 text-center space-y-4">
-                <CheckCircle2 className="w-16 h-16 text-cyan-400 mx-auto" />
-                <h2 className="text-2xl font-bold text-white">Message Received!</h2>
-                <p className="text-xs text-slate-400">Our engineering architect will get back to you within 4 business hours.</p>
+              <div className="py-16 text-center space-y-4">
+                <div className="w-14 h-14 bg-[#F5F3EF] border border-[#E5E2DB] rounded-full flex items-center justify-center mx-auto text-[#111215]">
+                  <Check className="w-6 h-6 text-[#519DD9]" />
+                </div>
+                <h2 className="text-2xl font-black uppercase text-[#111215]">Specification Received</h2>
+                <p className="text-sm text-[#4A4D54] max-w-md mx-auto">
+                  Our engineering team has received your inquiry. We will contact you at your email address to coordinate an initial technical discovery call.
+                </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">Your Name</label>
-                    <input required type="text" placeholder="Sarah Jenkins" className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500" />
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Your Name</label>
+                    <input 
+                      required 
+                      type="text" 
+                      placeholder="e.g. Alexander Vance" 
+                      className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all" 
+                    />
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">Work Email</label>
-                    <input required type="email" placeholder="sarah@company.com" className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500" />
+                  <div className="space-y-2">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Work Email</label>
+                    <input 
+                      required 
+                      type="email" 
+                      placeholder="e.g. alex@company.com" 
+                      className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all" 
+                    />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">Company Name</label>
-                    <input type="text" placeholder="Acme Corp" className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Organization</label>
+                    <input 
+                      type="text" 
+                      placeholder="e.g. Enterprise Systems" 
+                      className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all" 
+                    />
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1.5">Budget Range</label>
-                    <select className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500">
-                      <option>$9,500 - $15,000 (Starter)</option>
-                      <option>$15,000 - $25,000 (Professional)</option>
-                      <option>$25,000+ (Enterprise)</option>
+                  <div className="space-y-2">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Timeline Target</label>
+                    <select className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all">
+                      <option>30–40 Days (Standard Sprint)</option>
+                      <option>Under 30 Days (Expedited)</option>
+                      <option>Ongoing Engineering Retainer</option>
                     </select>
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">Project Overview</label>
-                  <textarea required rows={4} placeholder="Briefly describe what software platform you want to build in 30 days..." className="w-full px-3.5 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white focus:outline-none focus:border-cyan-500" />
+                <div className="space-y-2">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Project Scope & Architecture Requirements</label>
+                  <textarea 
+                    required 
+                    rows={5} 
+                    placeholder="Describe the software application, target features, and any required database/API integrations..." 
+                    className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all leading-relaxed" 
+                  />
                 </div>
 
-                <Button type="submit" variant="gradient" size="lg" className="w-full">
-                  Send Project Request
-                </Button>
+                <button 
+                  type="submit" 
+                  className="w-full py-4 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] font-mono text-xs uppercase tracking-widest font-semibold transition-colors rounded-xl shadow-sm"
+                >
+                  Submit Project Specification
+                </button>
               </form>
             )}
-          </GlassCard>
+          </div>
         </div>
       </div>
     </div>

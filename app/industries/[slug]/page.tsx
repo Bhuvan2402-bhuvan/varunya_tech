@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React from "react";
 import Link from "next/link";
 import { INDUSTRIES_DATA } from "@/lib/data/mock-data";
 import { GlassCard } from "@/components/ui/GlassCard";
@@ -12,8 +12,8 @@ export default function IndustryDetailPage({ params }: { params: { slug: string 
 
   if (!ind) {
     return (
-      <div className="py-24 text-center text-white space-y-4">
-        <h1 className="text-3xl font-bold">Industry Not Found</h1>
+      <div className="py-24 text-center text-[#111215] space-y-4">
+        <h1 className="text-3xl font-bold font-display">Sector Not Found</h1>
         <Link href="/industries">
           <Button variant="outline">Back to Industries</Button>
         </Link>
@@ -22,52 +22,53 @@ export default function IndustryDetailPage({ params }: { params: { slug: string 
   }
 
   return (
-    <div className="py-16 space-y-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="py-20 space-y-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Hero Header */}
-      <div className="text-center space-y-6 max-w-4xl mx-auto">
-        <span className="px-3.5 py-1 bg-purple-500/10 border border-purple-500/30 rounded-full text-xs font-mono text-purple-400 uppercase tracking-widest">
-          INDUSTRY SOLUTIONS: {ind.title.toUpperCase()}
-        </span>
-        <h1 className="text-4xl sm:text-6xl font-extrabold text-white font-display">
+      <div className="border-b border-[#E5E2DB] pb-12 max-w-4xl mx-auto text-center space-y-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.2em] shadow-sm font-semibold">
+          <span className="w-1.5 h-1.5 bg-[#519DD9] rounded-full" />
+          SECTOR ARCHITECTURE: {ind.title.toUpperCase()}
+        </div>
+        <h1 className="text-4xl sm:text-6xl font-extrabold text-[#111215] tracking-tight font-display">
           {ind.title}
         </h1>
-        <p className="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto">
+        <p className="text-[#4A4D54] text-base sm:text-lg font-normal leading-relaxed max-w-2xl mx-auto">
           {ind.tagline}
         </p>
 
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           {ind.compliance.map((c) => (
-            <span key={c} className="px-3 py-1 bg-slate-900 border border-slate-700 rounded-lg text-xs font-mono text-cyan-300">
+            <span key={c} className="px-3 py-1 bg-[#F5F3EF] border border-[#E5E2DB] text-xs font-mono text-[#111215] font-medium shadow-sm">
               🛡️ {c}
             </span>
           ))}
         </div>
       </div>
 
-      {/* Industry Challenges vs Our 30-Day Solutions */}
+      {/* Industry Challenges vs Our Solutions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <GlassCard className="p-8 border-red-500/30 bg-slate-950/80 space-y-6">
-          <div className="flex items-center gap-3 text-red-400">
-            <AlertTriangle className="w-6 h-6" />
-            <h2 className="text-xl font-bold text-white">Common Industry Challenges</h2>
+        <GlassCard className="p-8 border-[#E5E2DB] bg-[#FFFFFF] space-y-6 shadow-sm">
+          <div className="flex items-center gap-3 text-[#111215]">
+            <AlertTriangle className="w-5 h-5 text-[#DB0038]" />
+            <h2 className="text-lg font-bold text-[#111215] font-display">Structural Sector Bottlenecks</h2>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {ind.challenges.map((c, idx) => (
-              <div key={idx} className="p-4 bg-slate-900/60 rounded-xl border border-slate-800 text-xs text-slate-300 leading-relaxed">
+              <div key={idx} className="p-4 bg-[#F5F3EF] border border-[#E5E2DB] text-xs text-[#4A4D54] leading-relaxed font-normal">
                 • {c}
               </div>
             ))}
           </div>
         </GlassCard>
 
-        <GlassCard className="p-8 border-cyan-500/30 bg-slate-950/80 space-y-6">
-          <div className="flex items-center gap-3 text-cyan-400">
-            <CheckCircle2 className="w-6 h-6" />
-            <h2 className="text-xl font-bold text-white">Our 30-Day Engineered Solutions</h2>
+        <GlassCard className="p-8 border-[#E5E2DB] bg-[#FFFFFF] space-y-6 shadow-sm">
+          <div className="flex items-center gap-3 text-[#111215]">
+            <CheckCircle2 className="w-5 h-5 text-[#519DD9]" />
+            <h2 className="text-lg font-bold text-[#111215] font-display">Engineered Architectural Solutions</h2>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {ind.solutions.map((s, idx) => (
-              <div key={idx} className="p-4 bg-slate-900/60 rounded-xl border border-cyan-500/20 text-xs text-cyan-200 leading-relaxed">
+              <div key={idx} className="p-4 bg-[#F5F3EF] border border-[#E5E2DB] text-xs text-[#111215] leading-relaxed font-medium">
                 ✓ {s}
               </div>
             ))}
@@ -76,28 +77,37 @@ export default function IndustryDetailPage({ params }: { params: { slug: string 
       </div>
 
       {/* Business Metrics Impact */}
-      <div className="space-y-6 text-center">
-        <h2 className="text-2xl font-bold text-white font-display">Proven Client Impact Metrics</h2>
+      <div className="space-y-8 text-center">
+        <div className="flex items-center gap-4">
+          <span className="font-mono text-xs text-[#71757E] uppercase tracking-widest font-semibold">Benchmark Verification Metrics</span>
+          <div className="h-px bg-[#E5E2DB] flex-1" />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
           {ind.metrics.map((metric, idx) => (
-            <GlassCard key={idx} className="p-6 text-center">
-              <div className="text-2xl font-bold text-cyan-400 font-display mb-1">{metric}</div>
-              <div className="text-xs text-slate-400 font-mono uppercase tracking-wider">Benchmark SLA</div>
+            <GlassCard key={idx} className="p-8 text-center bg-[#FFFFFF] border-[#E5E2DB] shadow-sm">
+              <div className="text-2xl font-bold text-[#111215] font-display mb-1">{metric}</div>
+              <div className="text-[10px] text-[#71757E] font-mono uppercase tracking-widest">Operational SLA</div>
             </GlassCard>
           ))}
         </div>
       </div>
 
       {/* CTA */}
-      <div className="p-10 rounded-3xl bg-slate-900 border border-slate-800 text-center space-y-6">
-        <h2 className="text-3xl font-extrabold text-white">Build Your {ind.title} Platform in 30 Days</h2>
-        <div>
+      <div className="p-12 bg-[#F5F3EF] border border-[#E5E2DB] text-center space-y-6 shadow-sm">
+        <span className="font-mono text-[10px] text-[#71757E] tracking-widest uppercase font-semibold">Direct Engagement</span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#111215] tracking-tight font-display">
+          Engineer Your {ind.title} Platform
+        </h2>
+        <p className="text-[#4A4D54] text-sm font-normal max-w-xl mx-auto">
+          Connect directly with our solutions engineering team to evaluate regulatory requirements and technical specifications.
+        </p>
+        <div className="pt-2">
           <a
-            href={`mailto:contact@varunyatech.com?subject=Industry Solution Inquiry: ${encodeURIComponent(ind.title)} - Varunya Technologies`}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-[#FF6B00] via-[#FF8A00] to-[#7C5CFF] text-white font-mono text-xs font-bold uppercase tracking-wider hover:opacity-95 transition-all shadow-lg"
+            href={`mailto:varunyatech@gmail.com?subject=Industry Solution Inquiry: ${encodeURIComponent(ind.title)} - Varunya Technologies`}
+            className="inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] font-mono text-xs font-bold uppercase tracking-widest transition-all shadow-md"
           >
-            <Mail className="w-4 h-4 text-white" />
-            <span>Contact Us via Email</span>
+            <Mail className="w-4 h-4" />
+            <span>Direct Email Inquiry</span>
           </a>
         </div>
       </div>

@@ -382,15 +382,15 @@ export default function AdminEmployeesPage() {
   return (
     <div className="space-y-8 font-sans pb-16">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-3xl border border-slate-800 backdrop-blur-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#FFFFFF] p-6 rounded-2xl border border-[#E5E2DB] shadow-xs">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-[11px] font-bold">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#519DD9]/10 border border-[#519DD9]/30 text-[#0284C7] font-mono text-[11px] font-bold">
             <Users className="w-3.5 h-3.5" /> WORKFORCE & TALENT MANAGEMENT
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-display tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111215] font-display tracking-tight">
             Employee & HR Workspace
           </h2>
-          <p className="text-xs text-slate-400 max-w-2xl">
+          <p className="text-xs text-[#565961] max-w-2xl">
             Complete management for staff directory records, candidate recruitment pipeline, and leave approval workflows.
           </p>
         </div>
@@ -425,44 +425,44 @@ export default function AdminEmployeesPage() {
 
       {/* Overview Stats Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 font-mono text-xs">
-        <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1">
-          <div className="text-slate-400 uppercase text-[10px]">Total Staff Members</div>
-          <div className="text-xl font-bold text-white">{employees.length} Active Profiles</div>
+        <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#E5E2DB] space-y-1 shadow-xs">
+          <div className="text-[#71757E] uppercase text-[10px] font-medium">Total Staff Members</div>
+          <div className="text-xl font-bold text-[#111215]">{employees.length} Active Profiles</div>
         </div>
-        <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1">
-          <div className="text-slate-400 uppercase text-[10px]">On-Duty Deployment</div>
-          <div className="text-xl font-bold text-emerald-400">{activeCount} Employees</div>
+        <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#E5E2DB] space-y-1 shadow-xs">
+          <div className="text-[#71757E] uppercase text-[10px] font-medium">On-Duty Deployment</div>
+          <div className="text-xl font-bold text-[#0F766E]">{activeCount} Employees</div>
         </div>
-        <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1">
-          <div className="text-slate-400 uppercase text-[10px]">Talent Candidates</div>
-          <div className="text-xl font-bold text-purple-400">{candidates.length} in Pipeline</div>
+        <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#E5E2DB] space-y-1 shadow-xs">
+          <div className="text-[#71757E] uppercase text-[10px] font-medium">Talent Candidates</div>
+          <div className="text-xl font-bold text-[#519DD9]">{candidates.length} in Pipeline</div>
         </div>
-        <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-1">
-          <div className="text-slate-400 uppercase text-[10px]">Pending Leave Approvals</div>
-          <div className="text-xl font-bold text-[#FFB347]">{pendingLeaves} Requests</div>
+        <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#E5E2DB] space-y-1 shadow-xs">
+          <div className="text-[#71757E] uppercase text-[10px] font-medium">Pending Leave Approvals</div>
+          <div className="text-xl font-bold text-[#B45309]">{pendingLeaves} Requests</div>
         </div>
       </div>
 
       {/* 1. STAFF DIRECTORY VIEW */}
       {activeTab === "directory" && (
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900/60 p-4 border border-slate-800 rounded-2xl flex-wrap">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-[#FFFFFF] p-4 border border-[#E5E2DB] rounded-2xl shadow-xs flex-wrap">
             <div className="relative flex-1 w-full sm:max-w-xs">
               <input 
                 type="text" 
                 placeholder="Search staff by name, title, email..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-purple-500/50"
+                className="w-full pl-9 pr-4 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-xs text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
-              <Search className="absolute left-3 top-2.5 w-4 h-4 text-slate-500" />
+              <Search className="absolute left-3 top-2.5 w-4 h-4 text-[#71757E]" />
             </div>
 
             <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
               <select
                 value={selectedDept}
                 onChange={(e) => setSelectedDept(e.target.value)}
-                className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none"
+                className="px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-xs font-mono text-[#111215] focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 <option value="ALL">All Departments</option>
                 <option value="Executive">Executive</option>
@@ -476,7 +476,7 @@ export default function AdminEmployeesPage() {
               <select
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
-                className="px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none"
+                className="px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-xs font-mono text-[#111215] focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 <option value="ALL">All Status</option>
                 <option value="ACTIVE">ACTIVE</option>
@@ -499,7 +499,7 @@ export default function AdminEmployeesPage() {
           {/* Employees Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredEmployees.map((employee) => (
-              <GlassCard key={employee.id} className="p-5 border-slate-800 space-y-4 hover:border-purple-500/40 transition group flex flex-col justify-between">
+              <GlassCard key={employee.id} className="p-5 border-[#E5E2DB] bg-[#FFFFFF] shadow-xs space-y-4 hover:border-[#519DD9] transition group flex flex-col justify-between">
                 <div className="space-y-4">
                   {/* Top Bar with Avatar & Actions */}
                   <div className="flex items-start justify-between gap-3">
@@ -507,34 +507,34 @@ export default function AdminEmployeesPage() {
                       <img 
                         src={employee.avatar} 
                         alt={employee.name} 
-                        className="w-12 h-12 rounded-full border border-purple-500/40 object-cover shrink-0" 
+                        className="w-12 h-12 rounded-full border border-[#E5E2DB] object-cover shrink-0" 
                       />
                       <div>
-                        <div className="font-bold text-white text-sm flex items-center gap-1.5">
+                        <div className="font-bold text-[#111215] text-sm flex items-center gap-1.5">
                           <span>{employee.name}</span>
-                          <span className={`px-2 py-0.2 rounded-full text-[9px] font-mono font-bold ${
-                            employee.status === "ACTIVE" ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" :
-                            employee.status === "ON_LEAVE" ? "bg-amber-500/15 text-amber-400 border border-amber-500/30" :
-                            "bg-slate-800 text-slate-400"
+                          <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold ${
+                            employee.status === "ACTIVE" ? "bg-[#53BAC1]/10 text-[#0F766E] border border-[#53BAC1]/30" :
+                            employee.status === "ON_LEAVE" ? "bg-[#C89B3C]/10 text-[#B45309] border border-[#C89B3C]/30" :
+                            "bg-[#F5F3EF] border border-[#E5E2DB] text-[#71757E]"
                           }`}>
                             {employee.status}
                           </span>
                         </div>
-                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">{employee.title}</div>
+                        <div className="text-[10px] text-[#71757E] font-mono mt-0.5">{employee.title}</div>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-1 shrink-0">
                       <button
                         onClick={() => handleOpenEditEmployee(employee)}
-                        className="p-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-lg text-xs transition"
+                        className="p-1.5 bg-[#FFFFFF] hover:bg-[#F5F3EF] border border-[#E5E2DB] text-[#565961] hover:text-[#111215] rounded-lg text-xs transition"
                         title="Edit employee record"
                       >
                         <Edit3 className="w-3.5 h-3.5" />
                       </button>
                       <button
                         onClick={() => setEmpDeleteConfirm(employee)}
-                        className="p-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 rounded-lg text-xs transition"
+                        className="p-1.5 bg-[#DB0038]/10 hover:bg-[#DB0038]/20 border border-[#DB0038]/30 text-[#DB0038] rounded-lg text-xs transition"
                         title="Delete employee record"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -543,36 +543,36 @@ export default function AdminEmployeesPage() {
                   </div>
 
                   {/* Details */}
-                  <div className="border-t border-slate-800/80 pt-3 space-y-2 text-xs font-mono">
+                  <div className="border-t border-[#E5E2DB] pt-3 space-y-2 text-xs font-mono">
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Security Clearance:</span>
-                      <span className="text-purple-400 font-bold">{employee.role}</span>
+                      <span className="text-[#71757E]">Security Clearance:</span>
+                      <span className="text-[#519DD9] font-bold">{employee.role}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Department:</span>
-                      <span className="text-slate-300 font-semibold">{employee.department}</span>
+                      <span className="text-[#71757E]">Department:</span>
+                      <span className="text-[#111215] font-semibold">{employee.department}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Attendance:</span>
-                      <span className="text-emerald-400">{employee.attendance}</span>
+                      <span className="text-[#71757E]">Attendance:</span>
+                      <span className="text-[#0F766E] font-bold">{employee.attendance}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Location:</span>
-                      <span className="text-slate-300 flex items-center gap-1">
-                        <MapPin className="w-3 h-3 text-slate-500" /> {employee.officeLocation}
+                      <span className="text-[#71757E]">Location:</span>
+                      <span className="text-[#4A4D54] flex items-center gap-1">
+                        <MapPin className="w-3 h-3 text-[#71757E]" /> {employee.officeLocation}
                       </span>
                     </div>
                     {employee.salary && (
                       <div className="flex justify-between">
-                        <span className="text-slate-500">Comp Package:</span>
-                        <span className="text-[#FFB347] font-bold">{employee.salary}</span>
+                        <span className="text-[#71757E]">Comp Package:</span>
+                        <span className="text-[#B45309] font-bold">{employee.salary}</span>
                       </div>
                     )}
                   </div>
                 </div>
 
                 {/* Contact Footer */}
-                <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                <div className="pt-3 border-t border-[#E5E2DB] flex items-center justify-between text-[11px] font-mono text-[#71757E]">
                   <span className="truncate">{employee.email}</span>
                   {employee.phone && <span className="shrink-0">{employee.phone}</span>}
                 </div>
@@ -580,8 +580,8 @@ export default function AdminEmployeesPage() {
             ))}
 
             {filteredEmployees.length === 0 && (
-              <div className="col-span-full text-center py-16 text-slate-500 text-xs font-mono border border-dashed border-slate-800 rounded-3xl space-y-2">
-                <Users className="w-8 h-8 text-slate-600 mx-auto" />
+              <div className="col-span-full text-center py-16 text-[#71757E] text-xs font-mono border border-dashed border-[#E5E2DB] rounded-3xl space-y-2 bg-[#FFFFFF]">
+                <Users className="w-8 h-8 text-[#71757E] mx-auto" />
                 <div>No employee profiles found matching your search and filter criteria.</div>
               </div>
             )}
@@ -592,10 +592,10 @@ export default function AdminEmployeesPage() {
       {/* 2. RECRUITMENT KANBAN WORKFLOW VIEW */}
       {activeTab === "recruitment" && (
         <div className="space-y-6">
-          <div className="flex items-center justify-between gap-4 bg-slate-900/60 p-4 border border-slate-800 rounded-2xl flex-wrap">
+          <div className="flex items-center justify-between gap-4 bg-[#FFFFFF] p-4 border border-[#E5E2DB] rounded-2xl shadow-xs flex-wrap">
             <div>
-              <h3 className="text-sm font-bold text-white font-display">Candidate Recruitment Workflow</h3>
-              <p className="text-[11px] text-slate-400">Manage applicants across all recruitment stages.</p>
+              <h3 className="text-sm font-bold text-[#111215] font-display">Candidate Recruitment Workflow</h3>
+              <p className="text-[11px] text-[#565961]">Manage applicants across all recruitment stages.</p>
             </div>
             <Button size="sm" variant="gradient" onClick={handleOpenAddCandidate} icon={<Plus className="w-4 h-4" />}>
               Add Candidate
@@ -607,31 +607,31 @@ export default function AdminEmployeesPage() {
               {recruitmentStages.map((stage) => {
                 const stageCandidates = candidates.filter(c => c.stage === stage);
                 return (
-                  <GlassCard key={stage} className="flex-1 p-4 border-slate-800 bg-slate-900/40 space-y-3 min-w-[210px] shrink-0">
-                    <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-300 pb-2 border-b border-slate-800">
+                  <div key={stage} className="flex-1 p-4 border border-[#E5E2DB] bg-[#F5F3EF] space-y-3 min-w-[210px] shrink-0 rounded-2xl shadow-xs">
+                    <div className="flex items-center justify-between text-xs font-mono font-bold text-[#111215] pb-2 border-b border-[#E5E2DB]">
                       <span>{stage}</span>
-                      <span className="px-2 py-0.5 bg-slate-800 rounded">{stageCandidates.length}</span>
+                      <span className="px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB] text-[10px] text-[#71757E] rounded font-bold">{stageCandidates.length}</span>
                     </div>
 
                     <div className="space-y-3">
                       {stageCandidates.map((candidate) => (
-                        <div key={candidate.id} className="p-3 bg-slate-800/80 rounded-xl border border-slate-700/60 space-y-2 text-[11px]">
+                        <div key={candidate.id} className="p-3 bg-[#FFFFFF] rounded-xl border border-[#E5E2DB] space-y-2 text-[11px] shadow-xs hover:border-[#519DD9] transition">
                           <div className="flex items-start justify-between gap-1">
                             <div>
-                              <div className="font-bold text-white text-xs">{candidate.name}</div>
-                              <div className="text-[10px] text-slate-400 font-mono">{candidate.role}</div>
+                              <div className="font-bold text-[#111215] text-xs">{candidate.name}</div>
+                              <div className="text-[10px] text-[#71757E] font-mono">{candidate.role}</div>
                             </div>
                             <div className="flex items-center gap-1">
                               <button 
                                 onClick={() => handleOpenEditCandidate(candidate)}
-                                className="p-1 hover:text-white text-slate-400"
+                                className="p-1 hover:text-[#111215] text-[#71757E]"
                                 title="Edit candidate"
                               >
                                 <Edit3 className="w-3 h-3" />
                               </button>
                               <button 
                                 onClick={() => handleDeleteCandidate(candidate.id)}
-                                className="p-1 hover:text-red-300 text-red-400"
+                                className="p-1 hover:text-[#DB0038] text-[#DB0038]"
                                 title="Delete candidate"
                               >
                                 <Trash2 className="w-3 h-3" />
@@ -639,14 +639,14 @@ export default function AdminEmployeesPage() {
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-between text-[9px] text-slate-500 pt-1.5 border-t border-slate-700/60 font-mono">
-                            <span>Score: <strong className="text-purple-400">{candidate.score}%</strong></span>
+                          <div className="flex items-center justify-between text-[9px] text-[#71757E] pt-1.5 border-t border-[#E5E2DB] font-mono">
+                            <span>Score: <strong className="text-[#0F766E]">{candidate.score}%</strong></span>
                             <span>{candidate.source}</span>
                           </div>
 
                           <button
                             onClick={() => moveCandidate(candidate.id)}
-                            className="w-full mt-2 py-1 bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 rounded font-semibold text-[9px] flex items-center justify-center gap-1 transition"
+                            className="w-full mt-2 py-1 bg-[#519DD9]/10 hover:bg-[#519DD9]/20 text-[#0284C7] border border-[#519DD9]/30 rounded font-semibold text-[9px] flex items-center justify-center gap-1 transition"
                           >
                             Advance Stage <ChevronRight className="w-3 h-3" />
                           </button>
@@ -654,12 +654,12 @@ export default function AdminEmployeesPage() {
                       ))}
 
                       {stageCandidates.length === 0 && (
-                        <div className="text-center py-6 text-[10px] text-slate-600 font-mono border border-dashed border-slate-800 rounded-xl">
+                        <div className="text-center py-6 text-[10px] text-[#71757E] font-mono border border-dashed border-[#E5E2DB] rounded-xl bg-[#FFFFFF]/60">
                           No applicants
                         </div>
                       )}
                     </div>
-                  </GlassCard>
+                  </div>
                 );
               })}
             </div>
@@ -669,13 +669,13 @@ export default function AdminEmployeesPage() {
 
       {/* 3. LEAVE APPROVALS VIEW */}
       {activeTab === "leaves" && (
-        <GlassCard className="p-6 border-slate-800 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+        <GlassCard className="p-6 border-[#E5E2DB] bg-[#FFFFFF] shadow-xs space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5E2DB] pb-4">
             <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Clock className="w-5 h-5 text-purple-400" /> Employee Leave Requests & SLA Approvals
+              <h3 className="text-base font-bold text-[#111215] flex items-center gap-2">
+                <Clock className="w-5 h-5 text-[#519DD9]" /> Employee Leave Requests & SLA Approvals
               </h3>
-              <p className="text-xs text-slate-400">Review, approve, reject, or schedule workforce leave requests.</p>
+              <p className="text-xs text-[#565961]">Review, approve, reject, or schedule workforce leave requests.</p>
             </div>
             <Button size="sm" variant="gradient" onClick={handleOpenAddLeave} icon={<Plus className="w-4 h-4" />}>
               Submit Leave Request
@@ -684,15 +684,15 @@ export default function AdminEmployeesPage() {
 
           <div className="space-y-4">
             {leaveRequests.map((request) => (
-              <div key={request.id} className="p-4 bg-slate-900/60 border border-slate-800 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
+              <div key={request.id} className="p-4 bg-[#F5F3EF] border border-[#E5E2DB] rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs">
                 <div className="space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-bold text-white text-sm">{request.employeeName}</span>
-                    <span className="px-2 py-0.5 bg-purple-500/10 text-purple-300 rounded font-mono text-[9px]">{request.role}</span>
-                    <span className="px-2 py-0.5 bg-cyan-500/10 text-cyan-300 rounded font-mono text-[9px]">{request.type}</span>
+                    <span className="font-bold text-[#111215] text-sm">{request.employeeName}</span>
+                    <span className="px-2 py-0.5 bg-[#519DD9]/10 text-[#0284C7] border border-[#519DD9]/30 rounded font-mono text-[9px] font-bold">{request.role}</span>
+                    <span className="px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB] text-[#4A4D54] rounded font-mono text-[9px]">{request.type}</span>
                   </div>
-                  <div className="text-slate-400 font-mono">Date Range: <span className="text-slate-200">{request.dates}</span></div>
-                  <div className="text-slate-400 font-sans">Reason: &ldquo;{request.reason}&rdquo;</div>
+                  <div className="text-[#71757E] font-mono">Date Range: <span className="text-[#111215] font-semibold">{request.dates}</span></div>
+                  <div className="text-[#565961] font-sans">Reason: &ldquo;{request.reason}&rdquo;</div>
                 </div>
 
                 <div className="flex items-center gap-2">
@@ -700,13 +700,13 @@ export default function AdminEmployeesPage() {
                     <>
                       <button
                         onClick={() => handleLeaveAction(request.id, "APPROVED")}
-                        className="px-3 py-1.5 bg-emerald-500/15 border border-emerald-500/30 hover:bg-emerald-500/25 text-emerald-400 rounded-xl flex items-center gap-1 font-bold font-sans transition text-[11px]"
+                        className="px-3 py-1.5 bg-[#53BAC1]/15 border border-[#53BAC1]/30 hover:bg-[#53BAC1]/25 text-[#0F766E] rounded-xl flex items-center gap-1 font-bold font-sans transition text-[11px]"
                       >
                         <Check className="w-3.5 h-3.5" /> Approve
                       </button>
                       <button
                         onClick={() => handleLeaveAction(request.id, "REJECTED")}
-                        className="px-3 py-1.5 bg-red-500/15 border border-red-500/30 hover:bg-red-500/25 text-red-400 rounded-xl flex items-center gap-1 font-bold font-sans transition text-[11px]"
+                        className="px-3 py-1.5 bg-[#DB0038]/15 border border-[#DB0038]/30 hover:bg-[#DB0038]/25 text-[#DB0038] rounded-xl flex items-center gap-1 font-bold font-sans transition text-[11px]"
                       >
                         <X className="w-3.5 h-3.5" /> Reject
                       </button>
@@ -714,8 +714,8 @@ export default function AdminEmployeesPage() {
                   ) : (
                     <span className={`px-3 py-1 rounded-xl font-mono text-[10px] font-bold ${
                       request.status === "APPROVED" 
-                        ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20" 
-                        : "bg-red-500/10 text-red-400 border border-red-500/20"
+                        ? "bg-[#53BAC1]/10 text-[#0F766E] border border-[#53BAC1]/30" 
+                        : "bg-[#DB0038]/10 text-[#DB0038] border border-[#DB0038]/30"
                     }`}>
                       ● {request.status}
                     </span>
@@ -723,14 +723,14 @@ export default function AdminEmployeesPage() {
 
                   <button
                     onClick={() => handleOpenEditLeave(request)}
-                    className="p-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs"
+                    className="p-1.5 bg-[#FFFFFF] hover:bg-[#F5F3EF] border border-[#E5E2DB] text-[#565961] hover:text-[#111215] rounded-lg text-xs transition"
                     title="Edit request"
                   >
                     <Edit3 className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => handleDeleteLeave(request.id)}
-                    className="p-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg text-xs"
+                    className="p-1.5 bg-[#DB0038]/10 hover:bg-[#DB0038]/20 border border-[#DB0038]/30 text-[#DB0038] rounded-lg text-xs transition"
                     title="Delete request"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -740,7 +740,7 @@ export default function AdminEmployeesPage() {
             ))}
 
             {leaveRequests.length === 0 && (
-              <div className="text-center py-10 text-slate-500 text-xs font-mono border border-dashed border-slate-800 rounded-2xl">
+              <div className="text-center py-10 text-[#71757E] text-xs font-mono border border-dashed border-[#E5E2DB] rounded-2xl bg-[#FFFFFF]">
                 No leave requests found.
               </div>
             )}
@@ -760,36 +760,36 @@ export default function AdminEmployeesPage() {
         <form onSubmit={handleSaveEmployee} className="space-y-4 font-sans text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Full Name *</label>
+              <label className="block font-bold text-[#111215]">Full Name *</label>
               <input 
                 required
                 type="text"
                 value={empName}
                 onChange={(e) => setEmpName(e.target.value)}
                 placeholder="Marcus Vance"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Job Title *</label>
+              <label className="block font-bold text-[#111215]">Job Title *</label>
               <input 
                 required
                 type="text"
                 value={empTitle}
                 onChange={(e) => setEmpTitle(e.target.value)}
                 placeholder="Lead Delivery Manager"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Security Clearance (Role)</label>
+              <label className="block font-bold text-[#111215]">Security Clearance (Role)</label>
               <select
                 value={empRole}
                 onChange={(e) => setEmpRole(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 <option value="ADMIN">ADMIN</option>
                 <option value="MANAGER">MANAGER</option>
@@ -801,11 +801,11 @@ export default function AdminEmployeesPage() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Department</label>
+              <label className="block font-bold text-[#111215]">Department</label>
               <select
                 value={empDept}
                 onChange={(e) => setEmpDept(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 <option value="Executive">Executive</option>
                 <option value="Engineering">Engineering</option>
@@ -816,11 +816,11 @@ export default function AdminEmployeesPage() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Status</label>
+              <label className="block font-bold text-[#111215]">Status</label>
               <select
                 value={empStatus}
                 onChange={(e) => setEmpStatus(e.target.value as any)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 <option value="ACTIVE">ACTIVE</option>
                 <option value="ON_LEAVE">ON_LEAVE</option>
@@ -832,64 +832,64 @@ export default function AdminEmployeesPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Email Address *</label>
+              <label className="block font-bold text-[#111215]">Email Address *</label>
               <input 
                 required
                 type="email"
                 value={empEmail}
                 onChange={(e) => setEmpEmail(e.target.value)}
                 placeholder="name@company.com"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Phone Number</label>
+              <label className="block font-bold text-[#111215]">Phone Number</label>
               <input 
                 type="text"
                 value={empPhone}
                 onChange={(e) => setEmpPhone(e.target.value)}
                 placeholder="+1 (555) 000-0000"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Office Location</label>
+              <label className="block font-bold text-[#111215]">Office Location</label>
               <input 
                 type="text"
                 value={empLocation}
                 onChange={(e) => setEmpLocation(e.target.value)}
                 placeholder="Remote / Austin"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Attendance Score</label>
+              <label className="block font-bold text-[#111215]">Attendance Score</label>
               <input 
                 type="text"
                 value={empAttendance}
                 onChange={(e) => setEmpAttendance(e.target.value)}
                 placeholder="98.5%"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Annual Salary / Package</label>
+              <label className="block font-bold text-[#111215]">Annual Salary / Package</label>
               <input 
                 type="text"
                 value={empSalary}
                 onChange={(e) => setEmpSalary(e.target.value)}
                 placeholder="$140,000"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
           </div>
 
           {/* Avatar Presets */}
           <div className="space-y-2">
-            <label className="block font-semibold text-slate-300">Avatar Photo</label>
+            <label className="block font-bold text-[#111215]">Avatar Photo</label>
             <div className="flex items-center gap-2 overflow-x-auto pb-1">
               {AVATAR_PRESETS.map((preset, idx) => (
                 <img
@@ -898,7 +898,7 @@ export default function AdminEmployeesPage() {
                   alt={`Preset ${idx}`}
                   onClick={() => setEmpAvatar(preset)}
                   className={`w-10 h-10 rounded-full cursor-pointer object-cover border-2 transition ${
-                    empAvatar === preset ? "border-purple-500 scale-110 shadow-lg shadow-purple-500/30" : "border-slate-800 opacity-60 hover:opacity-100"
+                    empAvatar === preset ? "border-[#519DD9] scale-110 shadow-md" : "border-[#E5E2DB] opacity-70 hover:opacity-100"
                   }`}
                 />
               ))}
@@ -908,7 +908,7 @@ export default function AdminEmployeesPage() {
               value={empAvatar}
               onChange={(e) => setEmpAvatar(e.target.value)}
               placeholder="Or enter custom image URL..."
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-[11px] font-mono focus:outline-none focus:border-purple-500"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] text-[11px] font-mono focus:outline-none focus:border-[#519DD9] transition shadow-xs"
             />
           </div>
 
@@ -931,10 +931,10 @@ export default function AdminEmployeesPage() {
         maxWidth="sm"
       >
         <div className="space-y-4 text-xs font-sans">
-          <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 flex items-start gap-2">
+          <div className="p-3.5 bg-[#DB0038]/10 border border-[#DB0038]/30 rounded-xl text-[#DB0038] flex items-start gap-2">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             <div>
-              Are you sure you want to delete <strong className="text-white">{empDeleteConfirm?.name}</strong> ({empDeleteConfirm?.title}) from the company staff registry?
+              Are you sure you want to delete <strong className="text-[#111215] font-bold">{empDeleteConfirm?.name}</strong> ({empDeleteConfirm?.title}) from the company staff registry?
             </div>
           </div>
           <div className="pt-2 flex gap-2">
@@ -944,7 +944,7 @@ export default function AdminEmployeesPage() {
             <Button 
               type="button" 
               variant="primary" 
-              className="flex-1 bg-red-600 hover:bg-red-700" 
+              className="flex-1 bg-[#DB0038] hover:bg-[#DB0038]/90 text-white font-bold" 
               size="sm" 
               onClick={() => empDeleteConfirm && handleDeleteEmployee(empDeleteConfirm.id)}
             >
@@ -963,36 +963,36 @@ export default function AdminEmployeesPage() {
         <form onSubmit={handleSaveCandidate} className="space-y-4 font-sans text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Candidate Name *</label>
+              <label className="block font-bold text-[#111215]">Candidate Name *</label>
               <input 
                 required
                 type="text"
                 value={candName}
                 onChange={(e) => setCandName(e.target.value)}
                 placeholder="Sarah Connor"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Target Role *</label>
+              <label className="block font-bold text-[#111215]">Target Role *</label>
               <input 
                 required
                 type="text"
                 value={candRole}
                 onChange={(e) => setCandRole(e.target.value)}
                 placeholder="Frontend Developer"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Stage</label>
+              <label className="block font-bold text-[#111215]">Stage</label>
               <select
                 value={candStage}
                 onChange={(e) => setCandStage(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 {recruitmentStages.map(st => (
                   <option key={st} value={st}>{st}</option>
@@ -1000,36 +1000,36 @@ export default function AdminEmployeesPage() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Source</label>
+              <label className="block font-bold text-[#111215]">Source</label>
               <input 
                 type="text"
                 value={candSource}
                 onChange={(e) => setCandSource(e.target.value)}
                 placeholder="LinkedIn / Referral"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Score (%)</label>
+              <label className="block font-bold text-[#111215]">Score (%)</label>
               <input 
                 type="number"
                 min="0"
                 max="100"
                 value={candScore}
                 onChange={(e) => setCandScore(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Email Address</label>
+            <label className="block font-bold text-[#111215]">Email Address</label>
             <input 
               type="email"
               value={candEmail}
               onChange={(e) => setCandEmail(e.target.value)}
               placeholder="candidate@example.com"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
             />
           </div>
 
@@ -1053,47 +1053,47 @@ export default function AdminEmployeesPage() {
         <form onSubmit={handleSaveLeave} className="space-y-4 font-sans text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Employee Name *</label>
+              <label className="block font-bold text-[#111215]">Employee Name *</label>
               <input 
                 required
                 type="text"
                 value={leaveEmpName}
                 onChange={(e) => setLeaveEmpName(e.target.value)}
                 placeholder="Alex Rivera"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Role</label>
+              <label className="block font-bold text-[#111215]">Role</label>
               <input 
                 required
                 type="text"
                 value={leaveRole}
                 onChange={(e) => setLeaveRole(e.target.value)}
                 placeholder="DEVELOPER"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Date Range *</label>
+              <label className="block font-bold text-[#111215]">Date Range *</label>
               <input 
                 required
                 type="text"
                 value={leaveDates}
                 onChange={(e) => setLeaveDates(e.target.value)}
                 placeholder="Oct 10 - Oct 14"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Leave Type</label>
+              <label className="block font-bold text-[#111215]">Leave Type</label>
               <select
                 value={leaveType}
                 onChange={(e) => setLeaveType(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 <option value="Vacation">Vacation</option>
                 <option value="Medical">Medical</option>
@@ -1105,23 +1105,23 @@ export default function AdminEmployeesPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Reason / Details *</label>
+            <label className="block font-bold text-[#111215]">Reason / Details *</label>
             <textarea 
               required
               rows={3}
               value={leaveReason}
               onChange={(e) => setLeaveReason(e.target.value)}
               placeholder="Brief explanation of the leave request..."
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:outline-none focus:border-purple-500 resize-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs resize-none"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Status</label>
+            <label className="block font-bold text-[#111215]">Status</label>
             <select
               value={leaveStatus}
               onChange={(e) => setLeaveStatus(e.target.value as any)}
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:outline-none focus:border-purple-500"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
             >
               <option value="PENDING">PENDING</option>
               <option value="APPROVED">APPROVED</option>

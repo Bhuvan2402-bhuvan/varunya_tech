@@ -221,44 +221,44 @@ export default function AdminCareersPage() {
   return (
     <div className="space-y-8 font-sans pb-16">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-3xl border border-slate-800 backdrop-blur-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#FFFFFF] p-6 rounded-3xl border border-[#E5E2DB] shadow-xs">
         <div className="space-y-1">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono text-[11px] font-bold">
-            <Briefcase className="w-3.5 h-3.5" /> RECRUITMENT & TALENT MANAGEMENT
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#519DD9]/10 border border-[#519DD9]/25 text-[#1D6FA5] font-mono text-[11px] font-bold">
+            <Briefcase className="w-3.5 h-3.5" /> RECRUITMENT &amp; TALENT MANAGEMENT
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-display tracking-tight">
-            Careers & Job Postings Hub
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#111215] font-display tracking-tight">
+            Careers &amp; Job Postings Hub
           </h2>
-          <p className="text-xs text-slate-400 max-w-2xl">
-            Publish and manage open engineering & creative roles, customize applicant perks, and review incoming candidate submissions.
+          <p className="text-xs text-[#71757E] max-w-2xl">
+            Publish and manage open engineering &amp; creative roles, customize applicant perks, and review incoming candidate submissions.
           </p>
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
           <Link href="/careers" target="_blank">
-            <Button variant="outline" size="sm" icon={<ExternalLink className="w-3.5 h-3.5" />}>
-              Live Careers Page
-            </Button>
+            <button className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#FFFFFF] border border-[#E5E2DB] text-[#4A4D54] hover:bg-[#F5F3EF] transition">
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Live Careers Page</span>
+            </button>
           </Link>
-          <Button 
-            variant="gradient" 
-            size="sm" 
+          <button 
             onClick={handleOpenAddJob}
-            icon={<Plus className="w-3.5 h-3.5" />}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#111215] text-[#FAFAF8] hover:bg-[#23252B] shadow-sm transition"
           >
-            Create Career Listing
-          </Button>
+            <Plus className="w-3.5 h-3.5" />
+            <span>Create Career Listing</span>
+          </button>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-800 pb-3 overflow-x-auto text-xs font-semibold">
+      <div className="flex items-center gap-2 border-b border-[#E5E2DB] pb-3 overflow-x-auto text-xs font-semibold scrollbar-none">
         <button
           onClick={() => setActiveTab("jobs")}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition ${
             activeTab === "jobs"
-              ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20 font-bold"
-              : "bg-slate-900 text-slate-400 hover:text-white"
+              ? "bg-[#111215] text-[#FAFAF8] shadow-sm font-bold"
+              : "bg-[#FFFFFF] border border-[#E5E2DB] text-[#71757E] hover:text-[#111215] hover:bg-[#F5F3EF]"
           }`}
         >
           <Briefcase className="w-3.5 h-3.5" />
@@ -268,19 +268,19 @@ export default function AdminCareersPage() {
           onClick={() => setActiveTab("perks")}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition ${
             activeTab === "perks"
-              ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20 font-bold"
-              : "bg-slate-900 text-slate-400 hover:text-white"
+              ? "bg-[#111215] text-[#FAFAF8] shadow-sm font-bold"
+              : "bg-[#FFFFFF] border border-[#E5E2DB] text-[#71757E] hover:text-[#111215] hover:bg-[#F5F3EF]"
           }`}
         >
           <Gift className="w-3.5 h-3.5" />
-          <span>Benefits & Perks Highlights ({perks.length})</span>
+          <span>Benefits &amp; Perks Highlights ({perks.length})</span>
         </button>
         <button
           onClick={() => setActiveTab("applicants")}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition ${
             activeTab === "applicants"
-              ? "bg-purple-600 text-white shadow-lg shadow-purple-500/20 font-bold"
-              : "bg-slate-900 text-slate-400 hover:text-white"
+              ? "bg-[#111215] text-[#FAFAF8] shadow-sm font-bold"
+              : "bg-[#FFFFFF] border border-[#E5E2DB] text-[#71757E] hover:text-[#111215] hover:bg-[#F5F3EF]"
           }`}
         >
           <Users2 className="w-3.5 h-3.5" />
@@ -299,9 +299,9 @@ export default function AdminCareersPage() {
                 placeholder="Search job titles, skills..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-purple-500"
+                className="w-full pl-9 pr-4 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] placeholder:text-[#9E9E9E] focus:outline-none focus:border-[#519DD9] focus:ring-1 focus:ring-[#519DD9]"
               />
-              <Search className="w-4 h-4 text-slate-500 absolute left-3 top-2.5" />
+              <Search className="w-4 h-4 text-[#9E9E9E] absolute left-3 top-2.5" />
             </div>
 
             <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
@@ -311,8 +311,8 @@ export default function AdminCareersPage() {
                   onClick={() => setSelectedDept(dept)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-mono transition ${
                     selectedDept === dept
-                      ? "bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold"
-                      : "bg-slate-900 text-slate-400 hover:text-white"
+                      ? "bg-[#519DD9]/15 border border-[#519DD9]/30 text-[#1D6FA5] font-bold"
+                      : "bg-[#FFFFFF] border border-[#E5E2DB] text-[#71757E] hover:text-[#111215] hover:bg-[#F5F3EF]"
                   }`}
                 >
                   {dept}
@@ -324,34 +324,34 @@ export default function AdminCareersPage() {
           {/* Job Listings Grid */}
           <div className="space-y-4">
             {filteredCareers.map((job) => (
-              <GlassCard key={job.id} className="p-6 border-slate-800 space-y-4 hover:border-purple-500/30 transition">
+              <div key={job.id} className="bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs p-6 space-y-4 hover:border-[#D0C9BE] transition">
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-lg font-bold text-white font-display flex items-center gap-2">
+                      <h3 className="text-lg font-bold text-[#111215] font-display flex items-center gap-2">
                         {job.title}
                       </h3>
                       <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold ${
                         job.status === "OPEN" 
-                          ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                          ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                           : job.status === "PAUSED"
-                          ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
-                          : "bg-red-500/15 text-red-400 border border-red-500/30"
+                          ? "bg-amber-50 text-amber-700 border border-amber-200"
+                          : "bg-rose-50 text-rose-700 border border-rose-200"
                       }`}>
                         ● {job.status}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 pt-1 flex-wrap">
+                    <div className="flex items-center gap-2 text-xs font-mono text-[#1D6FA5] pt-1 flex-wrap">
                       <span>{job.department}</span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {job.location}</span>
-                      <span>•</span>
-                      <span>{job.type}</span>
+                      <span className="text-[#9E9E9E]">•</span>
+                      <span className="flex items-center gap-1 text-[#565961]"><MapPin className="w-3 h-3 text-[#1D6FA5]" /> {job.location}</span>
+                      <span className="text-[#9E9E9E]">•</span>
+                      <span className="text-[#565961]">{job.type}</span>
                       {job.salaryRange && (
                         <>
-                          <span>•</span>
-                          <span className="text-[#FFB347] font-bold">{job.salaryRange}</span>
+                          <span className="text-[#9E9E9E]">•</span>
+                          <span className="text-[#B45309] font-bold">{job.salaryRange}</span>
                         </>
                       )}
                     </div>
@@ -360,19 +360,19 @@ export default function AdminCareersPage() {
                   <div className="flex items-center gap-2 shrink-0">
                     <button
                       onClick={() => handleToggleJobStatus(job.id)}
-                      className="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-lg text-xs font-semibold"
+                      className="px-2.5 py-1.5 bg-[#F5F3EF] hover:bg-[#E5E2DB] border border-[#E5E2DB] text-[#111215] rounded-lg text-xs font-semibold transition"
                     >
                       Status: {job.status}
                     </button>
                     <button
                       onClick={() => handleOpenEditJob(job)}
-                      className="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-lg text-xs font-semibold flex items-center gap-1"
+                      className="px-2.5 py-1.5 bg-[#F5F3EF] hover:bg-[#E5E2DB] border border-[#E5E2DB] text-[#111215] rounded-lg text-xs font-semibold flex items-center gap-1 transition"
                     >
-                      <Edit3 className="w-3 h-3" /> Edit
+                      <Edit3 className="w-3 h-3 text-[#1D6FA5]" /> Edit
                     </button>
                     <button
                       onClick={() => handleDeleteJob(job.id)}
-                      className="p-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 rounded-lg text-xs"
+                      className="p-1.5 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-[#DB0038] rounded-lg text-xs transition"
                       title="Delete listing"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -380,26 +380,26 @@ export default function AdminCareersPage() {
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-300 leading-relaxed max-w-4xl">{job.summary}</p>
+                <p className="text-xs text-[#565961] leading-relaxed max-w-4xl">{job.summary}</p>
 
                 {job.requirements && job.requirements.length > 0 && (
-                  <div className="space-y-1.5 pt-2 border-t border-slate-850">
-                    <div className="text-[10px] font-mono text-slate-400 uppercase font-bold">Key Requirements:</div>
+                  <div className="space-y-1.5 pt-2 border-t border-[#E5E2DB]">
+                    <div className="text-[10px] font-mono text-[#71757E] uppercase font-bold">Key Requirements:</div>
                     <div className="flex flex-wrap gap-1.5">
                       {job.requirements.map((req, rIdx) => (
-                        <span key={rIdx} className="px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-[11px] text-slate-300 font-mono">
+                        <span key={rIdx} className="px-2.5 py-1 rounded-md bg-[#F5F3EF] border border-[#E5E2DB] text-[11px] text-[#4A4D54] font-mono">
                           {req}
                         </span>
                       ))}
                     </div>
                   </div>
                 )}
-              </GlassCard>
+              </div>
             ))}
 
             {filteredCareers.length === 0 && (
-              <div className="text-center py-16 text-slate-500 text-xs font-mono border border-dashed border-slate-800 rounded-3xl space-y-2">
-                <Briefcase className="w-8 h-8 text-slate-600 mx-auto" />
+              <div className="text-center py-16 text-[#71757E] text-xs font-mono border border-dashed border-[#E5E2DB] rounded-3xl space-y-2 bg-[#FFFFFF]">
+                <Briefcase className="w-8 h-8 text-[#9E9E9E] mx-auto" />
                 <div>No job listings found matching your search.</div>
               </div>
             )}
@@ -410,42 +410,41 @@ export default function AdminCareersPage() {
       {/* 2. BENEFITS & PERKS TAB */}
       {activeTab === "perks" && (
         <div className="space-y-6">
-          <GlassCard className="p-6 space-y-4 border-slate-800">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+          <div className="p-6 space-y-4 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#E5E2DB] pb-4">
               <div>
-                <h3 className="text-base font-bold text-white flex items-center gap-2 font-display">
-                  <Gift className="w-4 h-4 text-cyan-400" /> Careers Perks & Benefit Cards
+                <h3 className="text-base font-bold text-[#111215] flex items-center gap-2 font-display">
+                  <Gift className="w-4 h-4 text-[#1D6FA5]" /> Careers Perks &amp; Benefit Cards
                 </h3>
-                <p className="text-xs text-slate-400">Manage the 3 highlight perk cards displayed prominently at the top of the careers page.</p>
+                <p className="text-xs text-[#71757E]">Manage the 3 highlight perk cards displayed prominently at the top of the careers page.</p>
               </div>
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <button 
                 onClick={() => {
                   setEditingPerk(null);
                   setPerkTitle("New Perk Title");
                   setPerkDesc("Perk description...");
                   setPerkModalOpen(true);
                 }}
-                icon={<Plus className="w-4 h-4" />}
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-[#FFFFFF] border border-[#E5E2DB] text-[#111215] hover:bg-[#F5F3EF] transition"
               >
-                Add Perk Card
-              </Button>
+                <Plus className="w-4 h-4 text-[#1D6FA5]" />
+                <span>Add Perk Card</span>
+              </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
               {perks.map((perk, idx) => (
-                <div key={perk.id || idx} className="p-5 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col justify-between space-y-4">
+                <div key={perk.id || idx} className="p-5 bg-[#F5F3EF] border border-[#E5E2DB] rounded-2xl flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <div className="text-sm font-bold text-cyan-400 font-display">{perk.title}</div>
-                    <div className="text-xs text-slate-300 leading-relaxed">{perk.description}</div>
+                    <div className="text-sm font-bold text-[#111215] font-display">{perk.title}</div>
+                    <div className="text-xs text-[#565961] leading-relaxed">{perk.description}</div>
                   </div>
-                  <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                  <div className="pt-3 border-t border-[#E5E2DB] flex items-center justify-between">
                     <button
                       onClick={() => handleOpenEditPerk(perk)}
-                      className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-cyan-300 rounded-lg text-xs font-semibold flex items-center gap-1.5"
+                      className="px-3 py-1.5 bg-[#FFFFFF] hover:bg-[#E5E2DB] border border-[#E5E2DB] text-[#111215] rounded-lg text-xs font-semibold flex items-center gap-1.5 transition"
                     >
-                      <Edit3 className="w-3 h-3" /> Edit Card
+                      <Edit3 className="w-3 h-3 text-[#1D6FA5]" /> Edit Card
                     </button>
                     <button
                       onClick={() => {
@@ -453,7 +452,7 @@ export default function AdminCareersPage() {
                         setPerks(updated);
                         savePerks(updated);
                       }}
-                      className="p-1.5 text-red-400 hover:bg-red-500/10 rounded-lg text-xs"
+                      className="p-1.5 text-[#DB0038] hover:bg-rose-50 border border-transparent hover:border-rose-200 rounded-lg text-xs transition"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -461,7 +460,7 @@ export default function AdminCareersPage() {
                 </div>
               ))}
             </div>
-          </GlassCard>
+          </div>
         </div>
       )}
 
@@ -469,20 +468,20 @@ export default function AdminCareersPage() {
       {activeTab === "applicants" && (
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="text-xs text-slate-400">
-              Total <strong className="text-white">{applicants.length}</strong> candidates submitted applications.
+            <div className="text-xs text-[#71757E]">
+              Total <strong className="text-[#111215] font-bold">{applicants.length}</strong> candidates submitted applications.
             </div>
 
             <div className="flex items-center gap-2 overflow-x-auto">
-              <span className="text-xs font-mono text-slate-500">Filter:</span>
+              <span className="text-xs font-mono text-[#71757E]">Filter:</span>
               {["ALL", "NEW", "REVIEWING", "SHORTLISTED", "INTERVIEWED", "HIRED", "REJECTED"].map((st) => (
                 <button
                   key={st}
                   onClick={() => setApplicantFilter(st)}
                   className={`px-2.5 py-1 rounded-lg text-[10px] font-mono transition ${
                     applicantFilter === st
-                      ? "bg-purple-500/20 border border-purple-500/40 text-purple-300 font-bold"
-                      : "bg-slate-900 text-slate-400 hover:text-white"
+                      ? "bg-[#519DD9]/15 border border-[#519DD9]/30 text-[#1D6FA5] font-bold"
+                      : "bg-[#FFFFFF] border border-[#E5E2DB] text-[#71757E] hover:text-[#111215] hover:bg-[#F5F3EF]"
                   }`}
                 >
                   {st}
@@ -494,40 +493,40 @@ export default function AdminCareersPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-3">
               {filteredApplicants.map((app) => (
-                <GlassCard 
+                <div 
                   key={app.id} 
-                  className={`p-4 border-slate-800 cursor-pointer transition flex items-center justify-between gap-4 ${
-                    selectedApplicant?.id === app.id ? "border-purple-500/60 bg-purple-500/5" : "hover:border-slate-700"
+                  className={`p-4 bg-[#FFFFFF] border rounded-xl cursor-pointer transition flex items-center justify-between gap-4 shadow-xs ${
+                    selectedApplicant?.id === app.id ? "border-[#519DD9] ring-2 ring-[#519DD9]/20" : "border-[#E5E2DB] hover:border-[#D0C9BE]"
                   }`}
                   onClick={() => setSelectedApplicant(app)}
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-white text-sm">{app.name}</span>
+                      <span className="font-bold text-[#111215] text-sm">{app.name}</span>
                       <span className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold ${
-                        app.status === "NEW" ? "bg-cyan-500/20 text-cyan-300" :
-                        app.status === "SHORTLISTED" ? "bg-emerald-500/20 text-emerald-300" :
-                        app.status === "INTERVIEWED" ? "bg-purple-500/20 text-purple-300" :
-                        app.status === "HIRED" ? "bg-green-500/30 text-green-200" :
-                        "bg-slate-800 text-slate-400"
+                        app.status === "NEW" ? "bg-blue-50 text-[#1D6FA5] border border-blue-200" :
+                        app.status === "SHORTLISTED" ? "bg-emerald-50 text-emerald-700 border border-emerald-200" :
+                        app.status === "INTERVIEWED" ? "bg-purple-50 text-purple-700 border border-purple-200" :
+                        app.status === "HIRED" ? "bg-green-100 text-green-800 border border-green-300" :
+                        "bg-[#F5F3EF] text-[#71757E] border border-[#E5E2DB]"
                       }`}>
                         {app.status}
                       </span>
                     </div>
-                    <div className="text-xs text-purple-400 font-mono">{app.jobTitle}</div>
-                    <div className="text-[10px] text-slate-500 font-mono">
+                    <div className="text-xs text-[#1D6FA5] font-mono">{app.jobTitle}</div>
+                    <div className="text-[10px] text-[#71757E] font-mono">
                       {app.email} • Submitted {new Date(app.submittedAt).toLocaleDateString()}
                     </div>
                   </div>
 
-                  <Button size="sm" variant="ghost" className="text-xs shrink-0">
+                  <span className="text-xs font-semibold text-[#1D6FA5] hover:underline shrink-0">
                     View Dossier →
-                  </Button>
-                </GlassCard>
+                  </span>
+                </div>
               ))}
 
               {filteredApplicants.length === 0 && (
-                <div className="text-center py-16 text-slate-500 text-xs font-mono border border-dashed border-slate-800 rounded-3xl">
+                <div className="text-center py-16 text-[#71757E] text-xs font-mono border border-dashed border-[#E5E2DB] rounded-3xl bg-[#FFFFFF]">
                   No applicant dossiers match the selected filter.
                 </div>
               )}
@@ -536,28 +535,28 @@ export default function AdminCareersPage() {
             {/* Candidate Dossier Detail Drawer */}
             <div className="lg:col-span-1">
               {selectedApplicant ? (
-                <GlassCard className="p-6 border-slate-800 space-y-5 sticky top-6">
-                  <div className="border-b border-slate-800 pb-3 space-y-1">
-                    <div className="text-[10px] font-mono text-purple-400 uppercase font-bold">Candidate Details</div>
-                    <h3 className="text-xl font-bold text-white font-display">{selectedApplicant.name}</h3>
-                    <p className="text-xs text-slate-400 font-mono">Role: {selectedApplicant.jobTitle}</p>
+                <div className="p-6 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs space-y-5 sticky top-6">
+                  <div className="border-b border-[#E5E2DB] pb-3 space-y-1">
+                    <div className="text-[10px] font-mono text-[#1D6FA5] uppercase font-bold">Candidate Details</div>
+                    <h3 className="text-xl font-bold text-[#111215] font-display">{selectedApplicant.name}</h3>
+                    <p className="text-xs text-[#71757E] font-mono">Role: {selectedApplicant.jobTitle}</p>
                   </div>
 
                   <div className="space-y-3 text-xs">
-                    <div className="flex items-center gap-2 text-slate-300">
-                      <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
+                    <div className="flex items-center gap-2 text-[#4A4D54]">
+                      <Mail className="w-4 h-4 text-[#1D6FA5] shrink-0" />
                       <a href={`mailto:${selectedApplicant.email}`} className="hover:underline truncate">{selectedApplicant.email}</a>
                     </div>
                     {selectedApplicant.phone && (
-                      <div className="flex items-center gap-2 text-slate-300">
-                        <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
+                      <div className="flex items-center gap-2 text-[#4A4D54]">
+                        <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
                         <span>{selectedApplicant.phone}</span>
                       </div>
                     )}
                     {selectedApplicant.portfolioUrl && (
-                      <div className="flex items-center gap-2 text-slate-300">
-                        <ExternalLink className="w-4 h-4 text-[#FFB347] shrink-0" />
-                        <a href={selectedApplicant.portfolioUrl} target="_blank" rel="noreferrer" className="text-cyan-400 hover:underline truncate">
+                      <div className="flex items-center gap-2 text-[#4A4D54]">
+                        <ExternalLink className="w-4 h-4 text-[#B45309] shrink-0" />
+                        <a href={selectedApplicant.portfolioUrl} target="_blank" rel="noreferrer" className="text-[#1D6FA5] hover:underline truncate">
                           Portfolio / GitHub Profile
                         </a>
                       </div>
@@ -565,19 +564,19 @@ export default function AdminCareersPage() {
                   </div>
 
                   {selectedApplicant.coverNote && (
-                    <div className="space-y-1 bg-slate-900 p-3 rounded-xl border border-slate-800">
-                      <div className="text-[10px] font-mono text-slate-400 uppercase">Cover Summary:</div>
-                      <p className="text-xs text-slate-200 leading-relaxed italic">{selectedApplicant.coverNote}</p>
+                    <div className="space-y-1 bg-[#F5F3EF] p-3 rounded-xl border border-[#E5E2DB]">
+                      <div className="text-[10px] font-mono text-[#71757E] uppercase">Cover Summary:</div>
+                      <p className="text-xs text-[#4A4D54] leading-relaxed italic">{selectedApplicant.coverNote}</p>
                     </div>
                   )}
 
                   {/* Status Decision Changer */}
-                  <div className="space-y-2 pt-2 border-t border-slate-800">
-                    <label className="text-[10px] font-mono text-slate-400 uppercase font-bold">Update Candidate Status</label>
+                  <div className="space-y-2 pt-2 border-t border-[#E5E2DB]">
+                    <label className="text-[10px] font-mono text-[#71757E] uppercase font-bold">Update Candidate Status</label>
                     <select
                       value={selectedApplicant.status}
                       onChange={(e) => handleUpdateApplicantStatus(selectedApplicant.id, e.target.value as any)}
-                      className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none focus:border-purple-500"
+                      className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-xs font-mono text-[#111215] focus:outline-none focus:border-[#519DD9]"
                     >
                       <option value="NEW">NEW</option>
                       <option value="REVIEWING">REVIEWING</option>
@@ -587,10 +586,10 @@ export default function AdminCareersPage() {
                       <option value="REJECTED">REJECTED</option>
                     </select>
                   </div>
-                </GlassCard>
+                </div>
               ) : (
-                <div className="p-8 border border-dashed border-slate-800 rounded-3xl text-center text-xs font-mono text-slate-500 space-y-2">
-                  <UserCheck className="w-8 h-8 text-slate-600 mx-auto" />
+                <div className="p-8 border border-dashed border-[#E5E2DB] rounded-3xl text-center text-xs font-mono text-[#71757E] space-y-2 bg-[#FFFFFF]">
+                  <UserCheck className="w-8 h-8 text-[#9E9E9E] mx-auto" />
                   <div>Select any applicant on the left to inspect candidate dossier and update recruitment status.</div>
                 </div>
               )}
@@ -608,22 +607,22 @@ export default function AdminCareersPage() {
         <form onSubmit={handleSaveJob} className="space-y-4 font-sans text-xs max-h-[80vh] overflow-y-auto pr-1">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Job Title</label>
+              <label className="block font-semibold text-[#111215]">Job Title</label>
               <input
                 required
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Senior Full-Stack Architect"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Department</label>
+              <label className="block font-semibold text-[#111215]">Department</label>
               <select
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none"
               >
                 <option value="Engineering">Engineering</option>
                 <option value="Creative Studio">Creative Studio</option>
@@ -636,22 +635,22 @@ export default function AdminCareersPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Location</label>
+              <label className="block font-semibold text-[#111215]">Location</label>
               <input
                 required
                 type="text"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="Remote / Hybrid"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Type</label>
+              <label className="block font-semibold text-[#111215]">Type</label>
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none"
               >
                 <option value="Full-time">Full-time</option>
                 <option value="Part-time">Part-time</option>
@@ -660,11 +659,11 @@ export default function AdminCareersPage() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Status</label>
+              <label className="block font-semibold text-[#111215]">Status</label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as any)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none"
               >
                 <option value="OPEN">OPEN</option>
                 <option value="PAUSED">PAUSED</option>
@@ -675,69 +674,76 @@ export default function AdminCareersPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Experience Level</label>
+              <label className="block font-semibold text-[#111215]">Experience Level</label>
               <input
                 type="text"
                 value={experience}
                 onChange={(e) => setExperience(e.target.value)}
                 placeholder="2+ Years"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Salary / Stipend Range</label>
+              <label className="block font-semibold text-[#111215]">Salary / Stipend Range</label>
               <input
                 type="text"
                 value={salaryRange}
                 onChange={(e) => setSalaryRange(e.target.value)}
                 placeholder="$80,000 - $110,000"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none"
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Job Summary</label>
+            <label className="block font-semibold text-[#111215]">Job Summary</label>
             <textarea
               required
               rows={3}
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
               placeholder="Detailed description of the role and key deliverables..."
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none resize-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none resize-none"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Key Requirements (Comma-separated)</label>
+            <label className="block font-semibold text-[#111215]">Key Requirements (Comma-separated)</label>
             <input
               required
               type="text"
               value={requirements}
               onChange={(e) => setRequirements(e.target.value)}
               placeholder="Next.js, TypeScript, PostgreSQL, REST APIs"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none"
             />
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Key Responsibilities (Comma-separated)</label>
+            <label className="block font-semibold text-[#111215]">Key Responsibilities (Comma-separated)</label>
             <input
               type="text"
               value={responsibilities}
               onChange={(e) => setResponsibilities(e.target.value)}
               placeholder="Lead rapid sprints, conduct peer code reviews, build reusable modules"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none"
             />
           </div>
 
           <div className="pt-3 flex gap-2">
-            <Button type="button" variant="outline" className="flex-1" size="sm" onClick={() => setJobModalOpen(false)}>
+            <button 
+              type="button" 
+              className="flex-1 py-2 rounded-xl text-xs font-semibold bg-[#FFFFFF] border border-[#E5E2DB] text-[#71757E] hover:text-[#111215] hover:bg-[#F5F3EF] transition"
+              onClick={() => setJobModalOpen(false)}
+            >
               Cancel
-            </Button>
-            <Button type="submit" variant="gradient" className="flex-1" size="sm">
+            </button>
+            <button 
+              type="submit" 
+              className="flex-1 py-2 rounded-xl text-xs font-bold bg-[#111215] text-[#FAFAF8] hover:bg-[#23252B] shadow-sm transition"
+            >
               Save Job Listing
-            </Button>
+            </button>
           </div>
         </form>
       </Modal>
@@ -750,35 +756,42 @@ export default function AdminCareersPage() {
       >
         <form onSubmit={handleSavePerk} className="space-y-4 font-sans text-xs">
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Benefit Title</label>
+            <label className="block font-semibold text-[#111215]">Benefit Title</label>
             <input
               required
               type="text"
               value={perkTitle}
               onChange={(e) => setPerkTitle(e.target.value)}
               placeholder="100% Remote Flexibility"
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none"
             />
           </div>
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Description</label>
+            <label className="block font-semibold text-[#111215]">Description</label>
             <input
               required
               type="text"
               value={perkDesc}
               onChange={(e) => setPerkDesc(e.target.value)}
               placeholder="Work comfortably from anywhere in the world..."
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder:text-[#9E9E9E] focus:border-[#519DD9] focus:outline-none"
             />
           </div>
 
           <div className="pt-3 flex gap-2">
-            <Button type="button" variant="outline" className="flex-1" size="sm" onClick={() => setPerkModalOpen(false)}>
+            <button 
+              type="button" 
+              className="flex-1 py-2 rounded-xl text-xs font-semibold bg-[#FFFFFF] border border-[#E5E2DB] text-[#71757E] hover:text-[#111215] hover:bg-[#F5F3EF] transition"
+              onClick={() => setPerkModalOpen(false)}
+            >
               Cancel
-            </Button>
-            <Button type="submit" variant="gradient" className="flex-1" size="sm">
+            </button>
+            <button 
+              type="submit" 
+              className="flex-1 py-2 rounded-xl text-xs font-bold bg-[#111215] text-[#FAFAF8] hover:bg-[#23252B] shadow-sm transition"
+            >
               Save Highlight Card
-            </Button>
+            </button>
           </div>
         </form>
       </Modal>

@@ -76,21 +76,21 @@ export default function AdminProjectsPage() {
 
   const getPriorityColor = (p: string) => {
     switch (p) {
-      case "HIGH": return "bg-red-500/10 text-red-400 border border-red-500/20";
-      case "MEDIUM": return "bg-yellow-500/10 text-yellow-450 border border-yellow-500/20";
-      default: return "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20";
+      case "HIGH": return "bg-[#DB0038]/10 text-[#DB0038] border border-[#DB0038]/30";
+      case "MEDIUM": return "bg-[#C89B3C]/10 text-[#B45309] border border-[#C89B3C]/30";
+      default: return "bg-[#519DD9]/10 text-[#0284C7] border border-[#519DD9]/30";
     }
   };
 
   return (
-    <div className="space-y-8 font-sans">
+    <div className="space-y-8 font-sans pb-16">
       <div className="flex justify-between items-center flex-wrap gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white font-display uppercase tracking-tight flex items-center gap-2">
-            <Kanban className="w-6 h-6 text-purple-400" />
+          <h2 className="text-2xl font-bold text-[#111215] font-display uppercase tracking-tight flex items-center gap-2">
+            <Kanban className="w-6 h-6 text-[#519DD9]" />
             {activeBoard === "developer" ? "Developer Sprint Kanban" : "Designer Creative Board"}
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#565961]">
             {activeBoard === "developer" 
               ? "Track core software engineering tasks through standard agile pipeline stages." 
               : "Monitor creative visual designs from request to final client sign-off."}
@@ -99,23 +99,23 @@ export default function AdminProjectsPage() {
 
         {/* Board Switcher for ADMIN and MANAGER */}
         {(activeRole === "ADMIN" || activeRole === "MANAGER") && (
-          <div className="flex bg-slate-900 border border-slate-800 p-1 rounded-xl">
+          <div className="flex bg-[#F5F3EF] border border-[#E5E2DB] p-1 rounded-xl shadow-xs">
             <button
               onClick={() => setBoardType("developer")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition ${
                 boardType === "developer" 
-                  ? "bg-purple-650 text-white" 
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-[#111215] text-white shadow-xs" 
+                  : "text-[#565961] hover:text-[#111215]"
               }`}
             >
               Developer Board
             </button>
             <button
               onClick={() => setBoardType("designer")}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-bold transition ${
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold transition ${
                 boardType === "designer" 
-                  ? "bg-cyan-650 text-white" 
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-[#111215] text-white shadow-xs" 
+                  : "text-[#565961] hover:text-[#111215]"
               }`}
             >
               Designer Board
@@ -132,31 +132,31 @@ export default function AdminProjectsPage() {
               (t) => t.status.replace("_", " ") === col
             );
             return (
-              <GlassCard key={col} className="flex-1 p-4 border-slate-800 bg-slate-900/40 space-y-3 min-w-[190px] shrink-0">
-                <div className="flex items-center justify-between text-xs font-mono font-bold text-slate-300 pb-2 border-b border-slate-800">
+              <div key={col} className="flex-1 p-4 border border-[#E5E2DB] bg-[#F5F3EF] space-y-3 min-w-[200px] shrink-0 rounded-2xl shadow-xs">
+                <div className="flex items-center justify-between text-xs font-mono font-bold text-[#111215] pb-2 border-b border-[#E5E2DB]">
                   <span>{col}</span>
-                  <span className="px-2 py-0.5 bg-slate-850 text-[10px] text-slate-450 rounded-md">
+                  <span className="px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB] text-[10px] text-[#71757E] rounded-md font-bold">
                     {colTasks.length}
                   </span>
                 </div>
 
                 <div className="space-y-3">
                   {colTasks.map((task) => (
-                    <div key={task.id} className="p-3.5 bg-slate-800/80 rounded-xl border border-slate-700/60 space-y-3 text-xs">
-                      <div className="font-bold text-white leading-snug">{task.title}</div>
+                    <div key={task.id} className="p-3.5 bg-[#FFFFFF] rounded-xl border border-[#E5E2DB] space-y-3 text-xs shadow-xs hover:border-[#519DD9] transition">
+                      <div className="font-bold text-[#111215] leading-snug">{task.title}</div>
                       <div className="space-y-1">
-                        <div className="text-[9px] text-slate-450 font-mono">Project: {task.project}</div>
-                        <div className="text-[9px] text-slate-455">Assignee: {task.assignee}</div>
+                        <div className="text-[10px] text-[#71757E] font-mono">Project: {task.project}</div>
+                        <div className="text-[10px] text-[#565961]">Assignee: {task.assignee}</div>
                       </div>
-                      <div className="flex items-center justify-between pt-2 border-t border-slate-700/60">
-                        <span className={`px-2 py-0.5 rounded font-mono text-[8px] font-bold ${getPriorityColor(task.priority)}`}>
+                      <div className="flex items-center justify-between pt-2 border-t border-[#E5E2DB]">
+                        <span className={`px-2 py-0.5 rounded font-mono text-[9px] font-bold ${getPriorityColor(task.priority)}`}>
                           {task.priority}
                         </span>
                         
                         {col !== "COMPLETED" && col !== "APPROVED" && (
                           <button
                             onClick={() => moveTask(task.id)}
-                            className="text-[9px] text-purple-400 hover:text-purple-300 font-bold flex items-center gap-0.5 hover:underline transition"
+                            className="text-[10px] text-[#519DD9] hover:text-[#111215] font-bold flex items-center gap-0.5 transition"
                           >
                             Advance <ChevronRight className="w-3.5 h-3.5" />
                           </button>
@@ -166,12 +166,12 @@ export default function AdminProjectsPage() {
                   ))}
 
                   {colTasks.length === 0 && (
-                    <div className="text-center py-8 text-[9px] text-slate-600 font-mono border border-dashed border-slate-800 rounded-xl">
+                    <div className="text-center py-8 text-[10px] text-[#71757E] font-mono border border-dashed border-[#E5E2DB] rounded-xl bg-[#FFFFFF]/60">
                       Empty column
                     </div>
                   )}
                 </div>
-              </GlassCard>
+              </div>
             );
           })}
         </div>

@@ -385,63 +385,63 @@ export default function AdminFinancePage() {
     <div className="space-y-8 font-sans pb-16">
       {/* 1. TOP STATS OVERVIEW GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <GlassCard className="p-6 border-slate-800 space-y-3">
+        <GlassCard className="p-6 border-[#E5E2DB] bg-[#FFFFFF] space-y-3 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 uppercase tracking-wider font-mono">Gross Invoiced Revenue</span>
-            <div className="p-2 rounded-lg bg-slate-800 text-emerald-400">
+            <span className="text-xs text-[#71757E] uppercase tracking-wider font-mono font-medium">Gross Invoiced Revenue</span>
+            <div className="p-2 rounded-lg bg-[#F5F3EF] border border-[#E5E2DB] text-[#0F766E]">
               <TrendingUp className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white font-display">${grossRevenue.toLocaleString()}</div>
-          <div className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+          <div className="text-2xl font-bold text-[#111215] font-display">${grossRevenue.toLocaleString()}</div>
+          <div className="text-[10px] font-mono text-[#0F766E] flex items-center gap-1 font-bold">
             ${totalPaidRevenue.toLocaleString()} Cleared & Paid
           </div>
         </GlassCard>
 
-        <GlassCard className="p-6 border-slate-800 space-y-3">
+        <GlassCard className="p-6 border-[#E5E2DB] bg-[#FFFFFF] space-y-3 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 uppercase tracking-wider font-mono">Operating Outflow</span>
-            <div className="p-2 rounded-lg bg-slate-800 text-red-400">
+            <span className="text-xs text-[#71757E] uppercase tracking-wider font-mono font-medium">Operating Outflow</span>
+            <div className="p-2 rounded-lg bg-[#F5F3EF] border border-[#E5E2DB] text-[#DB0038]">
               <TrendingDown className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white font-display">${totalExpenses.toLocaleString()}</div>
-          <div className="text-[10px] font-mono text-slate-400">
+          <div className="text-2xl font-bold text-[#111215] font-display">${totalExpenses.toLocaleString()}</div>
+          <div className="text-[10px] font-mono text-[#71757E]">
             {expenses.length} Expense Allocations
           </div>
         </GlassCard>
 
-        <GlassCard className="p-6 border-slate-800 space-y-3">
+        <GlassCard className="p-6 border-[#E5E2DB] bg-[#FFFFFF] space-y-3 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 uppercase tracking-wider font-mono">Outstanding Receivables</span>
-            <div className="p-2 rounded-lg bg-slate-800 text-yellow-400">
+            <span className="text-xs text-[#71757E] uppercase tracking-wider font-mono font-medium">Outstanding Receivables</span>
+            <div className="p-2 rounded-lg bg-[#F5F3EF] border border-[#E5E2DB] text-[#C89B3C]">
               <Clock className="w-4 h-4" />
             </div>
           </div>
-          <div className="text-2xl font-bold text-white font-display">${outstandingReceivables.toLocaleString()}</div>
-          <div className="text-[10px] font-mono text-yellow-400">
+          <div className="text-2xl font-bold text-[#111215] font-display">${outstandingReceivables.toLocaleString()}</div>
+          <div className="text-[10px] font-mono text-[#B45309] font-bold">
             {invoices.filter(i => i.status !== "PAID").length} Invoices Pending Clearance
           </div>
         </GlassCard>
 
-        <GlassCard className="p-6 border-slate-800 space-y-3">
+        <GlassCard className="p-6 border-[#E5E2DB] bg-[#FFFFFF] space-y-3 shadow-xs">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 uppercase tracking-wider font-mono">Net Operating Margin</span>
-            <div className="p-2 rounded-lg bg-slate-800 text-cyan-400">
+            <span className="text-xs text-[#71757E] uppercase tracking-wider font-mono font-medium">Net Operating Margin</span>
+            <div className="p-2 rounded-lg bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9]">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
-          <div className={`text-2xl font-bold font-display ${netCashFlow >= 0 ? "text-cyan-400" : "text-red-400"}`}>
+          <div className={`text-2xl font-bold font-display ${netCashFlow >= 0 ? "text-[#0F766E]" : "text-[#DB0038]"}`}>
             ${netCashFlow.toLocaleString()}
           </div>
-          <div className="text-[10px] font-mono text-slate-400">
+          <div className="text-[10px] font-mono text-[#71757E]">
             {grossRevenue > 0 ? `${((netCashFlow / grossRevenue) * 100).toFixed(1)}% Operating Margin` : "Healthy SLA Runway"}
           </div>
         </GlassCard>
       </div>
 
       {/* 2. SECTION TABS & EXPORT ACTION */}
-      <div className="flex justify-between items-center flex-wrap gap-4 border-b border-slate-800 pb-4">
+      <div className="flex justify-between items-center flex-wrap gap-4 border-b border-[#E5E2DB] pb-4">
         <div className="flex gap-2 flex-wrap">
           <Button 
             variant={activeView === "invoices" ? "gradient" : "outline"} 
@@ -478,13 +478,13 @@ export default function AdminFinancePage() {
 
       {/* 3A. BILLING & INVOICES VIEW */}
       {activeView === "invoices" && (
-        <GlassCard className="p-6 border-slate-800 space-y-5">
+        <GlassCard className="p-6 border-[#E5E2DB] bg-[#FFFFFF] shadow-xs space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-white flex items-center gap-2 font-display">
-                <FileCheck className="w-5 h-5 text-cyan-400" /> Client Billing & Invoices Customizer
+              <h3 className="text-base font-bold text-[#111215] flex items-center gap-2 font-display">
+                <FileCheck className="w-5 h-5 text-[#519DD9]" /> Client Billing & Invoices Customizer
               </h3>
-              <p className="text-xs text-slate-400">Create, edit amounts, update payment statuses, and manage invoice line scopes.</p>
+              <p className="text-xs text-[#565961]">Create, edit amounts, update payment statuses, and manage invoice line scopes.</p>
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
@@ -494,15 +494,15 @@ export default function AdminFinancePage() {
                   placeholder="Search invoice, client, project..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full pl-8 pr-3 py-1.5 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-xs text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
                 />
-                <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2" />
+                <Search className="w-3.5 h-3.5 text-[#71757E] absolute left-2.5 top-2" />
               </div>
 
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none"
+                className="px-3 py-1.5 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-xs font-mono text-[#111215] focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 <option value="ALL">All Statuses</option>
                 <option value="PAID">PAID</option>
@@ -516,10 +516,10 @@ export default function AdminFinancePage() {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-[#E5E2DB]">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-850 text-slate-500 font-mono text-[10px] uppercase">
+                <tr className="border-b border-[#E5E2DB] bg-[#F5F3EF] text-[#71757E] font-mono text-[10px] uppercase font-bold">
                   <th className="py-3 px-4">Invoice No</th>
                   <th className="py-3 px-4">Client</th>
                   <th className="py-3 px-4">Project Scope</th>
@@ -529,24 +529,24 @@ export default function AdminFinancePage() {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-850 text-slate-300">
+              <tbody className="divide-y divide-[#E5E2DB] text-[#4A4D54]">
                 {filteredInvoices.map((inv) => (
-                  <tr key={inv.id} className="hover:bg-slate-900/40 transition">
-                    <td className="py-3.5 px-4 font-mono font-bold text-white">{inv.invoiceNo}</td>
-                    <td className="py-3.5 px-4 font-semibold text-white">{inv.client}</td>
-                    <td className="py-3.5 px-4 text-slate-400">
-                      <div>{inv.project}</div>
-                      {inv.notes && <div className="text-[10px] text-slate-500 italic">{inv.notes}</div>}
+                  <tr key={inv.id} className="hover:bg-[#F5F3EF]/60 transition bg-[#FFFFFF]">
+                    <td className="py-3.5 px-4 font-mono font-bold text-[#111215]">{inv.invoiceNo}</td>
+                    <td className="py-3.5 px-4 font-bold text-[#111215]">{inv.client}</td>
+                    <td className="py-3.5 px-4 text-[#565961]">
+                      <div className="font-medium text-[#111215]">{inv.project}</div>
+                      {inv.notes && <div className="text-[10px] text-[#71757E] italic">{inv.notes}</div>}
                     </td>
-                    <td className="py-3.5 px-4 text-right font-mono font-bold text-white text-sm">
+                    <td className="py-3.5 px-4 text-right font-mono font-bold text-[#111215] text-sm">
                       ${inv.amount.toLocaleString()}
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-400">{inv.dueDate}</td>
+                    <td className="py-3.5 px-4 font-mono text-[#71757E]">{inv.dueDate}</td>
                     <td className="py-3.5 px-4">
                       <span className={`px-2.5 py-0.5 rounded font-mono text-[9px] font-bold ${
-                        inv.status === "PAID" ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" :
-                        inv.status === "PENDING" ? "bg-yellow-500/15 text-yellow-400 border border-yellow-500/30" :
-                        "bg-red-500/15 text-red-400 border border-red-500/30"
+                        inv.status === "PAID" ? "bg-[#53BAC1]/10 text-[#0F766E] border border-[#53BAC1]/30" :
+                        inv.status === "PENDING" ? "bg-[#C89B3C]/10 text-[#B45309] border border-[#C89B3C]/30" :
+                        "bg-[#DB0038]/10 text-[#DB0038] border border-[#DB0038]/30"
                       }`}>
                         ● {inv.status}
                       </span>
@@ -556,28 +556,28 @@ export default function AdminFinancePage() {
                         {inv.status !== "PAID" ? (
                           <button
                             onClick={() => handleToggleInvoiceStatus(inv.id, "PAID")}
-                            className="px-2 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 rounded text-[10px] font-semibold transition"
+                            className="px-2 py-1 bg-[#53BAC1]/10 hover:bg-[#53BAC1]/20 border border-[#53BAC1]/30 text-[#0F766E] rounded text-[10px] font-bold transition"
                           >
                             Mark Paid
                           </button>
                         ) : (
                           <button
                             onClick={() => handleToggleInvoiceStatus(inv.id, "PENDING")}
-                            className="px-2 py-1 bg-yellow-500/10 hover:bg-yellow-500/20 border border-yellow-500/20 text-yellow-300 rounded text-[10px] font-semibold transition"
+                            className="px-2 py-1 bg-[#C89B3C]/10 hover:bg-[#C89B3C]/20 border border-[#C89B3C]/30 text-[#B45309] rounded text-[10px] font-bold transition"
                           >
                             Mark Pending
                           </button>
                         )}
                         <button
                           onClick={() => handleOpenEditInvoice(inv)}
-                          className="p-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-lg text-xs"
+                          className="p-1.5 bg-[#FFFFFF] hover:bg-[#F5F3EF] border border-[#E5E2DB] text-[#565961] hover:text-[#111215] rounded-lg text-xs transition"
                           title="Edit invoice"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => setDeleteInvoiceConfirm(inv)}
-                          className="p-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 rounded-lg text-xs"
+                          className="p-1.5 bg-[#DB0038]/10 hover:bg-[#DB0038]/20 border border-[#DB0038]/30 text-[#DB0038] rounded-lg text-xs transition"
                           title="Delete invoice"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -589,7 +589,7 @@ export default function AdminFinancePage() {
 
                 {filteredInvoices.length === 0 && (
                   <tr>
-                    <td colSpan={7} className="py-12 text-center text-slate-500 font-mono text-xs">
+                    <td colSpan={7} className="py-12 text-center text-[#71757E] font-mono text-xs">
                       No invoices found matching your query.
                     </td>
                   </tr>
@@ -602,13 +602,13 @@ export default function AdminFinancePage() {
 
       {/* 3B. OPERATING EXPENSES VIEW */}
       {activeView === "expenses" && (
-        <GlassCard className="p-6 border-slate-800 space-y-5">
+        <GlassCard className="p-6 border-[#E5E2DB] bg-[#FFFFFF] shadow-xs space-y-5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-white flex items-center gap-2 font-display">
-                <TrendingDown className="w-5 h-5 text-red-400" /> Operating Expense Allocations
+              <h3 className="text-base font-bold text-[#111215] flex items-center gap-2 font-display">
+                <TrendingDown className="w-5 h-5 text-[#DB0038]" /> Operating Expense Allocations
               </h3>
-              <p className="text-xs text-slate-400">Record overhead expenses, manage vendor disbursements, and approve clearances.</p>
+              <p className="text-xs text-[#565961]">Record overhead expenses, manage vendor disbursements, and approve clearances.</p>
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
@@ -618,15 +618,15 @@ export default function AdminFinancePage() {
                   placeholder="Search expense description, vendor..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-8 pr-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full pl-8 pr-3 py-1.5 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-xs text-[#111215] placeholder-[#9E9E9E] focus:outline-none focus:border-[#519DD9] transition shadow-xs"
                 />
-                <Search className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-2" />
+                <Search className="w-3.5 h-3.5 text-[#71757E] absolute left-2.5 top-2" />
               </div>
 
               <select
                 value={expenseCategoryFilter}
                 onChange={(e) => setExpenseCategoryFilter(e.target.value)}
-                className="px-3 py-1.5 bg-slate-900 border border-slate-800 rounded-xl text-xs font-mono text-white focus:outline-none"
+                className="px-3 py-1.5 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-xs font-mono text-[#111215] focus:outline-none focus:border-[#519DD9] transition shadow-xs cursor-pointer"
               >
                 <option value="ALL">All Categories</option>
                 {EXPENSE_CATEGORIES.map(cat => (
@@ -640,10 +640,10 @@ export default function AdminFinancePage() {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-[#E5E2DB]">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-slate-850 text-slate-500 font-mono text-[10px] uppercase">
+                <tr className="border-b border-[#E5E2DB] bg-[#F5F3EF] text-[#71757E] font-mono text-[10px] uppercase font-bold">
                   <th className="py-3 px-4">Category</th>
                   <th className="py-3 px-4">Description & Vendor</th>
                   <th className="py-3 px-4 text-right">Amount</th>
@@ -652,22 +652,22 @@ export default function AdminFinancePage() {
                   <th className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-850 text-slate-300">
+              <tbody className="divide-y divide-[#E5E2DB] text-[#4A4D54]">
                 {filteredExpenses.map((exp) => (
-                  <tr key={exp.id} className="hover:bg-slate-900/40 transition">
-                    <td className="py-3.5 px-4 font-mono font-bold text-white">{exp.category}</td>
-                    <td className="py-3.5 px-4 text-slate-300">
-                      <div>{exp.description}</div>
-                      {exp.vendor && <div className="text-[10px] text-slate-500 font-mono">{exp.vendor}</div>}
+                  <tr key={exp.id} className="hover:bg-[#F5F3EF]/60 transition bg-[#FFFFFF]">
+                    <td className="py-3.5 px-4 font-mono font-bold text-[#111215]">{exp.category}</td>
+                    <td className="py-3.5 px-4 text-[#4A4D54]">
+                      <div className="font-medium text-[#111215]">{exp.description}</div>
+                      {exp.vendor && <div className="text-[10px] text-[#71757E] font-mono">{exp.vendor}</div>}
                     </td>
-                    <td className="py-3.5 px-4 text-right font-mono font-bold text-white text-sm">
+                    <td className="py-3.5 px-4 text-right font-mono font-bold text-[#111215] text-sm">
                       ${exp.amount.toLocaleString()}
                     </td>
-                    <td className="py-3.5 px-4 font-mono text-slate-400">{exp.date}</td>
+                    <td className="py-3.5 px-4 font-mono text-[#71757E]">{exp.date}</td>
                     <td className="py-3.5 px-4">
                       <span className={`px-2.5 py-0.5 rounded font-mono text-[9px] font-bold ${
-                        exp.status === "CLEARED" ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" :
-                        "bg-yellow-500/15 text-yellow-400 border border-yellow-500/30"
+                        exp.status === "CLEARED" ? "bg-[#53BAC1]/10 text-[#0F766E] border border-[#53BAC1]/30" :
+                        "bg-[#C89B3C]/10 text-[#B45309] border border-[#C89B3C]/30"
                       }`}>
                         ● {exp.status}
                       </span>
@@ -677,21 +677,21 @@ export default function AdminFinancePage() {
                         {exp.status !== "CLEARED" && (
                           <button
                             onClick={() => handleClearExpense(exp.id)}
-                            className="px-2 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 text-emerald-400 rounded text-[10px] font-semibold transition"
+                            className="px-2 py-1 bg-[#53BAC1]/10 hover:bg-[#53BAC1]/20 border border-[#53BAC1]/30 text-[#0F766E] rounded text-[10px] font-bold transition"
                           >
                             Clear
                           </button>
                         )}
                         <button
                           onClick={() => handleOpenEditExpense(exp)}
-                          className="p-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-lg text-xs"
+                          className="p-1.5 bg-[#FFFFFF] hover:bg-[#F5F3EF] border border-[#E5E2DB] text-[#565961] hover:text-[#111215] rounded-lg text-xs transition"
                           title="Edit expense"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => setDeleteExpenseConfirm(exp)}
-                          className="p-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 rounded-lg text-xs"
+                          className="p-1.5 bg-[#DB0038]/10 hover:bg-[#DB0038]/20 border border-[#DB0038]/30 text-[#DB0038] rounded-lg text-xs transition"
                           title="Delete expense"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -703,7 +703,7 @@ export default function AdminFinancePage() {
 
                 {filteredExpenses.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="py-12 text-center text-slate-500 font-mono text-xs">
+                    <td colSpan={6} className="py-12 text-center text-[#71757E] font-mono text-xs">
                       No expense records found.
                     </td>
                   </tr>
@@ -717,10 +717,10 @@ export default function AdminFinancePage() {
       {/* 3C. PROJECT PROFITABILITY VIEW */}
       {activeView === "profitability" && (
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/60 p-4 border border-slate-800 rounded-2xl flex-wrap">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[#FFFFFF] p-5 border border-[#E5E2DB] rounded-2xl shadow-xs flex-wrap">
             <div>
-              <h3 className="text-base font-bold text-white font-display">Project Profitability & Margin Calculator</h3>
-              <p className="text-xs text-slate-400">Track gross SLA budget, engineering wages, and net retained profit margin per project.</p>
+              <h3 className="text-base font-bold text-[#111215] font-display">Project Profitability & Margin Calculator</h3>
+              <p className="text-xs text-[#565961]">Track gross SLA budget, engineering wages, and net retained profit margin per project.</p>
             </div>
             <Button size="sm" variant="gradient" onClick={handleOpenAddProfit} icon={<Plus className="w-4 h-4" />}>
               Add Project Ledger
@@ -734,24 +734,24 @@ export default function AdminFinancePage() {
               const marginPct = p.budget > 0 ? Math.round((margin / p.budget) * 100) : 0;
 
               return (
-                <GlassCard key={p.id} className="p-6 border-slate-800 space-y-4 hover:border-cyan-500/30 transition flex flex-col justify-between">
+                <GlassCard key={p.id} className="p-6 border-[#E5E2DB] bg-[#FFFFFF] shadow-xs space-y-4 hover:border-[#519DD9] transition flex flex-col justify-between">
                   <div className="space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <div className="text-[10px] font-mono text-cyan-400 uppercase font-bold">{p.client}</div>
-                        <h4 className="text-base font-bold text-white font-display mt-0.5">{p.title}</h4>
+                        <div className="text-[10px] font-mono text-[#519DD9] uppercase font-bold">{p.client}</div>
+                        <h4 className="text-base font-bold text-[#111215] font-display mt-0.5">{p.title}</h4>
                       </div>
                       <div className="flex items-center gap-1">
                         <button
                           onClick={() => handleOpenEditProfit(p)}
-                          className="p-1.5 bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 rounded-lg text-xs"
+                          className="p-1.5 bg-[#FFFFFF] hover:bg-[#F5F3EF] border border-[#E5E2DB] text-[#565961] hover:text-[#111215] rounded-lg text-xs transition"
                           title="Edit project margin"
                         >
                           <Edit3 className="w-3.5 h-3.5" />
                         </button>
                         <button
                           onClick={() => setDeleteProfitConfirm(p)}
-                          className="p-1.5 bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 text-red-400 rounded-lg text-xs"
+                          className="p-1.5 bg-[#DB0038]/10 hover:bg-[#DB0038]/20 border border-[#DB0038]/30 text-[#DB0038] rounded-lg text-xs transition"
                           title="Delete record"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -759,28 +759,28 @@ export default function AdminFinancePage() {
                       </div>
                     </div>
 
-                    <div className="p-3 bg-slate-950/80 border border-slate-800 rounded-xl space-y-1.5 text-xs font-mono">
+                    <div className="p-3.5 bg-[#F5F3EF] border border-[#E5E2DB] rounded-xl space-y-2 text-xs font-mono">
                       <div className="flex justify-between">
-                        <span className="text-slate-400">Total SLA Budget:</span>
-                        <span className="text-white font-bold">${p.budget.toLocaleString()}</span>
+                        <span className="text-[#71757E]">Total SLA Budget:</span>
+                        <span className="text-[#111215] font-bold">${p.budget.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-500">Eng Wages:</span>
-                        <span className="text-slate-300">${p.engWages.toLocaleString()}</span>
+                        <span className="text-[#71757E]">Eng Wages:</span>
+                        <span className="text-[#4A4D54] font-semibold">${p.engWages.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-slate-500">Cloud Costs:</span>
-                        <span className="text-slate-300">${p.cloudCosts.toLocaleString()}</span>
+                        <span className="text-[#71757E]">Cloud Costs:</span>
+                        <span className="text-[#4A4D54] font-semibold">${p.cloudCosts.toLocaleString()}</span>
                       </div>
                       {p.toolingCosts ? (
                         <div className="flex justify-between">
-                          <span className="text-slate-500">Tooling & Ops:</span>
-                          <span className="text-slate-300">${p.toolingCosts.toLocaleString()}</span>
+                          <span className="text-[#71757E]">Tooling & Ops:</span>
+                          <span className="text-[#4A4D54] font-semibold">${p.toolingCosts.toLocaleString()}</span>
                         </div>
                       ) : null}
-                      <div className="border-t border-slate-800 pt-1.5 flex justify-between">
-                        <span className="text-cyan-400 font-bold">Retained Margin:</span>
-                        <span className={`font-bold ${margin >= 0 ? "text-emerald-400" : "text-red-400"}`}>
+                      <div className="border-t border-[#E5E2DB] pt-2 flex justify-between">
+                        <span className="text-[#519DD9] font-bold">Retained Margin:</span>
+                        <span className={`font-bold ${margin >= 0 ? "text-[#0F766E]" : "text-[#DB0038]"}`}>
                           ${margin.toLocaleString()} ({marginPct}%)
                         </span>
                       </div>
@@ -788,16 +788,16 @@ export default function AdminFinancePage() {
                   </div>
 
                   <div className="space-y-1.5 pt-2">
-                    <div className="flex justify-between text-[10px] font-mono text-slate-400">
+                    <div className="flex justify-between text-[10px] font-mono text-[#71757E]">
                       <span>Margin Health</span>
-                      <span className={marginPct >= 40 ? "text-emerald-400 font-bold" : "text-yellow-400"}>
+                      <span className={marginPct >= 40 ? "text-[#0F766E] font-bold" : "text-[#B45309] font-bold"}>
                         {marginPct}% Net
                       </span>
                     </div>
-                    <div className="w-full h-2 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                    <div className="w-full h-2 bg-[#E5E2DB] rounded-full overflow-hidden border border-[#E5E2DB]">
                       <div 
                         className={`h-full rounded-full transition-all duration-500 ${
-                          marginPct >= 50 ? "bg-emerald-400" : marginPct >= 30 ? "bg-cyan-400" : "bg-amber-400"
+                          marginPct >= 50 ? "bg-[#0F766E]" : marginPct >= 30 ? "bg-[#519DD9]" : "bg-[#C89B3C]"
                         }`}
                         style={{ width: `${Math.max(0, Math.min(100, marginPct))}%` }}
                       />
@@ -822,43 +822,43 @@ export default function AdminFinancePage() {
         <form onSubmit={handleSaveInvoice} className="space-y-4 font-sans text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Invoice Number *</label>
+              <label className="block font-bold text-[#111215]">Invoice Number *</label>
               <input
                 required
                 type="text"
                 value={invNo}
                 onChange={(e) => setInvNo(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Client Name *</label>
+              <label className="block font-bold text-[#111215]">Client Name *</label>
               <input
                 required
                 type="text"
                 placeholder="ApexPay Inc"
                 value={invClient}
                 onChange={(e) => setInvClient(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Project Scope / Title *</label>
+            <label className="block font-bold text-[#111215]">Project Scope / Title *</label>
             <input
               required
               type="text"
               placeholder="ApexPay FinTech Portal"
               value={invProject}
               onChange={(e) => setInvProject(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none transition shadow-xs"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Amount ($ USD) *</label>
+              <label className="block font-bold text-[#111215]">Amount ($ USD) *</label>
               <input
                 required
                 type="number"
@@ -866,27 +866,27 @@ export default function AdminFinancePage() {
                 step="50"
                 value={invAmount}
                 onChange={(e) => setInvAmount(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono font-bold focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono font-bold focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Due Date *</label>
+              <label className="block font-bold text-[#111215]">Due Date *</label>
               <input
                 required
                 type="date"
                 value={invDueDate}
                 onChange={(e) => setInvDueDate(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
 
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Status</label>
+              <label className="block font-bold text-[#111215]">Status</label>
               <select
                 value={invStatus}
                 onChange={(e) => setInvStatus(e.target.value as any)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none transition shadow-xs cursor-pointer"
               >
                 <option value="PENDING">PENDING</option>
                 <option value="PAID">PAID</option>
@@ -896,13 +896,13 @@ export default function AdminFinancePage() {
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Invoice Memo / Notes</label>
+            <label className="block font-bold text-[#111215]">Invoice Memo / Notes</label>
             <input
               type="text"
               placeholder="Milestone sprint deliverables, payment terms..."
               value={invNotes}
               onChange={(e) => setInvNotes(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none transition shadow-xs"
             />
           </div>
 
@@ -925,10 +925,10 @@ export default function AdminFinancePage() {
         maxWidth="sm"
       >
         <div className="space-y-4 text-xs font-sans">
-          <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 flex items-start gap-2">
+          <div className="p-3.5 bg-[#DB0038]/10 border border-[#DB0038]/30 rounded-xl text-[#DB0038] flex items-start gap-2">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             <div>
-              Are you sure you want to permanently delete invoice <strong className="text-white">{deleteInvoiceConfirm?.invoiceNo}</strong> (${deleteInvoiceConfirm?.amount.toLocaleString()} - {deleteInvoiceConfirm?.client})?
+              Are you sure you want to permanently delete invoice <strong className="text-[#111215] font-bold">{deleteInvoiceConfirm?.invoiceNo}</strong> (${deleteInvoiceConfirm?.amount.toLocaleString()} - {deleteInvoiceConfirm?.client})?
             </div>
           </div>
           <div className="pt-2 flex gap-2">
@@ -938,7 +938,7 @@ export default function AdminFinancePage() {
             <Button 
               type="button" 
               variant="primary" 
-              className="flex-1 bg-red-600 hover:bg-red-700" 
+              className="flex-1 bg-[#DB0038] hover:bg-[#DB0038]/90 text-white font-bold" 
               size="sm" 
               onClick={() => deleteInvoiceConfirm && handleDeleteInvoice(deleteInvoiceConfirm.id)}
             >
@@ -958,11 +958,11 @@ export default function AdminFinancePage() {
         <form onSubmit={handleSaveExpense} className="space-y-4 font-sans text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Expense Category *</label>
+              <label className="block font-bold text-[#111215]">Expense Category *</label>
               <select
                 value={expCategory}
                 onChange={(e) => setExpCategory(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none transition shadow-xs cursor-pointer"
               >
                 {EXPENSE_CATEGORIES.map(c => (
                   <option key={c} value={c}>{c}</option>
@@ -970,32 +970,32 @@ export default function AdminFinancePage() {
               </select>
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Vendor / Payee</label>
+              <label className="block font-bold text-[#111215]">Vendor / Payee</label>
               <input
                 type="text"
                 placeholder="AWS / GitHub / Vercel"
                 value={expVendor}
                 onChange={(e) => setExpVendor(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-slate-300">Description *</label>
+            <label className="block font-bold text-[#111215]">Description *</label>
             <input
               required
               type="text"
               placeholder="Enterprise cloud server cluster hosting..."
               value={expDesc}
               onChange={(e) => setExpDesc(e.target.value)}
-              className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+              className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none transition shadow-xs"
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Amount ($ USD) *</label>
+              <label className="block font-bold text-[#111215]">Amount ($ USD) *</label>
               <input
                 required
                 type="number"
@@ -1003,25 +1003,25 @@ export default function AdminFinancePage() {
                 step="50"
                 value={expAmount}
                 onChange={(e) => setExpAmount(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono font-bold focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono font-bold focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Expense Date *</label>
+              <label className="block font-bold text-[#111215]">Expense Date *</label>
               <input
                 required
                 type="date"
                 value={expDate}
                 onChange={(e) => setExpDate(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Clearance Status</label>
+              <label className="block font-bold text-[#111215]">Clearance Status</label>
               <select
                 value={expStatus}
                 onChange={(e) => setExpStatus(e.target.value as any)}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none transition shadow-xs cursor-pointer"
               >
                 <option value="CLEARED">CLEARED</option>
                 <option value="PENDING">PENDING</option>
@@ -1048,10 +1048,10 @@ export default function AdminFinancePage() {
         maxWidth="sm"
       >
         <div className="space-y-4 text-xs font-sans">
-          <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 flex items-start gap-2">
+          <div className="p-3.5 bg-[#DB0038]/10 border border-[#DB0038]/30 rounded-xl text-[#DB0038] flex items-start gap-2">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             <div>
-              Are you sure you want to delete expense record <strong className="text-white">{deleteExpenseConfirm?.description}</strong> (${deleteExpenseConfirm?.amount.toLocaleString()})?
+              Are you sure you want to delete expense record <strong className="text-[#111215] font-bold">{deleteExpenseConfirm?.description}</strong> (${deleteExpenseConfirm?.amount.toLocaleString()})?
             </div>
           </div>
           <div className="pt-2 flex gap-2">
@@ -1061,7 +1061,7 @@ export default function AdminFinancePage() {
             <Button 
               type="button" 
               variant="primary" 
-              className="flex-1 bg-red-600 hover:bg-red-700" 
+              className="flex-1 bg-[#DB0038] hover:bg-[#DB0038]/90 text-white font-bold" 
               size="sm" 
               onClick={() => deleteExpenseConfirm && handleDeleteExpense(deleteExpenseConfirm.id)}
             >
@@ -1081,32 +1081,32 @@ export default function AdminFinancePage() {
         <form onSubmit={handleSaveProfit} className="space-y-4 font-sans text-xs">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Project Title *</label>
+              <label className="block font-bold text-[#111215]">Project Title *</label>
               <input
                 required
                 type="text"
                 value={profTitle}
                 onChange={(e) => setProfTitle(e.target.value)}
                 placeholder="Enterprise ERP Platform"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Client *</label>
+              <label className="block font-bold text-[#111215]">Client *</label>
               <input
                 required
                 type="text"
                 value={profClient}
                 onChange={(e) => setProfClient(e.target.value)}
                 placeholder="Global Freight Systems"
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Total SLA Budget ($ USD) *</label>
+              <label className="block font-bold text-[#111215]">Total SLA Budget ($ USD) *</label>
               <input
                 required
                 type="number"
@@ -1114,11 +1114,11 @@ export default function AdminFinancePage() {
                 step="500"
                 value={profBudget}
                 onChange={(e) => setProfBudget(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono font-bold focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono font-bold focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Engineering Wages ($ USD) *</label>
+              <label className="block font-bold text-[#111215]">Engineering Wages ($ USD) *</label>
               <input
                 required
                 type="number"
@@ -1126,39 +1126,39 @@ export default function AdminFinancePage() {
                 step="500"
                 value={profWages}
                 onChange={(e) => setProfWages(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Cloud Infrastructure Costs ($ USD)</label>
+              <label className="block font-bold text-[#111215]">Cloud Infrastructure Costs ($ USD)</label>
               <input
                 type="number"
                 min="0"
                 step="100"
                 value={profCloud}
                 onChange={(e) => setProfCloud(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-slate-300">Tooling & Ops Costs ($ USD)</label>
+              <label className="block font-bold text-[#111215]">Tooling & Ops Costs ($ USD)</label>
               <input
                 type="number"
                 min="0"
                 step="100"
                 value={profTooling}
                 onChange={(e) => setProfTooling(Number(e.target.value))}
-                className="w-full px-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white font-mono focus:border-cyan-500 focus:outline-none"
+                className="w-full px-3 py-2 bg-[#FFFFFF] border border-[#E5E2DB] hover:border-[#111215] rounded-xl text-[#111215] font-mono focus:border-[#519DD9] focus:outline-none transition shadow-xs"
               />
             </div>
           </div>
 
-          <div className="p-3 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono flex justify-between items-center">
-            <span className="text-slate-400">Calculated Net Margin:</span>
-            <span className="text-emerald-400 font-bold">
+          <div className="p-3.5 bg-[#F5F3EF] border border-[#E5E2DB] rounded-xl text-xs font-mono flex justify-between items-center text-[#111215]">
+            <span className="text-[#71757E]">Calculated Net Margin:</span>
+            <span className="text-[#0F766E] font-bold">
               ${(profBudget - profWages - profCloud - profTooling).toLocaleString()} ({profBudget > 0 ? Math.round(((profBudget - profWages - profCloud - profTooling) / profBudget) * 100) : 0}%)
             </span>
           </div>
@@ -1182,10 +1182,10 @@ export default function AdminFinancePage() {
         maxWidth="sm"
       >
         <div className="space-y-4 text-xs font-sans">
-          <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 flex items-start gap-2">
+          <div className="p-3.5 bg-[#DB0038]/10 border border-[#DB0038]/30 rounded-xl text-[#DB0038] flex items-start gap-2">
             <AlertTriangle className="w-5 h-5 shrink-0" />
             <div>
-              Are you sure you want to delete the financial ledger record for <strong className="text-white">{deleteProfitConfirm?.title}</strong>?
+              Are you sure you want to delete the financial ledger record for <strong className="text-[#111215] font-bold">{deleteProfitConfirm?.title}</strong>?
             </div>
           </div>
           <div className="pt-2 flex gap-2">
@@ -1195,7 +1195,7 @@ export default function AdminFinancePage() {
             <Button 
               type="button" 
               variant="primary" 
-              className="flex-1 bg-red-600 hover:bg-red-700" 
+              className="flex-1 bg-[#DB0038] hover:bg-[#DB0038]/90 text-white font-bold" 
               size="sm" 
               onClick={() => deleteProfitConfirm && handleDeleteProfit(deleteProfitConfirm.id)}
             >

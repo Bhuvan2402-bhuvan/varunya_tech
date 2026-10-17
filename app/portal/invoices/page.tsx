@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
-import { CreditCard, Download, CheckCircle2, ShieldCheck } from "lucide-react";
+import { CreditCard, Download } from "lucide-react";
 
 export default function ClientInvoicesPage() {
   const [paid, setPaid] = useState(false);
@@ -15,32 +14,32 @@ export default function ClientInvoicesPage() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-[#111215]">
       <div>
-        <h2 className="text-2xl font-bold text-white font-display">Invoices &amp; Billing</h2>
-        <p className="text-xs text-slate-400">View payment history, download itemized PDF invoices, or make online credit card/Stripe payments.</p>
+        <h2 className="text-2xl font-bold text-[#111215] font-display">Invoices &amp; Billing</h2>
+        <p className="text-xs text-[#4A4D54]">View payment history, download itemized PDF invoices, or make online credit card/Stripe payments.</p>
       </div>
 
       <div className="space-y-4">
         {invoices.map((inv) => (
-          <GlassCard key={inv.id} className="p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div key={inv.id} className="p-6 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#519DD9] mb-1 font-bold">
                 <span>{inv.id}</span> • <span>{inv.date}</span>
               </div>
-              <h3 className="text-base font-bold text-white">{inv.description}</h3>
-              <div className="text-sm font-mono text-slate-300 font-bold mt-1">{inv.amount}</div>
+              <h3 className="text-base font-bold text-[#111215]">{inv.description}</h3>
+              <div className="text-sm font-mono text-[#111215] font-bold mt-1">{inv.amount}</div>
             </div>
 
             <div className="flex items-center gap-3">
-              <span className={`px-3 py-1 rounded text-xs font-mono font-bold ${
-                inv.status === "PAID" ? "bg-emerald-500/20 text-emerald-300" : inv.status === "PENDING" ? "bg-yellow-500/20 text-yellow-300" : "bg-slate-800 text-slate-500"
+              <span className={`px-3 py-1 rounded-full text-xs font-mono font-bold ${
+                inv.status === "PAID" ? "bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9]" : inv.status === "PENDING" ? "bg-[#F5F3EF] border border-[#E5E2DB] text-[#C89B3C]" : "bg-[#F5F3EF] text-[#71757E]"
               }`}>
                 {inv.status}
               </span>
 
               {inv.status === "PENDING" && (
-                <Button size="sm" variant="gradient" onClick={() => setPaid(true)} icon={<CreditCard className="w-4 h-4" />}>
+                <Button size="sm" variant="primary" onClick={() => setPaid(true)} icon={<CreditCard className="w-4 h-4" />}>
                   Pay Now (Stripe)
                 </Button>
               )}
@@ -49,7 +48,7 @@ export default function ClientInvoicesPage() {
                 PDF
               </Button>
             </div>
-          </GlassCard>
+          </div>
         ))}
       </div>
     </div>
