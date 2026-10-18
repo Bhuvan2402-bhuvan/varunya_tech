@@ -514,7 +514,7 @@ export default function AdminEmployeesPage() {
                           <span>{employee.name}</span>
                           <span className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold ${
                             employee.status === "ACTIVE" ? "bg-[#53BAC1]/10 text-[#0F766E] border border-[#53BAC1]/30" :
-                            employee.status === "ON_LEAVE" ? "bg-[#C89B3C]/10 text-[#B45309] border border-[#C89B3C]/30" :
+                            employee.status === "ON_LEAVE" ? "bg-[#F7C200]/15 text-[#B45309] border border-[#F7C200]/40" :
                             "bg-[#F5F3EF] border border-[#E5E2DB] text-[#71757E]"
                           }`}>
                             {employee.status}

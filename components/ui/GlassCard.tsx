@@ -21,8 +21,8 @@ export function GlassCard({
     <div
       className={clsx(
         "relative transition-all duration-300 overflow-hidden",
-        "bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm",
-        hoverGlow && "hover:border-[#111215] hover:shadow-md hover:bg-[#FAFAF8]",
+        "bg-[#202329] border border-[#2A2E37] text-[#EDEDED] shadow-sm",
+        hoverGlow && "hover:border-[#519DD9] hover:shadow-steel-glow hover:bg-[#252932]",
         gradientBorder && "border-l-2 border-l-[#519DD9]",
         className
       )}

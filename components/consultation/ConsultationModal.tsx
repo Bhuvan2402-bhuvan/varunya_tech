@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/Button";
 import { 
   Calendar, 
   CheckCircle2, 
-  Send
+  Send,
+  AlertCircle
 } from "lucide-react";
 
 interface ConsultationModalProps {
@@ -17,6 +18,8 @@ interface ConsultationModalProps {
 export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [serverLeadId, setServerLeadId] = useState<string | null>(null);
 
   // Form fields
   const [clientName, setClientName] = useState("");
@@ -29,42 +32,59 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
   const [preferredTime, setPreferredTime] = useState("Morning (9 AM - 12 PM EST)");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setErrorMessage(null);
 
-    const consultationLead = {
-      id: `CALL-${Date.now().toString().slice(-4)}`,
-      fullName: clientName,
-      company: company || "Direct Client",
-      email,
-      phone,
-      serviceNeeded: projectType,
-      budgetRange,
-      projectScope: `Timeline: ${timeline} | Preferred Call Slot: ${preferredTime} | Details: ${description}`,
-      status: "NEW",
-      createdAt: new Date().toISOString()
-    };
-
-    try {
-      const existingLeads = localStorage.getItem("velocity_leads_data");
-      const list = existingLeads ? JSON.parse(existingLeads) : [];
-      list.unshift(consultationLead);
-      localStorage.setItem("velocity_leads_data", JSON.stringify(list));
-    } catch (err) {
-      console.error("Error storing consultation lead:", err);
+    if (!clientName.trim() || !email.trim() || !description.trim()) {
+      setErrorMessage("Please fill in your name, email, and project requirements.");
+      return;
     }
 
-    setTimeout(() => {
-      setLoading(false);
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/v1/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: clientName.trim(),
+          email: email.trim(),
+          company: company.trim() || undefined,
+          phone: phone.trim() || undefined,
+          serviceNeeded: projectType,
+          budgetRange,
+          projectScope: description.trim(),
+          consultationDetails: `Target Timeline: ${timeline} | Preferred Discovery Slot: ${preferredTime}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to persist consultation request.");
+      }
+
+      setServerLeadId(data.leadId);
       setSubmitted(true);
-    }, 600);
+    } catch (err: any) {
+      console.error("Consultation submission error:", err);
+      setErrorMessage(
+        err.message || "Failed to submit request. Please email varunyatech@gmail.com directly."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
     onClose();
     setTimeout(() => {
       setSubmitted(false);
+      setErrorMessage(null);
+      setServerLeadId(null);
       setClientName("");
       setCompany("");
       setEmail("");
@@ -82,34 +102,35 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
     >
       {submitted ? (
         <div className="text-center py-8 px-4 space-y-5 animate-in fade-in zoom-in-95 duration-200">
-          <div className="w-16 h-16 rounded-2xl bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9] flex items-center justify-center mx-auto">
-            <CheckCircle2 className="w-10 h-10" />
+          <div className="w-16 h-16 rounded-2xl bg-[#202329] border border-[#2A2E37] text-[#53BAC1] flex items-center justify-center mx-auto shadow-steel-glow">
+            <CheckCircle2 className="w-10 h-10 text-[#53BAC1]" />
           </div>
 
           <div className="space-y-2">
-            <h3 className="text-2xl font-bold text-[#111215] font-display">1-on-1 Call Request Received!</h3>
-            <p className="text-xs sm:text-sm text-[#4A4D54] max-w-md mx-auto leading-relaxed">
-              Thank you, <strong className="text-[#111215]">{clientName}</strong>. Our senior engineering lead will review your project requirements and send a calendar invitation to <strong className="text-[#519DD9]">{email}</strong> within 2–4 hours.
+            <h3 className="text-2xl font-bold text-[#EDEDED] font-display">1-on-1 Discovery Scheduled</h3>
+            <p className="text-xs sm:text-sm text-[#A6AFBD] max-w-md mx-auto leading-relaxed">
+              Thank you, <strong className="text-[#EDEDED]">{clientName}</strong>. Your consultation request has been securely persisted in our CRM pipeline with reference{" "}
+              <strong className="text-[#519DD9] font-mono">{serverLeadId || "ACTIVE"}</strong>. Our lead architect will review your specifications and dispatch a calendar invitation to <strong className="text-[#53BAC1]">{email}</strong>.
             </p>
           </div>
 
-          <div className="p-4 bg-[#F5F3EF] border border-[#E5E2DB] rounded-2xl max-w-md mx-auto text-left text-xs font-mono space-y-2">
-            <div className="flex justify-between border-b border-[#E5E2DB] pb-1.5">
-              <span className="text-[#71757E]">Service:</span>
-              <span className="text-[#111215] font-semibold">{projectType}</span>
+          <div className="p-4 bg-[#202329] border border-[#2A2E37] rounded-xl max-w-md mx-auto text-left text-xs font-mono space-y-2">
+            <div className="flex justify-between border-b border-[#2A2E37] pb-1.5">
+              <span className="text-[#727C8D]">Service Focus:</span>
+              <span className="text-[#EDEDED] font-semibold">{projectType}</span>
             </div>
-            <div className="flex justify-between border-b border-[#E5E2DB] pb-1.5">
-              <span className="text-[#71757E]">Target Timeline:</span>
+            <div className="flex justify-between border-b border-[#2A2E37] pb-1.5">
+              <span className="text-[#727C8D]">Sprint Timeline:</span>
               <span className="text-[#519DD9] font-semibold">{timeline}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-[#71757E]">Preferred Slot:</span>
+              <span className="text-[#727C8D]">Target Window:</span>
               <span className="text-[#53BAC1] font-semibold">{preferredTime}</span>
             </div>
           </div>
 
           <div className="pt-2">
-            <Button variant="primary" size="md" onClick={handleClose} className="w-full sm:w-auto px-8">
+            <Button variant="primary" size="md" onClick={handleClose} className="w-full sm:w-auto px-8 bg-[#519DD9] hover:bg-[#3d8ac4] text-[#17191D] font-bold">
               Done
             </Button>
           </div>
@@ -117,58 +138,65 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
       ) : (
         <form onSubmit={handleSubmit} className="space-y-5 font-sans text-xs">
           {/* Header Banner */}
-          <div className="p-4 bg-[#F5F3EF] border border-[#E5E2DB] rounded-2xl flex items-center gap-3">
+          <div className="p-4 bg-[#202329] border border-[#2A2E37] rounded-xl flex items-center gap-3">
             <Calendar className="w-6 h-6 text-[#519DD9] shrink-0" />
-            <p className="text-xs text-[#4A4D54] leading-relaxed">
-              Every project is unique. Schedule a direct 1-on-1 technical discovery call with our engineering team to review your specifications, architecture, and tailored milestones.
+            <p className="text-xs text-[#A6AFBD] leading-relaxed">
+              Discuss architecture, technical scoping, deliverables, and customized milestone commitments directly with a senior engineer.
             </p>
           </div>
+
+          {errorMessage && (
+            <div className="p-3 bg-[#DB0038]/10 border border-[#DB0038]/30 rounded-lg flex items-center gap-2.5 text-[#DB0038] text-xs">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{errorMessage}</span>
+            </div>
+          )}
 
           {/* Contact Details */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-[#111215]">Your Full Name *</label>
+              <label className="block font-semibold text-[#EDEDED]">Your Full Name *</label>
               <input
                 required
                 type="text"
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)}
                 placeholder="Johnathan Davis"
-                className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+                className="w-full px-3.5 py-2.5 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-[#111215]">Company / Organization</label>
+              <label className="block font-semibold text-[#EDEDED]">Company / Organization</label>
               <input
                 type="text"
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
                 placeholder="Apex Global Solutions"
-                className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+                className="w-full px-3.5 py-2.5 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block font-semibold text-[#111215]">Email Address *</label>
+              <label className="block font-semibold text-[#EDEDED]">Email Address *</label>
               <input
                 required
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="johnathan@company.com"
-                className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+                className="w-full px-3.5 py-2.5 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all"
               />
             </div>
             <div className="space-y-1">
-              <label className="block font-semibold text-[#111215]">Phone / WhatsApp Number</label>
+              <label className="block font-semibold text-[#EDEDED]">Phone / WhatsApp Number</label>
               <input
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+1 (555) 234-5678"
-                className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+                className="w-full px-3.5 py-2.5 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all"
               />
             </div>
           </div>
@@ -176,11 +204,11 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
           {/* Project Scoping Details */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="space-y-1">
-              <label className="block font-semibold text-[#111215]">Project Type *</label>
+              <label className="block font-semibold text-[#EDEDED]">Project Type *</label>
               <select
                 value={projectType}
                 onChange={(e) => setProjectType(e.target.value)}
-                className="w-full px-3 py-2 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] text-xs focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+                className="w-full px-3 py-2 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] text-xs focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all"
               >
                 <option value="Custom Web Application">Custom Web Application</option>
                 <option value="Enterprise ERP / CRM Portal">Enterprise ERP / CRM Portal</option>
@@ -192,11 +220,11 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
             </div>
 
             <div className="space-y-1">
-              <label className="block font-semibold text-[#111215]">Target Timeline</label>
+              <label className="block font-semibold text-[#EDEDED]">Target Timeline</label>
               <select
                 value={timeline}
                 onChange={(e) => setTimeline(e.target.value)}
-                className="w-full px-3 py-2 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] text-xs focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+                className="w-full px-3 py-2 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] text-xs focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all"
               >
                 <option value="30–40 Days (Standard)">30–40 Days (Standard)</option>
                 <option value="Under 30 Days (Accelerated)">Under 30 Days (Accelerated)</option>
@@ -206,11 +234,11 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
             </div>
 
             <div className="space-y-1">
-              <label className="block font-semibold text-[#111215]">Estimated Budget</label>
+              <label className="block font-semibold text-[#EDEDED]">Estimated Budget</label>
               <select
                 value={budgetRange}
                 onChange={(e) => setBudgetRange(e.target.value)}
-                className="w-full px-3 py-2 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] text-xs focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+                className="w-full px-3 py-2 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] text-xs focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all"
               >
                 <option value="$3,000 - $6,000">$3,000 - $6,000</option>
                 <option value="$6,000 - $12,000">$6,000 - $12,000</option>
@@ -221,11 +249,11 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-[#111215]">Preferred Call Time Slot</label>
+            <label className="block font-semibold text-[#EDEDED]">Preferred Call Time Slot</label>
             <select
               value={preferredTime}
               onChange={(e) => setPreferredTime(e.target.value)}
-              className="w-full px-3 py-2 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] text-xs focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+              className="w-full px-3 py-2 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] text-xs focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all"
             >
               <option value="Morning (9 AM - 12 PM EST)">Morning (9:00 AM - 12:00 PM EST)</option>
               <option value="Afternoon (1 PM - 4 PM EST)">Afternoon (1:00 PM - 4:00 PM EST)</option>
@@ -235,14 +263,14 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
           </div>
 
           <div className="space-y-1">
-            <label className="block font-semibold text-[#111215]">Project Requirements &amp; Deliverables</label>
+            <label className="block font-semibold text-[#EDEDED]">Project Requirements &amp; Deliverables *</label>
             <textarea
               required
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Tell us about the key features, target users, integrations, or specific challenges for your project..."
-              className="w-full px-3.5 py-2.5 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-[#111215] placeholder-[#8C8F98] focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all resize-none leading-relaxed"
+              placeholder="Tell us about the key features, target users, integrations, or specific challenges for your project (min 10 characters)..."
+              className="w-full px-3.5 py-2.5 bg-[#17191D] border border-[#2A2E37] rounded-xl text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] focus:bg-[#202329] transition-all resize-none leading-relaxed"
             />
           </div>
 
@@ -251,7 +279,7 @@ export function ConsultationModal({ isOpen, onClose }: ConsultationModalProps) {
               type="submit"
               variant="primary"
               size="lg"
-              className="w-full"
+              className="w-full bg-[#519DD9] hover:bg-[#3d8ac4] text-[#17191D] font-bold"
               loading={loading}
               icon={<Send className="w-4 h-4" />}
             >

@@ -88,7 +88,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center p-4 relative overflow-hidden font-sans text-[#111215]">
         {/* Luminous Ambient Glows */}
         <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-[#519DD9]/8 blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-[#C89B3C]/8 blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 rounded-full bg-[#53BAC1]/8 blur-[140px] pointer-events-none" />
 
         <div className="w-full max-w-md bg-[#FFFFFF] border border-[#E5E2DB] shadow-2xl p-8 sm:p-10 relative z-10 space-y-6">
           <div className="text-center space-y-2">

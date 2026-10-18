@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
-import { GlassCard } from "@/components/ui/GlassCard";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
-import { Users, Filter, Plus, ChevronRight, TrendingUp } from "lucide-react";
+import { Users, Plus, ChevronRight, RefreshCw, CheckCircle2 } from "lucide-react";
+import { useAdminSession } from "@/app/admin/AdminSessionContext";
 
 interface LeadItem {
   id: string;
@@ -13,9 +13,15 @@ interface LeadItem {
   service: string;
   stage: string;
   score: number;
+  phone?: string | null;
+  projectScope?: string;
+  isDb?: boolean;
 }
 
 export default function AdminLeadsPage() {
+  const { activeRole } = useAdminSession();
+  const [loading, setLoading] = useState(false);
+  const [dbConnected, setDbConnected] = useState(false);
   const [leads, setLeads] = useState<LeadItem[]>([
     { id: "L1", name: "Acme FinTech Corp", email: "sarah@acme.com", budget: "$18,500", service: "Custom Software", stage: "PROPOSAL", score: 94 },
     { id: "L2", name: "PulseHealth MedTech", email: "david@pulsehealth.com", budget: "$14,500", service: "AI Solution", stage: "QUALIFIED", score: 91 },
@@ -23,33 +29,6 @@ export default function AdminLeadsPage() {
     { id: "L4", name: "Alpha Finance Portal", email: "dean@alpha.com", budget: "$35,000", service: "FinTech Platform", stage: "NEGOTIATION", score: 95 },
     { id: "L5", name: "ApexPay Inc", email: "ceo@apexpay.com", budget: "$30,000", service: "Custom SaaS", stage: "WON", score: 98 },
   ]);
-
-  React.useEffect(() => {
-    try {
-      const stored = localStorage.getItem("velocity_leads_data");
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const dynamicLeads: LeadItem[] = parsed.map((item: any, i: number) => ({
-            id: item.id || `L-DYN-${i}`,
-            name: item.fullName ? `${item.fullName} (${item.company || "Direct"})` : (item.company || "Inbound Client"),
-            email: item.email || "inquiry@client.com",
-            budget: item.budgetRange || "$15,000 - $35,000",
-            service: item.serviceNeeded || "Custom Architecture",
-            stage: "NEW LEAD",
-            score: Math.max(85, 96 - i)
-          }));
-          setLeads(prev => {
-            const existingIds = new Set(prev.map(p => p.id));
-            const newOnes = dynamicLeads.filter(d => !existingIds.has(d.id));
-            return [...newOnes, ...prev];
-          });
-        }
-      }
-    } catch (e) {
-      console.error("Failed to load dynamic leads", e);
-    }
-  }, []);
 
   const salesWorkflow = [
     "NEW LEAD",
@@ -61,19 +40,97 @@ export default function AdminLeadsPage() {
     "LOST"
   ];
 
-  const moveLead = (id: string) => {
-    setLeads(prev => prev.map(l => {
-      if (l.id === id) {
-        const currentIdx = salesWorkflow.indexOf(l.stage);
-        const nextStage = salesWorkflow[(currentIdx + 1) % salesWorkflow.length];
-        return { ...l, stage: nextStage };
+  // Map database status string ("NEW", "CONTACTED", etc.) to UI stage
+  const normalizeStatusToStage = (status: string): string => {
+    const upper = status.toUpperCase();
+    if (upper === "NEW") return "NEW LEAD";
+    if (salesWorkflow.includes(upper)) return upper;
+    return "NEW LEAD";
+  };
+
+  const normalizeStageToDbStatus = (stage: string): string => {
+    if (stage === "NEW LEAD") return "NEW";
+    return stage;
+  };
+
+  const fetchLeads = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("velocity_panel_token") || `token_${activeRole || "ADMIN"}`;
+      const res = await fetch("/api/v1/leads", {
+        headers: {
+          "X-Staff-Token": token,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.leads)) {
+          setDbConnected(true);
+          const dbLeads: LeadItem[] = data.leads.map((l: any) => ({
+            id: l.id,
+            name: l.fullName ? `${l.fullName} (${l.company || "Direct"})` : (l.company || "Direct Client"),
+            email: l.email,
+            budget: l.budgetRange || "Standard Tier",
+            service: l.serviceNeeded || "Custom Architecture",
+            stage: normalizeStatusToStage(l.status),
+            score: l.aiLeadScore || 85,
+            phone: l.phone,
+            projectScope: l.projectScope,
+            isDb: true,
+          }));
+
+          setLeads(prev => {
+            const dbIds = new Set(dbLeads.map(d => d.id));
+            const nonDbSeeds = prev.filter(p => !p.isDb && !dbIds.has(p.id));
+            return [...dbLeads, ...nonDbSeeds];
+          });
+        }
       }
-      return l;
-    }));
+    } catch (err) {
+      console.error("Failed to load leads from database:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchLeads();
+  }, [activeRole]);
+
+  const moveLead = async (id: string) => {
+    const lead = leads.find(l => l.id === id);
+    if (!lead) return;
+
+    const currentIdx = salesWorkflow.indexOf(lead.stage);
+    const nextStage = salesWorkflow[(currentIdx + 1) % salesWorkflow.length];
+
+    // Optimistically update UI
+    setLeads(prev => prev.map(l => (l.id === id ? { ...l, stage: nextStage } : l)));
+
+    // If it's a database-backed lead, persist to server
+    if (lead.isDb) {
+      try {
+        const token = localStorage.getItem("velocity_panel_token") || `token_${activeRole || "ADMIN"}`;
+        await fetch("/api/v1/leads", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "X-Staff-Token": token,
+          },
+          body: JSON.stringify({
+            id,
+            status: normalizeStageToDbStatus(nextStage),
+          }),
+        });
+      } catch (err) {
+        console.error("Failed to persist lead status mutation:", err);
+      }
+    }
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return "text-[#0F766E]";
+    if (score >= 90) return "text-[#53BAC1]";
     if (score >= 80) return "text-[#519DD9]";
     return "text-[#71757E]";
   };
@@ -85,11 +142,28 @@ export default function AdminLeadsPage() {
           <h2 className="text-2xl font-bold text-[#111215] font-display uppercase tracking-tight flex items-center gap-2">
             <Users className="w-6 h-6 text-[#519DD9]" /> CRM 1-on-1 Consultation Pipeline
           </h2>
-          <p className="text-xs text-[#565961]">Track inbound 1-on-1 discovery calls, review client project requirements, and manage proposal milestones.</p>
+          <p className="text-xs text-[#565961]">
+            Track inbound discovery enquiries, review project specifications, and manage client proposal milestones.
+          </p>
         </div>
-        <Button variant="gradient" size="sm" icon={<Plus className="w-4 h-4" />}>
-          Add Consultation Lead
-        </Button>
+        <div className="flex items-center gap-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] font-mono text-[10px] text-[#565961] rounded-lg">
+            <CheckCircle2 className={`w-3.5 h-3.5 ${dbConnected ? "text-[#53BAC1]" : "text-[#71757E]"}`} />
+            <span>DB PERSISTENCE: {dbConnected ? "ACTIVE" : "STANDBY"}</span>
+          </div>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={fetchLeads} 
+            loading={loading}
+            icon={<RefreshCw className="w-3.5 h-3.5" />}
+          >
+            Refresh Pipeline
+          </Button>
+          <Button variant="gradient" size="sm" icon={<Plus className="w-4 h-4" />}>
+            Add Consultation Lead
+          </Button>
+        </div>
       </div>
 
       <div className="overflow-x-auto pb-4">
@@ -108,8 +182,21 @@ export default function AdminLeadsPage() {
                 <div className="space-y-3">
                   {stageLeads.map((lead) => (
                     <div key={lead.id} className="p-3.5 bg-[#FFFFFF] rounded-xl border border-[#E5E2DB] space-y-2 text-xs shadow-xs hover:border-[#519DD9] transition">
-                      <div className="font-bold text-[#111215] text-sm leading-snug">{lead.name}</div>
+                      <div className="flex items-center justify-between">
+                        <div className="font-bold text-[#111215] text-sm leading-snug">{lead.name}</div>
+                        {lead.isDb && (
+                          <span className="font-mono text-[8px] px-1.5 py-0.2 bg-[#519DD9]/10 text-[#519DD9] border border-[#519DD9]/20 font-bold rounded">
+                            DB PERSISTED
+                          </span>
+                        )}
+                      </div>
                       <div className="text-[10px] text-[#71757E] font-mono">{lead.service} • {lead.budget}</div>
+                      <div className="text-[10px] text-[#565961]">{lead.email}</div>
+                      {lead.projectScope && (
+                        <p className="text-[10px] text-[#71757E] line-clamp-2 italic pt-1 border-t border-[#E5E2DB]">
+                          &quot;{lead.projectScope}&quot;
+                        </p>
+                      )}
                       <div className="flex justify-between items-center pt-2 border-t border-[#E5E2DB] text-[10px]">
                         <span className={`font-mono font-bold ${getScoreColor(lead.score)}`}>Lead Priority: {lead.score}%</span>
                         

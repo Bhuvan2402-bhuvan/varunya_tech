@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import { Loader2 } from "lucide-react";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "steel" | "gradient";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "steel" | "gradient" | "crimson";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
   icon?: React.ReactNode;
@@ -24,12 +24,13 @@ export function Button({
   const baseStyles = "inline-flex items-center justify-center font-mono text-xs uppercase tracking-wider transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
 
   const variants = {
-    primary: "bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] font-bold shadow-sm",
-    gradient: "bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] font-bold shadow-sm",
-    secondary: "bg-[#F5F3EF] text-[#111215] hover:bg-[#EBE8E1] border border-[#E5E2DB]",
-    outline: "bg-transparent border border-[#E5E2DB] text-[#111215] hover:border-[#111215] hover:bg-[#F5F3EF]",
-    ghost: "bg-transparent text-[#565961] hover:text-[#111215] hover:bg-[#F5F3EF]",
-    steel: "bg-[#519DD9] text-[#111215] hover:bg-[#53BAC1] font-bold",
+    primary: "bg-[#519DD9] text-[#17191D] hover:bg-[#3d8ac4] font-bold shadow-sm",
+    crimson: "bg-[#DB0038] text-[#FFFFFF] hover:bg-[#b5002e] font-bold shadow-sm",
+    gradient: "bg-gradient-to-r from-[#519DD9] to-[#53BAC1] text-[#17191D] hover:opacity-95 font-bold shadow-sm",
+    secondary: "bg-[#202329] text-[#EDEDED] hover:bg-[#282C34] border border-[#2A2E37]",
+    outline: "bg-transparent border border-[#2A2E37] text-[#EDEDED] hover:border-[#519DD9] hover:bg-[#202329]",
+    ghost: "bg-transparent text-[#A6AFBD] hover:text-[#EDEDED] hover:bg-[#202329]",
+    steel: "bg-[#202329] text-[#519DD9] hover:bg-[#282C34] border border-[#519DD9]/40 font-bold",
   };
 
   const sizes = {

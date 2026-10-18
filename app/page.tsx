@@ -8,32 +8,19 @@ import {
   ArrowUpRight,
   ExternalLink,
   ShieldCheck, 
-  Cpu, 
-  Layers, 
-  Terminal, 
-  Globe, 
   Database, 
   Server, 
   Check, 
+  Sparkles, 
+  Activity, 
+  Lock, 
+  School, 
+  CheckCircle2, 
+  Send, 
+  Mail, 
+  FileText,
   Clock,
-  Sparkles,
-  Activity,
-  Code2,
-  Workflow,
-  Lock,
-  GitBranch,
-  Zap,
-  BookOpen,
-  School,
-  FileCode2,
-  AlertCircle,
-  CheckCircle2,
-  Send,
-  Mail,
-  Building2,
-  ChevronRight,
-  Shield,
-  FileText
+  AlertCircle
 } from "lucide-react";
 import { ConsultationModal } from "@/components/consultation/ConsultationModal";
 import { 
@@ -60,6 +47,7 @@ export default function HomePage() {
   const [formProblem, setFormProblem] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formSubmitting, setFormSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
   const [formLeadId, setFormLeadId] = useState("");
 
   useEffect(() => {
@@ -70,69 +58,80 @@ export default function HomePage() {
     return () => unsubscribe();
   }, []);
 
-  const handleEnquirySubmit = (e: React.FormEvent) => {
+  const handleEnquirySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formName || !formEmail || !formProblem) return;
+    setFormError(null);
 
-    setFormSubmitting(true);
-    const leadId = `ENG-${Date.now().toString().slice(-4)}`;
-
-    const newLead = {
-      id: leadId,
-      fullName: formName,
-      company: formOrg || "Independent Client",
-      email: formEmail,
-      serviceNeeded: formProjectType,
-      projectScope: formProblem,
-      status: "NEW",
-      createdAt: new Date().toISOString()
-    };
-
-    try {
-      const existing = localStorage.getItem("velocity_leads_data");
-      const list = existing ? JSON.parse(existing) : [];
-      list.unshift(newLead);
-      localStorage.setItem("velocity_leads_data", JSON.stringify(list));
-    } catch (err) {
-      console.error("Error saving enquiry lead:", err);
+    if (!formName.trim() || !formEmail.trim() || !formProblem.trim()) {
+      setFormError("Please fill in your name, work email, and project description.");
+      return;
     }
 
-    setTimeout(() => {
-      setFormLeadId(leadId);
-      setFormSubmitting(false);
+    if (formProblem.trim().length < 10) {
+      setFormError("Please provide at least 10 characters describing your project requirements.");
+      return;
+    }
+
+    setFormSubmitting(true);
+
+    try {
+      const response = await fetch("/api/v1/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: formName.trim(),
+          email: formEmail.trim(),
+          company: formOrg.trim() || undefined,
+          serviceNeeded: formProjectType,
+          projectScope: formProblem.trim(),
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to persist project enquiry.");
+      }
+
+      setFormLeadId(data.leadId);
       setFormSubmitted(true);
-    }, 600);
+    } catch (err: any) {
+      console.error("Enquiry submission error:", err);
+      setFormError(
+        err.message || "Failed to submit enquiry. Please email varunyatech@gmail.com directly."
+      );
+    } finally {
+      setFormSubmitting(false);
+    }
   };
 
-  const visibleProjects = config.projects.projects.filter(p => p.visible !== false);
-  const flagshipProject = visibleProjects.find(p => p.id === "p1") || visibleProjects[0];
-  const secondaryProjects = visibleProjects.filter(p => p.id !== flagshipProject?.id);
-
   return (
-    <div className="relative bg-[#FAFAF8] text-[#111215] overflow-hidden font-sans">
+    <div className="relative bg-[#17191D] text-[#EDEDED] overflow-hidden font-sans">
       
       {/* ========================================================
           SECTION A — HERO / PROPOSITION
           "Your challenges. Our engineering."
-          Ivory Canvas with Digital Blue & Aqua Accents
+          Graphite Canvas with Digital Blue & Aqua Accents
           ======================================================== */}
-      <section id="hero" className="relative min-h-[90vh] flex flex-col justify-between border-b border-[#E5E2DB] bg-[#FAFAF8]">
+      <section id="hero" className="relative min-h-[90vh] flex flex-col justify-between border-b border-[#2A2E37] bg-[#17191D]">
         {/* Subtle luminous ambient glow */}
-        <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] rounded-full bg-[#519DD9]/8 blur-[160px] pointer-events-none" />
-        <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-[#C89B3C]/8 blur-[150px] pointer-events-none" />
+        <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] rounded-full bg-[#519DD9]/10 blur-[180px] pointer-events-none" />
+        <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-[#53BAC1]/8 blur-[160px] pointer-events-none" />
 
         {/* Top Telemetry Header Ribbon */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 pb-4 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.2em] text-[#565961] border-b border-[#E5E2DB]">
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-6 pb-4 flex flex-wrap items-center justify-between gap-4 font-mono text-[11px] uppercase tracking-[0.2em] text-[#A6AFBD] border-b border-[#2A2E37]">
           <div className="flex items-center gap-3">
             <span className="w-2 h-2 rounded-full bg-[#519DD9] shadow-[0_0_8px_#519DD9] animate-pulse" />
-            <span className="text-[#111215] font-bold">VARUNYA<span className="text-[#519DD9] font-normal">TECH</span></span>
-            <span className="text-[#D4D0C5]">/</span>
-            <span className="text-[#519DD9] font-semibold">ENGINEERING &amp; SOFTWARE ARCHITECTURE</span>
+            <span className="text-[#EDEDED] font-bold">VARUNYA<span className="text-[#519DD9] font-normal">TECH</span></span>
+            <span className="text-[#3B414E]">/</span>
+            <span className="text-[#519DD9] font-semibold">SOFTWARE ARCHITECTURE &amp; ENGINEERING</span>
           </div>
 
           <div className="flex items-center gap-6">
-            <span className="hidden md:inline text-[#565961]">DELIVERY SLA: <strong className="text-[#111215]">30–40 DAY SPRINTS</strong></span>
-            <span className="text-[#111215] font-semibold flex items-center gap-1.5">
+            <span className="hidden md:inline text-[#A6AFBD]">SPRINT CADENCE: <strong className="text-[#EDEDED]">30–40 DAY MILESTONES</strong></span>
+            <span className="text-[#EDEDED] font-semibold flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-[#F7C200] animate-pulse" />
               <span>[ SYSTEMS OPERATIONAL ]</span>
             </span>
@@ -145,32 +144,32 @@ export default function HomePage() {
           {/* Left Column: Customer-First Proposition & Call to Action (6 cols) */}
           <div className="lg:col-span-6 space-y-6">
             
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] font-mono text-[10px] tracking-[0.25em] text-[#519DD9] uppercase shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] font-mono text-[10px] tracking-[0.25em] text-[#519DD9] uppercase shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9]" />
-              <span>CUSTOM SOFTWARE &amp; AI ENGINEERING</span>
+              <span>CUSTOM SOFTWARE &amp; DIGITAL SYSTEMS</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold text-[#111215] tracking-tight uppercase leading-[0.98]">
+            <h1 className="text-4xl sm:text-6xl xl:text-7xl font-extrabold text-[#EDEDED] tracking-tight uppercase leading-[0.98]">
               Your challenges. <br />
               Our <span className="font-editorial font-light italic text-[#519DD9] normal-case">engineering.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-[#4A4D54] leading-relaxed max-w-xl font-normal">
-              We build software, AI solutions, and digital systems designed around real business problems. From custom ERP engines and interactive education platforms to autonomous AI workflows, we engineer production systems that drive measurable operations.
+            <p className="text-base sm:text-lg text-[#A6AFBD] leading-relaxed max-w-xl font-normal">
+              We design and build bespoke software, tailored business platforms, and automated digital systems focused entirely on practical business challenges. Production systems engineered for long-term reliability and complete client ownership.
             </p>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-              <a
-                href="#contact"
-                className="px-8 py-4 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] hover:text-[#111215] font-mono text-xs uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2.5 shadow-md"
+              <button
+                onClick={() => setConsultModalOpen(true)}
+                className="px-8 py-4 bg-[#DB0038] hover:bg-[#b5002e] text-[#FFFFFF] font-mono text-xs uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(219,0,56,0.35)]"
               >
                 <span>Discuss a project</span>
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </button>
 
               <a
                 href="#works"
-                className="px-8 py-4 bg-[#FFFFFF] text-[#111215] hover:bg-[#F5F3EF] font-mono text-xs uppercase tracking-widest font-semibold transition-all flex items-center justify-center gap-2.5 border border-[#E5E2DB] hover:border-[#111215] shadow-sm"
+                className="px-8 py-4 bg-[#202329] text-[#EDEDED] hover:bg-[#282C34] font-mono text-xs uppercase tracking-widest font-semibold transition-all flex items-center justify-center gap-2.5 border border-[#2A2E37] hover:border-[#519DD9] shadow-sm"
               >
                 <span>Explore our work</span>
                 <ArrowDownRight className="w-4 h-4 text-[#519DD9]" />
@@ -178,22 +177,22 @@ export default function HomePage() {
             </div>
 
             {/* Credibility Metrics Strip */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-[#E5E2DB] font-mono text-xs">
-              <div className="p-3 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm">
-                <div className="text-[10px] text-[#71757E] uppercase">SPRINT CYCLE</div>
-                <div className="text-sm font-bold text-[#111215] mt-0.5">30–40 DAYS</div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-[#2A2E37] font-mono text-xs">
+              <div className="p-3 bg-[#202329] border border-[#2A2E37] shadow-sm">
+                <div className="text-[10px] text-[#727C8D] uppercase">SPRINT CYCLE</div>
+                <div className="text-sm font-bold text-[#EDEDED] mt-0.5">30–40 DAYS</div>
               </div>
-              <div className="p-3 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm">
-                <div className="text-[10px] text-[#71757E] uppercase">PRODUCTION APPS</div>
+              <div className="p-3 bg-[#202329] border border-[#2A2E37] shadow-sm">
+                <div className="text-[10px] text-[#727C8D] uppercase">PRODUCTION APPS</div>
                 <div className="text-sm font-bold text-[#53BAC1] mt-0.5">4 VERIFIED</div>
               </div>
-              <div className="p-3 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm">
-                <div className="text-[10px] text-[#71757E] uppercase">IP TRANSFER</div>
+              <div className="p-3 bg-[#202329] border border-[#2A2E37] shadow-sm">
+                <div className="text-[10px] text-[#727C8D] uppercase">IP TRANSFER</div>
                 <div className="text-sm font-bold text-[#DB0038] mt-0.5">100% OWNED</div>
               </div>
-              <div className="p-3 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm">
-                <div className="text-[10px] text-[#71757E] uppercase">LATENCY SLA</div>
-                <div className="text-sm font-bold text-[#C89B3C] mt-0.5">&lt; 100MS P95</div>
+              <div className="p-3 bg-[#202329] border border-[#2A2E37] shadow-sm">
+                <div className="text-[10px] text-[#727C8D] uppercase">TARGET P95</div>
+                <div className="text-sm font-bold text-[#F7C200] mt-0.5">&lt; 100MS SPEC</div>
               </div>
             </div>
 
@@ -207,15 +206,15 @@ export default function HomePage() {
         </div>
 
         {/* Bottom Ticker Ribbon */}
-        <div className="relative z-10 w-full bg-[#F5F3EF] border-t border-[#E5E2DB] py-2.5 overflow-hidden font-mono text-[10px] uppercase tracking-[0.25em] text-[#565961]">
+        <div className="relative z-10 w-full bg-[#191C21] border-t border-[#2A2E37] py-2.5 overflow-hidden font-mono text-[10px] uppercase tracking-[0.25em] text-[#A6AFBD]">
           <div className="flex whitespace-nowrap gap-12 items-center animate-marquee">
             <span className="text-[#519DD9] font-semibold">• ENTERPRISE ERP ARCHITECTURES</span>
             <span className="text-[#53BAC1] font-semibold">• INTERACTIVE EDTECH PLATFORMS</span>
-            <span className="text-[#DB0038] font-semibold">• PRIVATE VECTOR AI RETRIEVAL</span>
-            <span className="text-[#519DD9] font-semibold">• 100% INTELLECTUAL PROPERTY TRANSFER</span>
-            <span className="text-[#111215] font-semibold">• STRICT TYPESCRIPT 5.7 COMPILATION</span>
+            <span className="text-[#DB0038] font-semibold">• DETERMINISTIC RAG VECTOR PIPELINES</span>
+            <span className="text-[#519DD9] font-semibold">• 100% SOURCE CODE &amp; IP TRANSFER</span>
+            <span className="text-[#EDEDED] font-semibold">• STRICT TYPESCRIPT COMPILATION</span>
             <span className="text-[#53BAC1] font-semibold">• DISCIPLINED 30–40 DAY DELIVERY SPRINTS</span>
-            <span className="text-[#C89B3C] font-semibold">• CONTINUOUS POST-LAUNCH SUPPORT</span>
+            <span className="text-[#F7C200] font-semibold">• GUARANTEED POST-LAUNCH SUPPORT</span>
           </div>
         </div>
       </section>
@@ -229,27 +228,27 @@ export default function HomePage() {
       {/* ========================================================
           SECTION B — CUSTOMER PROBLEMS & SOLUTIONS
           4 Categories: Education, Custom Software/ERP, AI, Infrastructure
-          Warm Ivory Surface #F0EEE9 · Accent #519DD9 · Cards #FFFFFF
+          Charcoal Foundation #191C21 · Accent #519DD9 · Cards #202329
           ======================================================== */}
-      <section id="problems" className="py-24 border-b border-[#E5E2DB] bg-[#F0EEE9] relative overflow-hidden">
+      <section id="problems" className="py-24 border-b border-[#2A2E37] bg-[#191C21] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
           
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E5E2DB] pb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#2A2E37] pb-8">
             <div className="space-y-4 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9] animate-pulse" />
                 SECTION B // REAL BUSINESS CHALLENGES
               </div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111215] tracking-tight font-sans">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#EDEDED] tracking-tight font-sans">
                 Customer Problems We Solve <span className="text-[#519DD9]">With Engineering.</span>
               </h2>
-              <p className="text-[#4A4D54] text-base font-normal leading-relaxed">
-                Generic SaaS software locks you into perpetual subscriptions and rigid templates. We engineer tailored software architectures that address your company&apos;s actual operational bottlenecks.
+              <p className="text-[#A6AFBD] text-base font-normal leading-relaxed">
+                Generic off-the-shelf software locks you into perpetual per-user licensing and rigid templates. We engineer tailored software architectures that solve your actual operational bottlenecks.
               </p>
             </div>
 
-            <div className="font-mono text-xs text-[#565961] shrink-0 flex items-center gap-2 bg-[#FFFFFF] px-3.5 py-2 border border-[#E5E2DB] shadow-sm">
+            <div className="font-mono text-xs text-[#A6AFBD] shrink-0 flex items-center gap-2 bg-[#202329] px-3.5 py-2 border border-[#2A2E37] shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#53BAC1]" />
               <span>FIXED SCOPE • NO RUNAWAY BILLING</span>
             </div>
@@ -259,264 +258,264 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             
             {/* Category 1: Education and Institutional Workflows */}
-            <div className="bg-[#FFFFFF] border border-[#E5E2DB] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#111215] hover:shadow-xl transition-all">
+            <div className="bg-[#202329] border border-[#2A2E37] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#53BAC1] hover:shadow-2xl transition-all rounded-xl">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#F5F3EF] border border-[#E5E2DB] font-mono text-[10px] text-[#53BAC1] uppercase tracking-wider font-bold">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#17191D] border border-[#2A2E37] font-mono text-[10px] text-[#53BAC1] uppercase tracking-wider font-bold">
                     <School className="w-3.5 h-3.5" />
                     <span>01 // EDUCATION &amp; INSTITUTIONAL WORKFLOWS</span>
                   </div>
-                  <span className="font-mono text-[10px] text-[#71757E] uppercase">PROVEN IN PRODUCTION</span>
+                  <span className="font-mono text-[10px] text-[#727C8D] uppercase">PROVEN IN PRODUCTION</span>
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-[#111215] font-sans">
+                  <h3 className="text-2xl font-bold text-[#EDEDED] font-sans">
                     Digital Learning &amp; Student Operations
                   </h3>
-                  <div className="mt-4 p-4 bg-[#FDFCFA] border-l-2 border-[#DB0038] space-y-1">
+                  <div className="mt-4 p-4 bg-[#17191D] border-l-2 border-[#DB0038] space-y-1">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-[#DB0038] font-bold">
                       THE CUSTOMER&apos;S PROBLEM:
                     </span>
-                    <p className="text-xs text-[#565961] leading-relaxed">
+                    <p className="text-xs text-[#A6AFBD] leading-relaxed">
                       Tutoring academies and educational institutions struggle with disconnected student tracking, manual paper reports, and difficulty teaching foundational hands-on skills (like abacus math) in digital formats.
                     </p>
                   </div>
 
-                  <div className="mt-4 p-4 bg-[#FDFCFA] border-l-2 border-[#53BAC1] space-y-1">
+                  <div className="mt-4 p-4 bg-[#17191D] border-l-2 border-[#53BAC1] space-y-1">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-[#53BAC1] font-bold">
                       OUR ENGINEERED SOLUTION:
                     </span>
-                    <p className="text-xs text-[#4A4D54] leading-relaxed">
+                    <p className="text-xs text-[#EDEDED] leading-relaxed">
                       Custom touch-enabled learning platforms with real-time 2D canvas bead interaction, automated skill mastery tracking, and clean student/teacher portals that work across all desktop and mobile devices.
                     </p>
                   </div>
                 </div>
 
                 {/* Proof & Verified Implementation */}
-                <div className="p-4 bg-[#FAFAF8] border border-[#E5E2DB] space-y-2">
-                  <span className="font-mono text-[10px] text-[#71757E] uppercase tracking-wider font-bold">
+                <div className="p-4 bg-[#17191D] border border-[#2A2E37] space-y-2 rounded-lg">
+                  <span className="font-mono text-[10px] text-[#727C8D] uppercase tracking-wider font-bold">
                     VERIFIED IMPLEMENTATIONS:
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
                       Fun With Abacus (Live Platform)
                     </span>
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
                       Jignasa Knowledge Hub
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] flex items-center justify-between">
-                <span className="font-mono text-[10px] text-[#71757E] uppercase">
-                  NEXT STEP: SCOPE AN EDUCATION PLATFORM
+              <div className="pt-4 border-t border-[#2A2E37] flex items-center justify-between">
+                <span className="font-mono text-[10px] text-[#727C8D] uppercase">
+                  SCOPE AN EDUCATION PLATFORM
                 </span>
-                <a
-                  href="#contact"
-                  className="font-mono text-xs text-[#111215] hover:text-[#53BAC1] flex items-center gap-1.5 uppercase font-bold transition-colors"
+                <button
+                  onClick={() => setConsultModalOpen(true)}
+                  className="font-mono text-xs text-[#53BAC1] hover:text-[#EDEDED] flex items-center gap-1.5 uppercase font-bold transition-colors"
                 >
                   <span>Discuss Requirements</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#53BAC1]" />
-                </a>
+                </button>
               </div>
             </div>
 
             {/* Category 2: Custom Business Software & ERP */}
-            <div className="bg-[#FFFFFF] border border-[#E5E2DB] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#111215] hover:shadow-xl transition-all">
+            <div className="bg-[#202329] border border-[#2A2E37] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#519DD9] hover:shadow-2xl transition-all rounded-xl">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#F5F3EF] border border-[#E5E2DB] font-mono text-[10px] text-[#519DD9] uppercase tracking-wider font-bold">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#17191D] border border-[#2A2E37] font-mono text-[10px] text-[#519DD9] uppercase tracking-wider font-bold">
                     <Database className="w-3.5 h-3.5" />
                     <span>02 // CUSTOM BUSINESS SOFTWARE &amp; ERP</span>
                   </div>
-                  <span className="font-mono text-[10px] text-[#71757E] uppercase">PROVEN IN PRODUCTION</span>
+                  <span className="font-mono text-[10px] text-[#727C8D] uppercase">PROVEN IN PRODUCTION</span>
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-[#111215] font-sans">
+                  <h3 className="text-2xl font-bold text-[#EDEDED] font-sans">
                     Operational Software &amp; Management Portals
                   </h3>
-                  <div className="mt-4 p-4 bg-[#FDFCFA] border-l-2 border-[#DB0038] space-y-1">
+                  <div className="mt-4 p-4 bg-[#17191D] border-l-2 border-[#DB0038] space-y-1">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-[#DB0038] font-bold">
                       THE CUSTOMER&apos;S PROBLEM:
                     </span>
-                    <p className="text-xs text-[#565961] leading-relaxed">
-                      Off-the-shelf ERP and CRM software is bloated, charges recurring per-user license fees, and forces businesses to change their proven workflows to fit inflexible software templates.
+                    <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                      Off-the-shelf ERP and CRM software is bloated, charges recurring per-seat subscriptions, and forces businesses to modify their proven workflows to fit rigid vendor software models.
                     </p>
                   </div>
 
-                  <div className="mt-4 p-4 bg-[#FDFCFA] border-l-2 border-[#519DD9] space-y-1">
+                  <div className="mt-4 p-4 bg-[#17191D] border-l-2 border-[#519DD9] space-y-1">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-[#519DD9] font-bold">
                       OUR ENGINEERED SOLUTION:
                     </span>
-                    <p className="text-xs text-[#4A4D54] leading-relaxed">
+                    <p className="text-xs text-[#EDEDED] leading-relaxed">
                       Tailored business management systems with granular Role-Based Access Control (RBAC), multi-tenant tenancy, ACID transactional integrity, and custom dashboards. You own 100% of the source code.
                     </p>
                   </div>
                 </div>
 
                 {/* Proof & Verified Implementation */}
-                <div className="p-4 bg-[#FAFAF8] border border-[#E5E2DB] space-y-2">
-                  <span className="font-mono text-[10px] text-[#71757E] uppercase tracking-wider font-bold">
+                <div className="p-4 bg-[#17191D] border border-[#2A2E37] space-y-2 rounded-lg">
+                  <span className="font-mono text-[10px] text-[#727C8D] uppercase tracking-wider font-bold">
                     VERIFIED IMPLEMENTATIONS:
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
                       Varunya ERP Platform (Live In Production)
                     </span>
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
                       Client Command Center (/portal)
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] flex items-center justify-between">
-                <span className="font-mono text-[10px] text-[#71757E] uppercase">
-                  NEXT STEP: REQUEST ERP BLUEPRINT
+              <div className="pt-4 border-t border-[#2A2E37] flex items-center justify-between">
+                <span className="font-mono text-[10px] text-[#727C8D] uppercase">
+                  REQUEST ERP BLUEPRINT
                 </span>
-                <a
-                  href="#contact"
-                  className="font-mono text-xs text-[#111215] hover:text-[#519DD9] flex items-center gap-1.5 uppercase font-bold transition-colors"
+                <button
+                  onClick={() => setConsultModalOpen(true)}
+                  className="font-mono text-xs text-[#519DD9] hover:text-[#EDEDED] flex items-center gap-1.5 uppercase font-bold transition-colors"
                 >
                   <span>Discuss Requirements</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#519DD9]" />
-                </a>
+                </button>
               </div>
             </div>
 
             {/* Category 3: AI and Workflow Automation */}
-            <div className="bg-[#FFFFFF] border border-[#E5E2DB] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#111215] hover:shadow-xl transition-all">
+            <div className="bg-[#202329] border border-[#2A2E37] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#53BAC1] hover:shadow-2xl transition-all rounded-xl">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#F5F3EF] border border-[#E5E2DB] font-mono text-[10px] text-[#53BAC1] uppercase tracking-wider font-bold">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#17191D] border border-[#2A2E37] font-mono text-[10px] text-[#53BAC1] uppercase tracking-wider font-bold">
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>03 // AI &amp; WORKFLOW AUTOMATION</span>
                   </div>
-                  <span className="font-mono text-[10px] text-[#71757E] uppercase">ZERO HALLUCINATION</span>
+                  <span className="font-mono text-[10px] text-[#727C8D] uppercase">DETERMINISTIC VERIFICATION</span>
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-[#111215] font-sans">
-                    Intelligent Pipelines &amp; Document AI
+                  <h3 className="text-2xl font-bold text-[#EDEDED] font-sans">
+                    Intelligent Retrieval &amp; Document AI
                   </h3>
-                  <div className="mt-4 p-4 bg-[#FDFCFA] border-l-2 border-[#DB0038] space-y-1">
+                  <div className="mt-4 p-4 bg-[#17191D] border-l-2 border-[#DB0038] space-y-1">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-[#DB0038] font-bold">
                       THE CUSTOMER&apos;S PROBLEM:
                     </span>
-                    <p className="text-xs text-[#565961] leading-relaxed">
-                      Organizations want AI leverage, but generic chatbots leak confidential data, hallucinate wrong answers, and fail to connect with private corporate databases or file systems.
+                    <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                      Organizations want AI leverage, but public AI interfaces risk exposing proprietary customer data, hallucinate wrong numbers, and fail to integrate with corporate databases or file systems.
                     </p>
                   </div>
 
-                  <div className="mt-4 p-4 bg-[#FDFCFA] border-l-2 border-[#53BAC1] space-y-1">
+                  <div className="mt-4 p-4 bg-[#17191D] border-l-2 border-[#53BAC1] space-y-1">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-[#53BAC1] font-bold">
                       OUR ENGINEERED SOLUTION:
                     </span>
-                    <p className="text-xs text-[#4A4D54] leading-relaxed">
-                      Enterprise Retrieval-Augmented Generation (RAG) pipelines with local or isolated vector databases (`pgvector`), strict permission guardrails, deterministic audit logs, and verifiable source citations.
+                    <p className="text-xs text-[#EDEDED] leading-relaxed">
+                      Enterprise Retrieval-Augmented Generation (RAG) pipelines with isolated vector databases (`pgvector`), strict permission guardrails, deterministic audit logs, and verifiable source citations.
                     </p>
                   </div>
                 </div>
 
                 {/* Proof & Verified Implementation */}
-                <div className="p-4 bg-[#FAFAF8] border border-[#E5E2DB] space-y-2">
-                  <span className="font-mono text-[10px] text-[#71757E] uppercase tracking-wider font-bold">
+                <div className="p-4 bg-[#17191D] border border-[#2A2E37] space-y-2 rounded-lg">
+                  <span className="font-mono text-[10px] text-[#727C8D] uppercase tracking-wider font-bold">
                     ARCHITECTURAL CAPABILITIES:
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
                       Semantic Document Ingestion
                     </span>
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
-                      Private Vector Indexing
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
+                      Isolated Vector Indexing
                     </span>
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
-                      Zero-Data-Retention APIs
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
+                      Zod Schema Contracts
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] flex items-center justify-between">
-                <span className="font-mono text-[10px] text-[#71757E] uppercase">
-                  NEXT STEP: SCHEDULE AI FEASIBILITY AUDIT
+              <div className="pt-4 border-t border-[#2A2E37] flex items-center justify-between">
+                <span className="font-mono text-[10px] text-[#727C8D] uppercase">
+                  SCHEDULE AI FEASIBILITY AUDIT
                 </span>
-                <a
-                  href="#contact"
-                  className="font-mono text-xs text-[#111215] hover:text-[#53BAC1] flex items-center gap-1.5 uppercase font-bold transition-colors"
+                <button
+                  onClick={() => setConsultModalOpen(true)}
+                  className="font-mono text-xs text-[#53BAC1] hover:text-[#EDEDED] flex items-center gap-1.5 uppercase font-bold transition-colors"
                 >
                   <span>Discuss Requirements</span>
                   <ArrowRight className="w-3.5 h-3.5 text-[#53BAC1]" />
-                </a>
+                </button>
               </div>
             </div>
 
             {/* Category 4: Infrastructure & Cloud Scaling */}
-            <div className="bg-[#FFFFFF] border border-[#E5E2DB] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#111215] hover:shadow-xl transition-all">
+            <div className="bg-[#202329] border border-[#2A2E37] p-8 sm:p-10 flex flex-col justify-between space-y-8 hover:border-[#F7C200] hover:shadow-2xl transition-all rounded-xl">
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#F5F3EF] border border-[#E5E2DB] font-mono text-[10px] text-[#C89B3C] uppercase tracking-wider font-bold">
+                  <div className="inline-flex items-center gap-2 px-2.5 py-1 bg-[#17191D] border border-[#2A2E37] font-mono text-[10px] text-[#F7C200] uppercase tracking-wider font-bold">
                     <Server className="w-3.5 h-3.5" />
                     <span>04 // CLOUD INFRASTRUCTURE &amp; SCALING</span>
                   </div>
-                  <span className="font-mono text-[10px] text-[#71757E] uppercase">SUB-100MS P95</span>
+                  <span className="font-mono text-[10px] text-[#727C8D] uppercase">SUB-100MS TARGET</span>
                 </div>
 
                 <div>
-                  <h3 className="text-2xl font-bold text-[#111215] font-sans">
+                  <h3 className="text-2xl font-bold text-[#EDEDED] font-sans">
                     High-Velocity Cloud &amp; Database Architecture
                   </h3>
-                  <div className="mt-4 p-4 bg-[#FDFCFA] border-l-2 border-[#DB0038] space-y-1">
+                  <div className="mt-4 p-4 bg-[#17191D] border-l-2 border-[#DB0038] space-y-1">
                     <span className="font-mono text-[10px] uppercase tracking-wider text-[#DB0038] font-bold">
                       THE CUSTOMER&apos;S PROBLEM:
                     </span>
-                    <p className="text-xs text-[#565961] leading-relaxed">
-                      Legacy applications suffer from slow page load times, frequent downtime during traffic spikes, poor mobile performance, and skyrocketing cloud bills from unoptimized queries.
+                    <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                      Legacy applications suffer from slow page load times, frequent downtime during traffic spikes, poor mobile performance, and uncontrolled cloud bills from unoptimized queries.
                     </p>
                   </div>
 
-                  <div className="mt-4 p-4 bg-[#FDFCFA] border-l-2 border-[#C89B3C] space-y-1">
-                    <span className="font-mono text-[10px] uppercase tracking-wider text-[#C89B3C] font-bold">
+                  <div className="mt-4 p-4 bg-[#17191D] border-l-2 border-[#F7C200] space-y-1">
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-[#F7C200] font-bold">
                       OUR ENGINEERED SOLUTION:
                     </span>
-                    <p className="text-xs text-[#4A4D54] leading-relaxed">
+                    <p className="text-xs text-[#EDEDED] leading-relaxed">
                       Next.js 14 App Router server-side rendering, global Edge CDN caching, connection-pooled PostgreSQL databases, and sub-100ms response targets deployed directly to your own cloud infrastructure.
                     </p>
                   </div>
                 </div>
 
                 {/* Proof & Verified Implementation */}
-                <div className="p-4 bg-[#FAFAF8] border border-[#E5E2DB] space-y-2">
-                  <span className="font-mono text-[10px] text-[#71757E] uppercase tracking-wider font-bold">
-                    TELEMETRY GUARANTEES:
+                <div className="p-4 bg-[#17191D] border border-[#2A2E37] space-y-2 rounded-lg">
+                  <span className="font-mono text-[10px] text-[#727C8D] uppercase tracking-wider font-bold">
+                    ARCHITECTURE TARGETS:
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
-                      99.95%+ Production Uptime
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
+                      High-Availability Edge Routing
                     </span>
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
                       Zero Cold-Start Edge Execution
                     </span>
-                    <span className="px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-xs font-semibold text-[#111215]">
-                      Turnkey AWS / GCP / Vercel Setup
+                    <span className="px-2.5 py-1 bg-[#202329] border border-[#2A2E37] text-xs font-semibold text-[#EDEDED]">
+                      Turnkey AWS / GCP / Vercel Deployments
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] flex items-center justify-between">
-                <span className="font-mono text-[10px] text-[#71757E] uppercase">
-                  NEXT STEP: AUDIT YOUR INFRASTRUCTURE
+              <div className="pt-4 border-t border-[#2A2E37] flex items-center justify-between">
+                <span className="font-mono text-[10px] text-[#727C8D] uppercase">
+                  AUDIT YOUR INFRASTRUCTURE
                 </span>
-                <a
-                  href="#contact"
-                  className="font-mono text-xs text-[#111215] hover:text-[#C89B3C] flex items-center gap-1.5 uppercase font-bold transition-colors"
+                <button
+                  onClick={() => setConsultModalOpen(true)}
+                  className="font-mono text-xs text-[#F7C200] hover:text-[#EDEDED] flex items-center gap-1.5 uppercase font-bold transition-colors"
                 >
                   <span>Discuss Requirements</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-[#C89B3C]" />
-                </a>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#F7C200]" />
+                </button>
               </div>
             </div>
 
@@ -529,51 +528,51 @@ export default function HomePage() {
           SECTION C — GENUINE PRODUCTS
           Showcases actual existing products with screenshots, users,
           problems solved, and working live links.
-          Soft Ivory Canvas with High-Contrast Editorial Panels
+          Graphite Canvas with Elevated Surface Panels
           ======================================================== */}
-      <section id="products" className="py-24 border-b border-[#E5E2DB] bg-[#FFFFFF] text-[#111215] relative overflow-hidden">
+      <section id="products" className="py-24 border-b border-[#2A2E37] bg-[#17191D] text-[#EDEDED] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
           
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E5E2DB] pb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#2A2E37] pb-8">
             <div className="space-y-4 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9] animate-pulse" />
                 SECTION C // GENUINE PRODUCTS &amp; PLATFORMS
               </div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111215] tracking-tight font-sans">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#EDEDED] tracking-tight font-sans">
                 Real Software Products <span className="text-[#519DD9]">Ready to Deploy.</span>
               </h2>
-              <p className="text-[#4A4D54] text-base font-normal leading-relaxed">
-                We do not show speculative design concepts. Below are genuine, fully coded software applications and platforms engineered by VarunyaTech with verified live URLs and complete source code ownership.
+              <p className="text-[#A6AFBD] text-base font-normal leading-relaxed">
+                We do not show speculative design concepts. Below are genuine, fully coded software applications engineered by VarunyaTech with verified live URLs and complete source code ownership.
               </p>
             </div>
 
-            <div className="font-mono text-xs text-[#565961] shrink-0 flex items-center gap-2 bg-[#F5F3EF] px-3.5 py-2 border border-[#E5E2DB] shadow-sm">
+            <div className="font-mono text-xs text-[#A6AFBD] shrink-0 flex items-center gap-2 bg-[#202329] px-3.5 py-2 border border-[#2A2E37] shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#53BAC1]" />
-              <span>STATUS: <strong className="text-[#111215]">ALL DEMOS OPERATIONAL</strong></span>
+              <span>STATUS: <strong className="text-[#EDEDED]">LIVE PRODUCTION DEMOS</strong></span>
             </div>
           </div>
 
           {/* Product 1: Flagship Showcase - Varunya ERP Platform */}
-          <div className="p-8 sm:p-12 bg-[#FAFAF8] border border-[#E5E2DB] shadow-md relative overflow-hidden group">
+          <div className="p-8 sm:p-12 bg-[#202329] border border-[#2A2E37] shadow-2xl relative overflow-hidden group rounded-xl">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
               
               {/* Image Preview (7 cols) */}
-              <div className="lg:col-span-7 relative h-72 sm:h-96 overflow-hidden border border-[#E5E2DB] bg-[#111215] shadow-inner">
+              <div className="lg:col-span-7 relative h-72 sm:h-96 overflow-hidden border border-[#2A2E37] bg-[#141518] rounded-lg">
                 <img
                   src="/images/products/erp-platform.jpg"
                   alt="Varunya ERP Platform Interface"
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF]/95 border border-[#519DD9] font-mono text-[10px] text-[#519DD9] uppercase tracking-wider shadow-md font-bold">
+                <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1 bg-[#17191D]/90 border border-[#519DD9] font-mono text-[10px] text-[#519DD9] uppercase tracking-wider shadow-md font-bold backdrop-blur">
                   <span className="w-2 h-2 rounded-full bg-[#519DD9] animate-pulse" />
                   RELEASED PRODUCT // LIVE IN PRODUCTION
                 </div>
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] text-[#111215] bg-[#FFFFFF]/95 p-3 border border-[#E5E2DB] shadow-md backdrop-blur">
-                  <span>USERS: Enterprise Ops &amp; Warehouse Teams</span>
-                  <span className="text-[#519DD9] font-bold">LATENCY: &lt; 32ms P95</span>
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between font-mono text-[10px] text-[#EDEDED] bg-[#17191D]/90 p-3 border border-[#2A2E37] shadow-md backdrop-blur rounded">
+                  <span>USERS: Enterprise Operations &amp; Warehouse Teams</span>
+                  <span className="text-[#519DD9] font-bold">STATUS: OPERATIONAL</span>
                 </div>
               </div>
 
@@ -584,19 +583,19 @@ export default function HomePage() {
                     <Database className="w-3.5 h-3.5" />
                     PRODUCT 01 // ENTERPRISE MANAGEMENT
                   </div>
-                  <h3 className="text-3xl sm:text-4xl font-extrabold text-[#111215] font-sans mt-2">
+                  <h3 className="text-3xl sm:text-4xl font-extrabold text-[#EDEDED] font-sans mt-2">
                     Varunya ERP Platform
                   </h3>
-                  <p className="text-sm text-[#4A4D54] font-normal leading-relaxed mt-3">
-                    A centralized enterprise operations engine that eliminates fragmented spreadsheets. Provides role-based access, automated inventory reconciliation, and real-time operational analytics.
+                  <p className="text-sm text-[#A6AFBD] font-normal leading-relaxed mt-3">
+                    A centralized enterprise operations platform that eliminates fragmented spreadsheets. Provides role-based access control, inventory tracking, and operational analytics.
                   </p>
                 </div>
 
-                <div className="space-y-2 border-t border-[#E5E2DB] pt-4">
-                  <div className="font-mono text-[10px] text-[#71757E] uppercase tracking-wider font-bold">
+                <div className="space-y-2 border-t border-[#2A2E37] pt-4">
+                  <div className="font-mono text-[10px] text-[#727C8D] uppercase tracking-wider font-bold">
                     KEY PRODUCT CAPABILITIES:
                   </div>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-[#111215]">
+                  <div className="grid grid-cols-2 gap-2 text-xs text-[#EDEDED]">
                     <div className="flex items-center gap-2">
                       <Check className="w-3.5 h-3.5 text-[#519DD9] shrink-0 font-bold" />
                       <span>Zero-Trust RBAC</span>
@@ -607,7 +606,7 @@ export default function HomePage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Check className="w-3.5 h-3.5 text-[#519DD9] shrink-0 font-bold" />
-                      <span>Live Order Pipeline</span>
+                      <span>Order Management</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Check className="w-3.5 h-3.5 text-[#519DD9] shrink-0 font-bold" />
@@ -618,29 +617,29 @@ export default function HomePage() {
 
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {["Next.js 14", "React", "TypeScript", "Node.js", "PostgreSQL", "Tailwind CSS"].map((tech) => (
-                    <span key={tech} className="font-mono text-[10px] px-2.5 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-[#111215] font-semibold">
+                    <span key={tech} className="font-mono text-[10px] px-2.5 py-1 bg-[#17191D] border border-[#2A2E37] text-[#EDEDED] font-semibold">
                       {tech}
                     </span>
                   ))}
                 </div>
 
-                <div className="pt-4 border-t border-[#E5E2DB] flex flex-wrap items-center justify-between gap-4">
+                <div className="pt-4 border-t border-[#2A2E37] flex flex-wrap items-center justify-between gap-4">
                   <a
                     href="https://erp-tan-six.vercel.app/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] hover:text-[#111215] font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-sm"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#519DD9] text-[#17191D] hover:bg-[#3d8ac4] font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-md rounded"
                   >
                     <span>Launch Live Demo</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
 
-                  <a
-                    href="#contact"
-                    className="font-mono text-xs text-[#519DD9] hover:text-[#111215] underline font-bold"
+                  <button
+                    onClick={() => setConsultModalOpen(true)}
+                    className="font-mono text-xs text-[#519DD9] hover:text-[#EDEDED] underline font-bold"
                   >
                     Request Custom Deployment →
-                  </a>
+                  </button>
                 </div>
               </div>
 
@@ -651,19 +650,19 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
             {/* Product 2: Fun With Abacus */}
-            <div className="bg-[#FAFAF8] border border-[#E5E2DB] p-6 flex flex-col justify-between space-y-6 group hover:border-[#111215] hover:shadow-xl transition-all">
+            <div className="bg-[#202329] border border-[#2A2E37] p-6 flex flex-col justify-between space-y-6 group hover:border-[#53BAC1] hover:shadow-2xl transition-all rounded-xl">
               <div className="space-y-5">
-                <div className="relative h-48 overflow-hidden border border-[#E5E2DB] bg-[#111215]">
+                <div className="relative h-48 overflow-hidden border border-[#2A2E37] bg-[#141518] rounded-lg">
                   <img
                     src="/images/products/fun-with-abacus.jpg"
                     alt="Fun With Abacus Learning Suite"
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#FFFFFF]/95 border border-[#53BAC1] font-mono text-[9px] text-[#53BAC1] font-bold uppercase tracking-wider shadow-sm">
+                  <div className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#17191D]/90 border border-[#53BAC1] font-mono text-[9px] text-[#53BAC1] font-bold uppercase tracking-wider shadow-sm backdrop-blur">
                     RELEASED PRODUCT // LIVE
                   </div>
-                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 bg-[#FFFFFF]/95 border border-[#E5E2DB] font-mono text-[9px] text-[#111215] font-semibold">
+                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 bg-[#17191D]/90 border border-[#2A2E37] font-mono text-[9px] text-[#EDEDED] font-semibold backdrop-blur">
                     EDTECH SUITE
                   </div>
                 </div>
@@ -672,19 +671,19 @@ export default function HomePage() {
                   <div className="font-mono text-[10px] uppercase tracking-widest text-[#53BAC1] font-bold">
                     STUDENTS &amp; TUTORING ACADEMIES
                   </div>
-                  <h3 className="text-xl font-bold text-[#111215] font-sans mt-1">
+                  <h3 className="text-xl font-bold text-[#EDEDED] font-sans mt-1">
                     Fun With Abacus
                   </h3>
-                  <p className="text-xs text-[#4A4D54] font-normal leading-relaxed mt-2">
-                    Digital mental math practice suite with responsive 2D canvas bead manipulation. Replaces physical plastic abacus boards with an engaging, lag-free web application.
+                  <p className="text-xs text-[#A6AFBD] font-normal leading-relaxed mt-2">
+                    Digital mental math practice suite with responsive 2D canvas bead manipulation. Replaces physical plastic abacus boards with an engaging, interactive web application.
                   </p>
                 </div>
 
-                <div className="space-y-1.5 border-t border-[#E5E2DB] pt-3">
-                  <div className="font-mono text-[9px] text-[#71757E] uppercase tracking-wider font-bold">
+                <div className="space-y-1.5 border-t border-[#2A2E37] pt-3">
+                  <div className="font-mono text-[9px] text-[#727C8D] uppercase tracking-wider font-bold">
                     CORE HIGHLIGHTS:
                   </div>
-                  <div className="space-y-1 text-xs text-[#111215]">
+                  <div className="space-y-1 text-xs text-[#EDEDED]">
                     <div className="flex items-center gap-2">
                       <Check className="w-3 h-3 shrink-0 text-[#53BAC1]" />
                       <span>Interactive touch bead canvas</span>
@@ -702,22 +701,22 @@ export default function HomePage() {
 
                 <div className="flex flex-wrap gap-1 pt-1">
                   {["React.js", "HTML5 Canvas", "Web Audio API", "Tailwind CSS", "Vercel"].map((tech) => (
-                    <span key={tech} className="font-mono text-[8px] px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB] text-[#111215] font-semibold">
+                    <span key={tech} className="font-mono text-[8px] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37] text-[#EDEDED] font-semibold">
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] flex items-center justify-between">
-                <span className="font-mono text-[9px] text-[#71757E]">
-                  PUBLIC INSTANCE
+              <div className="pt-4 border-t border-[#2A2E37] flex items-center justify-between">
+                <span className="font-mono text-[9px] text-[#727C8D]">
+                  PUBLIC PLATFORM
                 </span>
                 <a
                   href="https://funwithabacus.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#111215] text-[#FFFFFF] hover:bg-[#53BAC1] hover:text-[#111215] font-mono text-[10px] uppercase tracking-wider font-bold transition-colors shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#53BAC1] text-[#17191D] hover:bg-[#3ca3aa] font-mono text-[10px] uppercase tracking-wider font-bold transition-colors shadow-sm rounded"
                 >
                   <span>Launch Live Platform</span>
                   <ExternalLink className="w-3 h-3" />
@@ -726,19 +725,19 @@ export default function HomePage() {
             </div>
 
             {/* Product 3: Jignasa Knowledge Hub */}
-            <div className="bg-[#FAFAF8] border border-[#E5E2DB] p-6 flex flex-col justify-between space-y-6 group hover:border-[#111215] hover:shadow-xl transition-all">
+            <div className="bg-[#202329] border border-[#2A2E37] p-6 flex flex-col justify-between space-y-6 group hover:border-[#519DD9] hover:shadow-2xl transition-all rounded-xl">
               <div className="space-y-5">
-                <div className="relative h-48 overflow-hidden border border-[#E5E2DB] bg-[#111215]">
+                <div className="relative h-48 overflow-hidden border border-[#2A2E37] bg-[#141518] rounded-lg">
                   <img
                     src="/images/products/jignasa.jpg"
                     alt="Jignasa Knowledge Portal"
                     loading="lazy"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#FFFFFF]/95 border border-[#519DD9] font-mono text-[9px] text-[#519DD9] font-bold uppercase tracking-wider shadow-sm">
+                  <div className="absolute top-2.5 left-2.5 px-2 py-0.5 bg-[#17191D]/90 border border-[#519DD9] font-mono text-[9px] text-[#519DD9] font-bold uppercase tracking-wider shadow-sm backdrop-blur">
                     RELEASED PRODUCT // LIVE
                   </div>
-                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 bg-[#FFFFFF]/95 border border-[#E5E2DB] font-mono text-[9px] text-[#111215] font-semibold">
+                  <div className="absolute top-2.5 right-2.5 px-2 py-0.5 bg-[#17191D]/90 border border-[#2A2E37] font-mono text-[9px] text-[#EDEDED] font-semibold backdrop-blur">
                     KNOWLEDGE HUB
                   </div>
                 </div>
@@ -747,19 +746,19 @@ export default function HomePage() {
                   <div className="font-mono text-[10px] uppercase tracking-widest text-[#519DD9] font-bold">
                     STUDENTS &amp; RESEARCH TEAMS
                   </div>
-                  <h3 className="text-xl font-bold text-[#111215] font-sans mt-1">
+                  <h3 className="text-xl font-bold text-[#EDEDED] font-sans mt-1">
                     Jignasa Knowledge Portal
                   </h3>
-                  <p className="text-xs text-[#4A4D54] font-normal leading-relaxed mt-2">
+                  <p className="text-xs text-[#A6AFBD] font-normal leading-relaxed mt-2">
                     Structured educational platform engineered for sub-second content retrieval, searchable curriculum modules, and distraction-free responsive reading.
                   </p>
                 </div>
 
-                <div className="space-y-1.5 border-t border-[#E5E2DB] pt-3">
-                  <div className="font-mono text-[9px] text-[#71757E] uppercase tracking-wider font-bold">
+                <div className="space-y-1.5 border-t border-[#2A2E37] pt-3">
+                  <div className="font-mono text-[9px] text-[#727C8D] uppercase tracking-wider font-bold">
                     CORE HIGHLIGHTS:
                   </div>
-                  <div className="space-y-1 text-xs text-[#111215]">
+                  <div className="space-y-1 text-xs text-[#EDEDED]">
                     <div className="flex items-center gap-2">
                       <Check className="w-3 h-3 shrink-0 text-[#519DD9]" />
                       <span>Instant sub-second search indexing</span>
@@ -777,22 +776,22 @@ export default function HomePage() {
 
                 <div className="flex flex-wrap gap-1 pt-1">
                   {["Next.js", "React.js", "TypeScript", "Tailwind CSS", "Vercel"].map((tech) => (
-                    <span key={tech} className="font-mono text-[8px] px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB] text-[#111215] font-semibold">
+                    <span key={tech} className="font-mono text-[8px] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37] text-[#EDEDED] font-semibold">
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] flex items-center justify-between">
-                <span className="font-mono text-[9px] text-[#71757E]">
-                  PUBLIC INSTANCE
+              <div className="pt-4 border-t border-[#2A2E37] flex items-center justify-between">
+                <span className="font-mono text-[9px] text-[#727C8D]">
+                  PUBLIC PLATFORM
                 </span>
                 <a
                   href="https://jignasa.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] hover:text-[#111215] font-mono text-[10px] uppercase tracking-wider font-bold transition-colors shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#519DD9] text-[#17191D] hover:bg-[#3d8ac4] font-mono text-[10px] uppercase tracking-wider font-bold transition-colors shadow-sm rounded"
                 >
                   <span>Launch Live Platform</span>
                   <ExternalLink className="w-3 h-3" />
@@ -801,73 +800,73 @@ export default function HomePage() {
             </div>
 
             {/* Product 4: Client Command Center (Internal Tool & Portal) */}
-            <div className="bg-[#FAFAF8] border border-[#E5E2DB] p-6 flex flex-col justify-between space-y-6 group hover:border-[#111215] hover:shadow-xl transition-all">
+            <div className="bg-[#202329] border border-[#2A2E37] p-6 flex flex-col justify-between space-y-6 group hover:border-[#F7C200] hover:shadow-2xl transition-all rounded-xl">
               <div className="space-y-5">
-                <div className="relative h-48 overflow-hidden border border-[#E5E2DB] bg-[#111215] p-5 flex flex-col justify-between text-white font-mono">
+                <div className="relative h-48 overflow-hidden border border-[#2A2E37] bg-[#141518] p-5 flex flex-col justify-between text-white font-mono rounded-lg">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] text-[#53BAC1] font-bold">CLIENT_PORTAL // SECURE</span>
                     <span className="w-2 h-2 rounded-full bg-[#53BAC1] animate-pulse" />
                   </div>
                   <div className="space-y-2">
-                    <div className="text-xs text-[#E5E2DB]">LIVE MILESTONE TRACKER</div>
-                    <div className="text-lg font-bold text-white">Sprint 03 / Handover Ready</div>
-                    <div className="w-full bg-[#2A2D35] h-1.5">
+                    <div className="text-xs text-[#A6AFBD]">LIVE MILESTONE TRACKER</div>
+                    <div className="text-lg font-bold text-[#EDEDED]">Sprint 03 / Handover Ready</div>
+                    <div className="w-full bg-[#202329] h-1.5 rounded-full overflow-hidden">
                       <div className="bg-[#53BAC1] h-1.5 w-4/5" />
                     </div>
                   </div>
-                  <div className="text-[9px] text-[#9299A3]">
-                    REAL-TIME UPTIME: 99.98% • ENCRYPTED
+                  <div className="text-[9px] text-[#727C8D]">
+                    ROLE-BASED RBAC ACCESS • ENCRYPTED
                   </div>
                 </div>
 
                 <div>
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-[#C89B3C] font-bold">
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-[#F7C200] font-bold">
                     COMMISSIONING CLIENTS &amp; PROJECT LEADS
                   </div>
-                  <h3 className="text-xl font-bold text-[#111215] font-sans mt-1">
+                  <h3 className="text-xl font-bold text-[#EDEDED] font-sans mt-1">
                     Client Command Center
                   </h3>
-                  <p className="text-xs text-[#4A4D54] font-normal leading-relaxed mt-2">
-                    Our proprietary project telemetry portal where clients track sprint progress, review live staging builds, inspect test passes, and access encrypted deliverables.
+                  <p className="text-xs text-[#A6AFBD] font-normal leading-relaxed mt-2">
+                    Our project telemetry portal where clients track sprint progress, review live staging builds, inspect deliverables, and coordinate directly with developers.
                   </p>
                 </div>
 
-                <div className="space-y-1.5 border-t border-[#E5E2DB] pt-3">
-                  <div className="font-mono text-[9px] text-[#71757E] uppercase tracking-wider font-bold">
+                <div className="space-y-1.5 border-t border-[#2A2E37] pt-3">
+                  <div className="font-mono text-[9px] text-[#727C8D] uppercase tracking-wider font-bold">
                     CLIENT ADVANTAGES:
                   </div>
-                  <div className="space-y-1 text-xs text-[#111215]">
+                  <div className="space-y-1 text-xs text-[#EDEDED]">
                     <div className="flex items-center gap-2">
-                      <Check className="w-3 h-3 shrink-0 text-[#C89B3C]" />
+                      <Check className="w-3 h-3 shrink-0 text-[#F7C200]" />
                       <span>Live sprint milestone progress</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Check className="w-3 h-3 shrink-0 text-[#C89B3C]" />
-                      <span>Encrypted repository credential sharing</span>
+                      <Check className="w-3 h-3 shrink-0 text-[#F7C200]" />
+                      <span>Repository credential and handover sharing</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Check className="w-3 h-3 shrink-0 text-[#C89B3C]" />
-                      <span>Direct architect escalation route</span>
+                      <Check className="w-3 h-3 shrink-0 text-[#F7C200]" />
+                      <span>Direct developer communication channel</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-wrap gap-1 pt-1">
-                  {["Next.js App Router", "JWT Auth", "RBAC", "WebSockets", "Prisma"].map((tech) => (
-                    <span key={tech} className="font-mono text-[8px] px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB] text-[#111215] font-semibold">
+                  {["Next.js App Router", "JWT Auth", "RBAC", "Prisma"].map((tech) => (
+                    <span key={tech} className="font-mono text-[8px] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37] text-[#EDEDED] font-semibold">
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] flex items-center justify-between">
-                <span className="font-mono text-[9px] text-[#71757E]">
+              <div className="pt-4 border-t border-[#2A2E37] flex items-center justify-between">
+                <span className="font-mono text-[9px] text-[#727C8D]">
                   INTERNAL CLIENT TOOL
                 </span>
                 <Link
                   href="/portal"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#111215] text-[#FFFFFF] hover:bg-[#C89B3C] hover:text-[#111215] font-mono text-[10px] uppercase tracking-wider font-bold transition-colors shadow-sm"
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#202329] hover:bg-[#282C34] text-[#EDEDED] border border-[#2A2E37] hover:border-[#F7C200] font-mono text-[10px] uppercase tracking-wider font-bold transition-colors shadow-sm rounded"
                 >
                   <span>Open Client Portal</span>
                   <ArrowRight className="w-3 h-3" />
@@ -884,28 +883,29 @@ export default function HomePage() {
           SECTION D — SELECTED WORK & CASE STUDIES
           Concise, honest case studies highlighting original problems,
           solutions implemented, and verified live outcomes.
+          Charcoal Foundation #191C21
           ======================================================== */}
-      <section id="works" className="py-24 border-b border-[#E5E2DB] bg-[#FAFAF8] text-[#111215] relative overflow-hidden">
+      <section id="works" className="py-24 border-b border-[#2A2E37] bg-[#191C21] text-[#EDEDED] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
           
           {/* Section Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E5E2DB] pb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#2A2E37] pb-8">
             <div className="space-y-4 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9] animate-pulse" />
                 SECTION D // VERIFIED CASE STUDIES
               </div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111215] tracking-tight font-sans">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#EDEDED] tracking-tight font-sans">
                 What We Have Actually <span className="text-[#519DD9]">Engineered.</span>
               </h2>
-              <p className="text-[#4A4D54] text-base font-normal leading-relaxed">
+              <p className="text-[#A6AFBD] text-base font-normal leading-relaxed">
                 Case studies of genuine systems engineered by VarunyaTech. Each project outlines the original operational problem, the architecture delivered, and verified live production links.
               </p>
             </div>
 
             <Link
               href="/portfolio"
-              className="font-mono text-xs text-[#519DD9] hover:text-[#111215] flex items-center gap-2 uppercase tracking-wider shrink-0 font-bold"
+              className="font-mono text-xs text-[#519DD9] hover:text-[#EDEDED] flex items-center gap-2 uppercase tracking-wider shrink-0 font-bold"
             >
               <span>View Portfolio Index</span>
               <ArrowUpRight className="w-4 h-4" />
@@ -917,20 +917,20 @@ export default function HomePage() {
             {PORTFOLIO_DATA.slice(0, 3).map((item, idx) => (
               <div 
                 key={item.id}
-                className="p-8 sm:p-10 bg-[#FFFFFF] border border-[#E5E2DB] shadow-md grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+                className="p-8 sm:p-10 bg-[#202329] border border-[#2A2E37] shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center rounded-xl"
               >
                 {/* Visual / Screenshot (5 cols) */}
-                <div className="lg:col-span-5 relative h-64 sm:h-80 overflow-hidden border border-[#E5E2DB] bg-[#111215]">
+                <div className="lg:col-span-5 relative h-64 sm:h-80 overflow-hidden border border-[#2A2E37] bg-[#141518] rounded-lg">
                   <img
                     src={item.heroImage}
                     alt={item.title}
                     loading="lazy"
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#FFFFFF]/95 border border-[#519DD9] font-mono text-[9px] text-[#519DD9] font-bold uppercase">
+                  <div className="absolute top-3 left-3 px-2.5 py-1 bg-[#17191D]/90 border border-[#519DD9] font-mono text-[9px] text-[#519DD9] font-bold uppercase backdrop-blur">
                     CASE STUDY // 0{idx + 1}
                   </div>
-                  <div className="absolute bottom-3 left-3 right-3 px-3 py-1.5 bg-[#FFFFFF]/95 border border-[#E5E2DB] font-mono text-[9px] text-[#111215] flex items-center justify-between">
+                  <div className="absolute bottom-3 left-3 right-3 px-3 py-1.5 bg-[#17191D]/90 border border-[#2A2E37] font-mono text-[9px] text-[#EDEDED] flex items-center justify-between backdrop-blur rounded">
                     <span>SECTOR: {item.industry}</span>
                     <span className="text-[#53BAC1] font-bold">SPRINT: {item.durationDays} DAYS</span>
                   </div>
@@ -942,40 +942,40 @@ export default function HomePage() {
                     <div className="font-mono text-[10px] text-[#519DD9] uppercase tracking-wider font-bold">
                       {item.category} • {item.client}
                     </div>
-                    <h3 className="text-2xl sm:text-3xl font-extrabold text-[#111215] font-sans mt-1">
+                    <h3 className="text-2xl sm:text-3xl font-extrabold text-[#EDEDED] font-sans mt-1">
                       {item.title}
                     </h3>
                   </div>
 
                   {/* Problem vs Solution breakdown */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                    <div className="p-4 bg-[#FDFCFA] border-l-2 border-[#DB0038] space-y-1">
+                    <div className="p-4 bg-[#17191D] border-l-2 border-[#DB0038] space-y-1 rounded-r-lg">
                       <span className="font-mono text-[9px] uppercase tracking-wider text-[#DB0038] font-bold">
                         THE ORIGINAL PROBLEM:
                       </span>
-                      <p className="text-[#565961] leading-relaxed">
+                      <p className="text-[#A6AFBD] leading-relaxed">
                         {item.challenge}
                       </p>
                     </div>
 
-                    <div className="p-4 bg-[#FDFCFA] border-l-2 border-[#519DD9] space-y-1">
+                    <div className="p-4 bg-[#17191D] border-l-2 border-[#519DD9] space-y-1 rounded-r-lg">
                       <span className="font-mono text-[9px] uppercase tracking-wider text-[#519DD9] font-bold">
                         THE SOLUTION DELIVERED:
                       </span>
-                      <p className="text-[#4A4D54] leading-relaxed">
+                      <p className="text-[#EDEDED] leading-relaxed">
                         {item.solution}
                       </p>
                     </div>
                   </div>
 
                   {/* Architecture & Tech Stack */}
-                  <div className="space-y-2 border-t border-[#E5E2DB] pt-3">
-                    <div className="font-mono text-[10px] text-[#71757E] uppercase tracking-wider">
-                      ARCHITECTURE: <strong className="text-[#111215]">{item.architecture}</strong>
+                  <div className="space-y-2 border-t border-[#2A2E37] pt-3">
+                    <div className="font-mono text-[10px] text-[#727C8D] uppercase tracking-wider">
+                      ARCHITECTURE: <strong className="text-[#EDEDED]">{item.architecture}</strong>
                     </div>
                     <div className="flex flex-wrap gap-1.5">
                       {item.techStack.map((tech) => (
-                        <span key={tech} className="font-mono text-[9px] px-2 py-0.5 bg-[#F5F3EF] border border-[#E5E2DB] text-[#111215] font-semibold">
+                        <span key={tech} className="font-mono text-[9px] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37] text-[#EDEDED] font-semibold">
                           {tech}
                         </span>
                       ))}
@@ -983,24 +983,26 @@ export default function HomePage() {
                   </div>
 
                   {/* Live Launch Action */}
-                  <div className="pt-3 border-t border-[#E5E2DB] flex items-center justify-between">
-                    <div className="flex items-center gap-3 font-mono text-[10px] text-[#71757E]">
+                  <div className="pt-3 border-t border-[#2A2E37] flex items-center justify-between">
+                    <div className="flex items-center gap-3 font-mono text-[10px] text-[#727C8D]">
                       {item.impactMetrics.slice(0, 2).map((m, i) => (
                         <span key={i}>
-                          {m.label}: <strong className="text-[#111215]">{m.value}</strong>
+                          {m.label}: <strong className="text-[#EDEDED]">{m.value}</strong>
                         </span>
                       ))}
                     </div>
 
-                    <a
-                      href={item.liveDemoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] hover:text-[#111215] font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-sm"
-                    >
-                      <span>Launch Live Platform</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
+                    {item.liveDemoUrl && (
+                      <a
+                        href={item.liveDemoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#519DD9] text-[#17191D] hover:bg-[#3d8ac4] font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-sm rounded"
+                      >
+                        <span>Launch Live Platform</span>
+                        <ExternalLink className="w-3.5 h-3.5" />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1015,19 +1017,19 @@ export default function HomePage() {
           Explains how software components connect and how AI workflows operate.
           Integrated cleanly without disrupting customer clarity.
           ======================================================== */}
-      <section id="engineering" className="py-24 border-b border-[#E5E2DB] bg-[#F0EEE9] relative overflow-hidden">
+      <section id="engineering" className="py-24 border-b border-[#2A2E37] bg-[#17191D] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
           
           <div className="space-y-4 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9]" />
               ENGINEERING ARCHITECTURE // HOW COMPONENTS CONNECT
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111215] tracking-tight font-sans">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#EDEDED] tracking-tight font-sans">
               Purposeful System <span className="text-[#519DD9]">Architecture.</span>
             </h2>
-            <p className="text-[#4A4D54] text-base font-normal leading-relaxed">
-              Inspect how we architect your software tier-by-tier: from edge ingress caching and zero-trust authentication to multi-tenant database persistence and autonomous vector AI pipelines.
+            <p className="text-[#A6AFBD] text-base font-normal leading-relaxed">
+              Inspect how we architect software tier-by-tier: from edge ingress caching and zero-trust authentication to multi-tenant database persistence and deterministic vector AI pipelines.
             </p>
           </div>
 
@@ -1035,7 +1037,7 @@ export default function HomePage() {
           <StageArchitecture />
 
           {/* Interactive AI Pipeline Simulation */}
-          <div className="pt-10 border-t border-[#E5E2DB]">
+          <div className="pt-10 border-t border-[#2A2E37]">
             <StageAiPipeline />
           </div>
 
@@ -1047,26 +1049,26 @@ export default function HomePage() {
           Transparent 5-Stage Delivery Process
           Clear expectations, milestones, and timelines.
           ======================================================== */}
-      <section id="process" className="py-24 border-b border-[#E5E2DB] bg-[#FFFFFF] text-[#111215] relative overflow-hidden">
+      <section id="process" className="py-24 border-b border-[#2A2E37] bg-[#191C21] text-[#EDEDED] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
           
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E5E2DB] pb-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#2A2E37] pb-8">
             <div className="space-y-4 max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9] animate-pulse" />
                 SECTION E // TRANSPARENT DELIVERY PROCESS
               </div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111215] tracking-tight font-sans">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#EDEDED] tracking-tight font-sans">
                 How We Deliver <span className="text-[#519DD9]">Your Project.</span>
               </h2>
-              <p className="text-[#4A4D54] text-base font-normal leading-relaxed">
+              <p className="text-[#A6AFBD] text-base font-normal leading-relaxed">
                 No speculative time-and-materials billing or endless scope drift. We operate on a disciplined 30–40 day milestone roadmap with continuous client visibility.
               </p>
             </div>
 
-            <div className="font-mono text-xs text-[#565961] shrink-0 bg-[#F5F3EF] px-3.5 py-2 border border-[#E5E2DB] shadow-sm">
-              TOTAL CYCLE: <strong className="text-[#111215]">30–40 CALENDAR DAYS</strong>
+            <div className="font-mono text-xs text-[#A6AFBD] shrink-0 bg-[#202329] px-3.5 py-2 border border-[#2A2E37] shadow-sm">
+              TOTAL CYCLE: <strong className="text-[#EDEDED]">30–40 CALENDAR DAYS</strong>
             </div>
           </div>
 
@@ -1074,27 +1076,27 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
             
             {/* Stage 1 */}
-            <div className="p-6 bg-[#FAFAF8] border border-[#E5E2DB] flex flex-col justify-between space-y-6 hover:border-[#111215] transition-colors shadow-sm">
+            <div className="p-6 bg-[#202329] border border-[#2A2E37] flex flex-col justify-between space-y-6 hover:border-[#519DD9] transition-colors shadow-sm rounded-xl">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-bold text-[#519DD9]">STAGE 01</span>
-                  <span className="font-mono text-[9px] text-[#71757E] px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB]">
+                  <span className="font-mono text-[9px] text-[#727C8D] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37]">
                     DAYS 1–5
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-[#111215]">
-                  Discovery &amp; Requirements
+                <h3 className="text-lg font-bold text-[#EDEDED]">
+                  Discovery &amp; Scoping
                 </h3>
-                <p className="text-xs text-[#4A4D54] leading-relaxed">
-                  We conduct focused scoping interviews to audit your business workflows, define technical requirements, and establish acceptance benchmarks.
+                <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                  Focused scoping discussions auditing your workflows, defining technical deliverables, and locking in acceptance benchmarks.
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] space-y-2 text-[11px] text-[#111215]">
-                <div className="font-mono text-[9px] text-[#71757E] uppercase font-bold">DELIVERABLES:</div>
+              <div className="pt-4 border-t border-[#2A2E37] space-y-2 text-[11px] text-[#EDEDED]">
+                <div className="font-mono text-[9px] text-[#727C8D] uppercase font-bold">DELIVERABLES:</div>
                 <div className="flex items-center gap-2">
                   <Check className="w-3.5 h-3.5 text-[#519DD9] shrink-0" />
-                  <span>Technical Requirements Doc</span>
+                  <span>Technical Scoping Doc</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="w-3.5 h-3.5 text-[#519DD9] shrink-0" />
@@ -1104,84 +1106,84 @@ export default function HomePage() {
             </div>
 
             {/* Stage 2 */}
-            <div className="p-6 bg-[#FAFAF8] border border-[#E5E2DB] flex flex-col justify-between space-y-6 hover:border-[#111215] transition-colors shadow-sm">
+            <div className="p-6 bg-[#202329] border border-[#2A2E37] flex flex-col justify-between space-y-6 hover:border-[#519DD9] transition-colors shadow-sm rounded-xl">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-bold text-[#519DD9]">STAGE 02</span>
-                  <span className="font-mono text-[9px] text-[#71757E] px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB]">
+                  <span className="font-mono text-[9px] text-[#727C8D] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37]">
                     DAYS 6–10
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-[#111215]">
-                  Solution Design &amp; Scope
+                <h3 className="text-lg font-bold text-[#EDEDED]">
+                  Design &amp; Specifications
                 </h3>
-                <p className="text-xs text-[#4A4D54] leading-relaxed">
+                <p className="text-xs text-[#A6AFBD] leading-relaxed">
                   Interactive UI/UX prototypes, database schema modeling, and API contract specifications locked in with fixed milestone pricing.
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] space-y-2 text-[11px] text-[#111215]">
-                <div className="font-mono text-[9px] text-[#71757E] uppercase font-bold">DELIVERABLES:</div>
+              <div className="pt-4 border-t border-[#2A2E37] space-y-2 text-[11px] text-[#EDEDED]">
+                <div className="font-mono text-[9px] text-[#727C8D] uppercase font-bold">DELIVERABLES:</div>
                 <div className="flex items-center gap-2">
                   <Check className="w-3.5 h-3.5 text-[#519DD9] shrink-0" />
-                  <span>Interactive Figma prototype</span>
+                  <span>Figma UI/UX prototype</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="w-3.5 h-3.5 text-[#519DD9] shrink-0" />
-                  <span>Fixed-scope contract</span>
+                  <span>Fixed milestone contract</span>
                 </div>
               </div>
             </div>
 
             {/* Stage 3 */}
-            <div className="p-6 bg-[#FAFAF8] border border-[#E5E2DB] flex flex-col justify-between space-y-6 hover:border-[#111215] transition-colors shadow-sm">
+            <div className="p-6 bg-[#202329] border border-[#2A2E37] flex flex-col justify-between space-y-6 hover:border-[#53BAC1] transition-colors shadow-sm rounded-xl">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-bold text-[#53BAC1]">STAGE 03</span>
-                  <span className="font-mono text-[9px] text-[#71757E] px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB]">
+                  <span className="font-mono text-[9px] text-[#727C8D] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37]">
                     DAYS 11–30
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-[#111215]">
+                <h3 className="text-lg font-bold text-[#EDEDED]">
                   Development &amp; Testing
                 </h3>
-                <p className="text-xs text-[#4A4D54] leading-relaxed">
-                  Fast bi-weekly development sprints with continuous live staging access. Strict automated unit, integration, and security testing.
+                <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                  Fast development sprints with continuous staging access. Strict automated unit, integration, and security checks.
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] space-y-2 text-[11px] text-[#111215]">
-                <div className="font-mono text-[9px] text-[#71757E] uppercase font-bold">DELIVERABLES:</div>
+              <div className="pt-4 border-t border-[#2A2E37] space-y-2 text-[11px] text-[#EDEDED]">
+                <div className="font-mono text-[9px] text-[#727C8D] uppercase font-bold">DELIVERABLES:</div>
                 <div className="flex items-center gap-2">
                   <Check className="w-3.5 h-3.5 text-[#53BAC1] shrink-0" />
                   <span>Live staging environment</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Check className="w-3.5 h-3.5 text-[#53BAC1] shrink-0" />
-                  <span>Automated test report</span>
+                  <span>Quality test report</span>
                 </div>
               </div>
             </div>
 
             {/* Stage 4 */}
-            <div className="p-6 bg-[#FAFAF8] border border-[#E5E2DB] flex flex-col justify-between space-y-6 hover:border-[#111215] transition-colors shadow-sm">
+            <div className="p-6 bg-[#202329] border border-[#2A2E37] flex flex-col justify-between space-y-6 hover:border-[#DB0038] transition-colors shadow-sm rounded-xl">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-bold text-[#DB0038]">STAGE 04</span>
-                  <span className="font-mono text-[9px] text-[#71757E] px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB]">
+                  <span className="font-mono text-[9px] text-[#727C8D] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37]">
                     DAYS 31–36
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-[#111215]">
+                <h3 className="text-lg font-bold text-[#EDEDED]">
                   Deployment &amp; Handover
                 </h3>
-                <p className="text-xs text-[#4A4D54] leading-relaxed">
-                  Production cloud deployment directly to your infrastructure (AWS/GCP/Vercel). 100% source code repository and database schema transfer.
+                <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                  Production cloud deployment directly into your accounts. Complete source code repository and database schema ownership transfer.
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] space-y-2 text-[11px] text-[#111215]">
-                <div className="font-mono text-[9px] text-[#71757E] uppercase font-bold">DELIVERABLES:</div>
+              <div className="pt-4 border-t border-[#2A2E37] space-y-2 text-[11px] text-[#EDEDED]">
+                <div className="font-mono text-[9px] text-[#727C8D] uppercase font-bold">DELIVERABLES:</div>
                 <div className="flex items-center gap-2">
                   <Check className="w-3.5 h-3.5 text-[#DB0038] shrink-0" />
                   <span>Production cloud release</span>
@@ -1194,31 +1196,31 @@ export default function HomePage() {
             </div>
 
             {/* Stage 5 */}
-            <div className="p-6 bg-[#FAFAF8] border border-[#E5E2DB] flex flex-col justify-between space-y-6 hover:border-[#111215] transition-colors shadow-sm">
+            <div className="p-6 bg-[#202329] border border-[#2A2E37] flex flex-col justify-between space-y-6 hover:border-[#F7C200] transition-colors shadow-sm rounded-xl">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-[#C89B3C]">STAGE 05</span>
-                  <span className="font-mono text-[9px] text-[#71757E] px-2 py-0.5 bg-[#FFFFFF] border border-[#E5E2DB]">
+                  <span className="font-mono text-xs font-bold text-[#F7C200]">STAGE 05</span>
+                  <span className="font-mono text-[9px] text-[#727C8D] px-2 py-0.5 bg-[#17191D] border border-[#2A2E37]">
                     POST-LAUNCH
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-[#111215]">
+                <h3 className="text-lg font-bold text-[#EDEDED]">
                   Maintenance &amp; Support
                 </h3>
-                <p className="text-xs text-[#4A4D54] leading-relaxed">
-                  30-day initial warranty SLA covering bug fixes and performance tuning, followed by agreed ongoing support retainers.
+                <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                  30-day post-launch warranty covering any bug fixes and performance tuning, followed by continuous client support arrangements.
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-[#E5E2DB] space-y-2 text-[11px] text-[#111215]">
-                <div className="font-mono text-[9px] text-[#71757E] uppercase font-bold">DELIVERABLES:</div>
+              <div className="pt-4 border-t border-[#2A2E37] space-y-2 text-[11px] text-[#EDEDED]">
+                <div className="font-mono text-[9px] text-[#727C8D] uppercase font-bold">DELIVERABLES:</div>
                 <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-[#C89B3C] shrink-0" />
-                  <span>30-Day warranty SLA</span>
+                  <Check className="w-3.5 h-3.5 text-[#F7C200] shrink-0" />
+                  <span>30-Day warranty coverage</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-[#C89B3C] shrink-0" />
-                  <span>Telemetry &amp; backups setup</span>
+                  <Check className="w-3.5 h-3.5 text-[#F7C200] shrink-0" />
+                  <span>Health monitoring &amp; backups</span>
                 </div>
               </div>
             </div>
@@ -1233,20 +1235,20 @@ export default function HomePage() {
           Accurate, verifiable practices: Security, QA, Data Ownership,
           Flexible Deployment, and Support.
           ======================================================== */}
-      <section id="trust" className="py-24 border-b border-[#E5E2DB] bg-[#FAFAF8] text-[#111215] relative overflow-hidden">
+      <section id="trust" className="py-24 border-b border-[#2A2E37] bg-[#17191D] text-[#EDEDED] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
           
           {/* Header */}
           <div className="space-y-4 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] text-[#519DD9] text-[10px] font-mono uppercase tracking-[0.25em] shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9]" />
               SECTION F // CREDIBILITY &amp; ENGINEERING STANDARDS
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111215] tracking-tight font-sans">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#EDEDED] tracking-tight font-sans">
               Rigorous Standards. <span className="text-[#519DD9]">No Artificial Claims.</span>
             </h2>
-            <p className="text-[#4A4D54] text-base font-normal leading-relaxed">
-              We do not invent certifications or vanity awards. We earn trust through concrete engineering guarantees: 100% IP ownership, automated testing, zero vendor lock-in, and documented code.
+            <p className="text-[#A6AFBD] text-base font-normal leading-relaxed">
+              We earn trust through concrete engineering practices: 100% intellectual property ownership, automated testing, zero vendor lock-in, and well-documented code.
             </p>
           </div>
 
@@ -1254,79 +1256,79 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             
             {/* Pillar 1: 100% IP Ownership */}
-            <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm space-y-4 hover:border-[#111215] transition-colors">
-              <div className="w-10 h-10 flex items-center justify-center bg-[#F5F3EF] border border-[#E5E2DB] text-[#DB0038]">
+            <div className="p-8 bg-[#202329] border border-[#2A2E37] shadow-sm space-y-4 hover:border-[#DB0038] transition-colors rounded-xl">
+              <div className="w-10 h-10 flex items-center justify-center bg-[#17191D] border border-[#2A2E37] text-[#DB0038] rounded-lg">
                 <ShieldCheck className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-bold text-[#111215]">
+              <h3 className="text-lg font-bold text-[#EDEDED]">
                 100% IP &amp; Source Code Rights
               </h3>
-              <p className="text-xs text-[#4A4D54] leading-relaxed">
+              <p className="text-xs text-[#A6AFBD] leading-relaxed">
                 You own every repository, commit, database migration, and design asset upon handover. There is zero recurring licensing fee or vendor lock-in.
               </p>
             </div>
 
             {/* Pillar 2: Security & Privacy */}
-            <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm space-y-4 hover:border-[#111215] transition-colors">
-              <div className="w-10 h-10 flex items-center justify-center bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9]">
+            <div className="p-8 bg-[#202329] border border-[#2A2E37] shadow-sm space-y-4 hover:border-[#519DD9] transition-colors rounded-xl">
+              <div className="w-10 h-10 flex items-center justify-center bg-[#17191D] border border-[#2A2E37] text-[#519DD9] rounded-lg">
                 <Lock className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-bold text-[#111215]">
+              <h3 className="text-lg font-bold text-[#EDEDED]">
                 Security &amp; Privacy by Design
               </h3>
-              <p className="text-xs text-[#4A4D54] leading-relaxed">
-                Hardened with OWASP Top 10 defenses, zero-trust RBAC authentication, bcrypt/Argon2 password hashing, and encrypted data at rest and in transit.
+              <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                Hardened with OWASP defenses, zero-trust RBAC authorization, secure session management, and encrypted data at rest and in transit.
               </p>
             </div>
 
             {/* Pillar 3: Automated Testing & QA */}
-            <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm space-y-4 hover:border-[#111215] transition-colors">
-              <div className="w-10 h-10 flex items-center justify-center bg-[#F5F3EF] border border-[#E5E2DB] text-[#53BAC1]">
+            <div className="p-8 bg-[#202329] border border-[#2A2E37] shadow-sm space-y-4 hover:border-[#53BAC1] transition-colors rounded-xl">
+              <div className="w-10 h-10 flex items-center justify-center bg-[#17191D] border border-[#2A2E37] text-[#53BAC1] rounded-lg">
                 <Activity className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-bold text-[#111215]">
+              <h3 className="text-lg font-bold text-[#EDEDED]">
                 Automated Testing &amp; Strict Types
               </h3>
-              <p className="text-xs text-[#4A4D54] leading-relaxed">
-                Strict TypeScript 5.7 compilation with zero-warning build gates. Vitest unit tests and Playwright end-to-end flows ensure production reliability.
+              <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                Strict TypeScript compilation with zero-warning build gates. Automated integration checks ensure reliable regression-free releases.
               </p>
             </div>
 
             {/* Pillar 4: Flexible Cloud Hosting */}
-            <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm space-y-4 hover:border-[#111215] transition-colors">
-              <div className="w-10 h-10 flex items-center justify-center bg-[#F5F3EF] border border-[#E5E2DB] text-[#C89B3C]">
+            <div className="p-8 bg-[#202329] border border-[#2A2E37] shadow-sm space-y-4 hover:border-[#F7C200] transition-colors rounded-xl">
+              <div className="w-10 h-10 flex items-center justify-center bg-[#17191D] border border-[#2A2E37] text-[#F7C200] rounded-lg">
                 <Server className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-bold text-[#111215]">
+              <h3 className="text-lg font-bold text-[#EDEDED]">
                 Flexible Hosting &amp; Cloud Options
               </h3>
-              <p className="text-xs text-[#4A4D54] leading-relaxed">
-                We deploy directly into your cloud accounts—AWS, Google Cloud, Vercel, Supabase, or on-premises servers. You retain administrative root control.
+              <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                We deploy directly into your cloud accounts—AWS, Google Cloud, Vercel, Supabase, or on-premises servers. You retain administrative control.
               </p>
             </div>
 
             {/* Pillar 5: Documentation & Turnkey Handover */}
-            <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm space-y-4 hover:border-[#111215] transition-colors">
-              <div className="w-10 h-10 flex items-center justify-center bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9]">
+            <div className="p-8 bg-[#202329] border border-[#2A2E37] shadow-sm space-y-4 hover:border-[#519DD9] transition-colors rounded-xl">
+              <div className="w-10 h-10 flex items-center justify-center bg-[#17191D] border border-[#2A2E37] text-[#519DD9] rounded-lg">
                 <FileText className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-bold text-[#111215]">
+              <h3 className="text-lg font-bold text-[#EDEDED]">
                 Comprehensive Handover Docs
               </h3>
-              <p className="text-xs text-[#4A4D54] leading-relaxed">
-                Every release includes full API schemas, environment configuration runbooks, database ERDs, and guided walkthrough sessions for your team.
+              <p className="text-xs text-[#A6AFBD] leading-relaxed">
+                Every release includes full API schemas, environment configuration runbooks, database schemas, and guided walkthrough sessions.
               </p>
             </div>
 
             {/* Pillar 6: Ongoing Support Arrangements */}
-            <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm space-y-4 hover:border-[#111215] transition-colors">
-              <div className="w-10 h-10 flex items-center justify-center bg-[#F5F3EF] border border-[#E5E2DB] text-[#53BAC1]">
+            <div className="p-8 bg-[#202329] border border-[#2A2E37] shadow-sm space-y-4 hover:border-[#53BAC1] transition-colors rounded-xl">
+              <div className="w-10 h-10 flex items-center justify-center bg-[#17191D] border border-[#2A2E37] text-[#53BAC1] rounded-lg">
                 <Clock className="w-5 h-5" />
               </div>
-              <h3 className="text-lg font-bold text-[#111215]">
+              <h3 className="text-lg font-bold text-[#EDEDED]">
                 Guaranteed Post-Launch Support
               </h3>
-              <p className="text-xs text-[#4A4D54] leading-relaxed">
+              <p className="text-xs text-[#A6AFBD] leading-relaxed">
                 Direct access to the engineers who built your platform. 30-day initial warranty included, with transparent ongoing support SLAs available.
               </p>
             </div>
@@ -1339,86 +1341,86 @@ export default function HomePage() {
       {/* ========================================================
           SECTION G — FINAL CTA & FUNCTIONAL ENQUIRY
           "Let's solve something meaningful."
-          Functional enquiry form with clear next-steps explanation.
+          Functional enquiry form connected to persistent server storage.
           ======================================================== */}
-      <section id="contact" className="py-24 lg:py-32 bg-[#F5F3EF] border-b border-[#E5E2DB] relative overflow-hidden">
+      <section id="contact" className="py-24 lg:py-32 bg-[#191C21] border-b border-[#2A2E37] relative overflow-hidden">
         {/* Luminous ambient backdrop */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#519DD9]/8 blur-[180px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-[#519DD9]/10 blur-[200px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
-          <div className="bg-[#FFFFFF] border border-[#E5E2DB] shadow-2xl p-8 sm:p-12 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="bg-[#202329] border border-[#2A2E37] shadow-2xl p-8 sm:p-12 lg:p-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start rounded-2xl">
             
             {/* Left Column: Proposition & Next Steps (5 cols) */}
             <div className="lg:col-span-5 space-y-8">
               
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F5F3EF] border border-[#E5E2DB] font-mono text-[10px] uppercase tracking-[0.25em] text-[#519DD9] shadow-sm">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#17191D] border border-[#2A2E37] font-mono text-[10px] uppercase tracking-[0.25em] text-[#519DD9] shadow-sm">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9] animate-ping" />
                   SECTION G // DIRECT ENGINEERING ENQUIRY
                 </div>
 
-                <h2 className="text-3xl sm:text-5xl font-black text-[#111215] uppercase tracking-tight leading-[1]">
+                <h2 className="text-3xl sm:text-5xl font-black text-[#EDEDED] uppercase tracking-tight leading-[1]">
                   Let&apos;s solve something <br />
                   <span className="font-editorial italic font-light text-[#519DD9] normal-case">meaningful.</span>
                 </h2>
 
-                <p className="text-sm text-[#4A4D54] leading-relaxed">
+                <p className="text-sm text-[#A6AFBD] leading-relaxed">
                   Tell us about the software challenge your organization is facing. We will review your requirements and provide an actionable architectural scope within 24 hours.
                 </p>
               </div>
 
               {/* What Happens After An Enquiry */}
-              <div className="p-6 bg-[#FAFAF8] border border-[#E5E2DB] space-y-4">
-                <div className="font-mono text-[10px] text-[#71757E] uppercase tracking-wider font-bold">
+              <div className="p-6 bg-[#17191D] border border-[#2A2E37] space-y-4 rounded-xl">
+                <div className="font-mono text-[10px] text-[#727C8D] uppercase tracking-wider font-bold">
                   WHAT HAPPENS AFTER YOU ENQUIRE:
                 </div>
 
                 <div className="space-y-3 font-sans text-xs">
                   <div className="flex items-start gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#111215] text-white flex items-center justify-center font-mono text-[10px] shrink-0 font-bold">
+                    <span className="w-5 h-5 rounded-full bg-[#519DD9] text-[#17191D] flex items-center justify-center font-mono text-[10px] shrink-0 font-bold">
                       1
                     </span>
                     <div>
-                      <strong className="text-[#111215] block">Architectural Review (within 24 hours)</strong>
-                      <span className="text-[#565961]">A principal software engineer reviews your brief for technical feasibility and scope.</span>
+                      <strong className="text-[#EDEDED] block">Architectural Review (within 24 hours)</strong>
+                      <span className="text-[#A6AFBD]">A principal software engineer reviews your brief for technical feasibility and scope.</span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#519DD9] text-white flex items-center justify-center font-mono text-[10px] shrink-0 font-bold">
+                    <span className="w-5 h-5 rounded-full bg-[#53BAC1] text-[#17191D] flex items-center justify-center font-mono text-[10px] shrink-0 font-bold">
                       2
                     </span>
                     <div>
-                      <strong className="text-[#111215] block">30-Minute Scoping Discussion</strong>
-                      <span className="text-[#565961]">No sales pressure. A focused conversation on system requirements, integrations, and timelines.</span>
+                      <strong className="text-[#EDEDED] block">30-Minute Scoping Discussion</strong>
+                      <span className="text-[#A6AFBD]">No sales pressure. A focused conversation on system requirements, integrations, and milestones.</span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#53BAC1] text-white flex items-center justify-center font-mono text-[10px] shrink-0 font-bold">
+                    <span className="w-5 h-5 rounded-full bg-[#DB0038] text-[#FFFFFF] flex items-center justify-center font-mono text-[10px] shrink-0 font-bold">
                       3
                     </span>
                     <div>
-                      <strong className="text-[#111215] block">Fixed-Scope Proposal &amp; Roadmap</strong>
-                      <span className="text-[#565961]">You receive an itemized 30–40 day milestone roadmap with guaranteed deliverables and pricing.</span>
+                      <strong className="text-[#EDEDED] block">Fixed-Scope Proposal &amp; Roadmap</strong>
+                      <span className="text-[#A6AFBD]">You receive an itemized 30–40 day milestone roadmap with guaranteed deliverables and pricing.</span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Direct Email Fallback */}
-              <div className="p-4 bg-[#F5F3EF] border border-[#E5E2DB] font-mono text-xs text-[#565961] flex items-center justify-between">
+              <div className="p-4 bg-[#17191D] border border-[#2A2E37] font-mono text-xs text-[#A6AFBD] flex items-center justify-between rounded-lg">
                 <div>
-                  <span className="text-[10px] text-[#71757E] uppercase block">DIRECT EMAIL:</span>
-                  <a href="mailto:varunyatech@gmail.com" className="text-[#111215] font-bold hover:underline">
+                  <span className="text-[10px] text-[#727C8D] uppercase block">DIRECT EMAIL:</span>
+                  <a href="mailto:varunyatech@gmail.com" className="text-[#EDEDED] font-bold hover:text-[#519DD9] transition-colors">
                     varunyatech@gmail.com
                   </a>
                 </div>
                 <button
                   type="button"
                   onClick={() => setConsultModalOpen(true)}
-                  className="px-3 py-1.5 bg-[#FFFFFF] border border-[#E5E2DB] text-[#111215] hover:border-[#111215] text-[10px] uppercase font-bold"
+                  className="px-3 py-1.5 bg-[#202329] border border-[#2A2E37] text-[#EDEDED] hover:border-[#519DD9] text-[10px] uppercase font-bold transition-colors rounded"
                 >
                   Schedule Call
                 </button>
@@ -1427,23 +1429,26 @@ export default function HomePage() {
             </div>
 
             {/* Right Column: Functional Project Enquiry Form (7 cols) */}
-            <div className="lg:col-span-7 bg-[#FAFAF8] border border-[#E5E2DB] p-8 sm:p-10 shadow-sm">
+            <div className="lg:col-span-7 bg-[#17191D] border border-[#2A2E37] p-8 sm:p-10 shadow-sm rounded-xl">
               
               {formSubmitted ? (
-                <div className="p-8 bg-[#FFFFFF] border border-[#53BAC1] text-center space-y-4">
-                  <div className="w-12 h-12 rounded-full bg-[#53BAC1]/10 text-[#53BAC1] flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-6 h-6" />
+                <div className="p-8 bg-[#202329] border border-[#53BAC1] text-center space-y-4 rounded-xl">
+                  <div className="w-12 h-12 rounded-full bg-[#53BAC1]/20 text-[#53BAC1] flex items-center justify-center mx-auto shadow-steel-glow">
+                    <CheckCircle2 className="w-6 h-6 text-[#53BAC1]" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#111215]">
-                    Enquiry Received Successfully
+                  <h3 className="text-xl font-bold text-[#EDEDED]">
+                    Enquiry Persisted Successfully
                   </h3>
-                  <p className="text-xs text-[#4A4D54] max-w-md mx-auto leading-relaxed">
-                    Thank you, <strong className="text-[#111215]">{formName}</strong>. Your reference ID is <span className="font-mono text-[#519DD9] font-bold">{formLeadId}</span>. A principal software architect will review your project brief and respond to <strong className="text-[#111215]">{formEmail}</strong> within 24 business hours.
+                  <p className="text-xs text-[#A6AFBD] max-w-md mx-auto leading-relaxed">
+                    Thank you, <strong className="text-[#EDEDED]">{formName}</strong>. Your enquiry has been persisted to our engineering CRM with tracking reference <span className="font-mono text-[#519DD9] font-bold">{formLeadId}</span>. A principal software architect will review your project brief and respond to <strong className="text-[#53BAC1]">{formEmail}</strong> within 24 business hours.
                   </p>
                   <div className="pt-2">
                     <button
-                      onClick={() => setFormSubmitted(false)}
-                      className="px-6 py-2.5 bg-[#111215] text-[#FFFFFF] font-mono text-xs uppercase tracking-wider hover:bg-[#519DD9] hover:text-[#111215]"
+                      onClick={() => {
+                        setFormSubmitted(false);
+                        setFormProblem("");
+                      }}
+                      className="px-6 py-2.5 bg-[#519DD9] text-[#17191D] font-mono text-xs uppercase tracking-wider font-bold hover:bg-[#3d8ac4] transition-all rounded"
                     >
                       Submit Another Enquiry
                     </button>
@@ -1452,17 +1457,24 @@ export default function HomePage() {
               ) : (
                 <form onSubmit={handleEnquirySubmit} className="space-y-5">
                   <div className="space-y-1">
-                    <h3 className="text-xl font-bold text-[#111215] font-sans">
+                    <h3 className="text-xl font-bold text-[#EDEDED] font-sans">
                       Discuss a Project with Our Engineers
                     </h3>
-                    <p className="text-xs text-[#565961]">
+                    <p className="text-xs text-[#A6AFBD]">
                       Fill out the brief below to start your 30–40 day development sprint.
                     </p>
                   </div>
 
+                  {formError && (
+                    <div className="p-3 bg-[#DB0038]/15 border border-[#DB0038]/30 rounded-lg flex items-center gap-2.5 text-[#DB0038] text-xs">
+                      <AlertCircle className="w-4 h-4 shrink-0" />
+                      <span>{formError}</span>
+                    </div>
+                  )}
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="block font-mono text-[10px] text-[#111215] uppercase tracking-wider font-bold">
+                      <label className="block font-mono text-[10px] text-[#EDEDED] uppercase tracking-wider font-bold">
                         Your Name *
                       </label>
                       <input
@@ -1471,12 +1483,12 @@ export default function HomePage() {
                         value={formName}
                         onChange={(e) => setFormName(e.target.value)}
                         placeholder="e.g. Elena Rostova"
-                        className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border border-[#E5E2DB] text-xs text-[#111215] focus:outline-none focus:border-[#519DD9] shadow-xs"
+                        className="w-full px-3.5 py-2.5 bg-[#202329] border border-[#2A2E37] text-xs text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] shadow-xs rounded-lg transition-colors"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="block font-mono text-[10px] text-[#111215] uppercase tracking-wider font-bold">
+                      <label className="block font-mono text-[10px] text-[#EDEDED] uppercase tracking-wider font-bold">
                         Work Email *
                       </label>
                       <input
@@ -1485,14 +1497,14 @@ export default function HomePage() {
                         value={formEmail}
                         onChange={(e) => setFormEmail(e.target.value)}
                         placeholder="elena@company.com"
-                        className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border border-[#E5E2DB] text-xs text-[#111215] focus:outline-none focus:border-[#519DD9] shadow-xs"
+                        className="w-full px-3.5 py-2.5 bg-[#202329] border border-[#2A2E37] text-xs text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] shadow-xs rounded-lg transition-colors"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="block font-mono text-[10px] text-[#111215] uppercase tracking-wider font-bold">
+                      <label className="block font-mono text-[10px] text-[#EDEDED] uppercase tracking-wider font-bold">
                         Organization / Company
                       </label>
                       <input
@@ -1500,18 +1512,18 @@ export default function HomePage() {
                         value={formOrg}
                         onChange={(e) => setFormOrg(e.target.value)}
                         placeholder="Company or Project Name"
-                        className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border border-[#E5E2DB] text-xs text-[#111215] focus:outline-none focus:border-[#519DD9] shadow-xs"
+                        className="w-full px-3.5 py-2.5 bg-[#202329] border border-[#2A2E37] text-xs text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] shadow-xs rounded-lg transition-colors"
                       />
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="block font-mono text-[10px] text-[#111215] uppercase tracking-wider font-bold">
+                      <label className="block font-mono text-[10px] text-[#EDEDED] uppercase tracking-wider font-bold">
                         Type of Requirement
                       </label>
                       <select
                         value={formProjectType}
                         onChange={(e) => setFormProjectType(e.target.value)}
-                        className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border border-[#E5E2DB] text-xs text-[#111215] focus:outline-none focus:border-[#519DD9] shadow-xs"
+                        className="w-full px-3.5 py-2.5 bg-[#202329] border border-[#2A2E37] text-xs text-[#EDEDED] focus:outline-none focus:border-[#519DD9] shadow-xs rounded-lg transition-colors"
                       >
                         <option value="Custom Business Software / ERP">Custom Business Software / ERP</option>
                         <option value="Education & Learning Platforms">Education &amp; Learning Platforms</option>
@@ -1524,16 +1536,16 @@ export default function HomePage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block font-mono text-[10px] text-[#111215] uppercase tracking-wider font-bold">
-                      Brief Description of the Problem / Goals *
+                    <label className="block font-mono text-[10px] text-[#EDEDED] uppercase tracking-wider font-bold">
+                      Brief Description of the Problem / Goals * (Min 10 characters)
                     </label>
                     <textarea
                       required
                       rows={4}
                       value={formProblem}
                       onChange={(e) => setFormProblem(e.target.value)}
-                      placeholder="Describe what operational problem you need to solve, current bottlenecks, desired timeline, or key feature requirements..."
-                      className="w-full px-3.5 py-2.5 bg-[#FFFFFF] border border-[#E5E2DB] text-xs text-[#111215] focus:outline-none focus:border-[#519DD9] shadow-xs leading-relaxed"
+                      placeholder="Describe the operational challenge you need solved, current bottlenecks, desired timeline, or key feature requirements..."
+                      className="w-full px-3.5 py-2.5 bg-[#202329] border border-[#2A2E37] text-xs text-[#EDEDED] placeholder-[#727C8D] focus:outline-none focus:border-[#519DD9] shadow-xs leading-relaxed rounded-lg transition-colors"
                     />
                   </div>
 
@@ -1541,10 +1553,10 @@ export default function HomePage() {
                     <button
                       type="submit"
                       disabled={formSubmitting}
-                      className="w-full sm:w-auto px-8 py-3.5 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] hover:text-[#111215] font-mono text-xs uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
+                      className="w-full sm:w-auto px-8 py-3.5 bg-[#DB0038] hover:bg-[#b5002e] text-[#FFFFFF] font-mono text-xs uppercase tracking-widest font-bold transition-all flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(219,0,56,0.3)] disabled:opacity-50 rounded"
                     >
                       {formSubmitting ? (
-                        <span>Transmitting Scope...</span>
+                        <span>Persisting To Pipeline...</span>
                       ) : (
                         <>
                           <span>Submit Project Enquiry</span>
@@ -1553,7 +1565,7 @@ export default function HomePage() {
                       )}
                     </button>
 
-                    <span className="font-mono text-[10px] text-[#71757E]">
+                    <span className="font-mono text-[10px] text-[#727C8D]">
                       Strict Privacy • 100% IP Transfer
                     </span>
                   </div>

@@ -77,7 +77,7 @@ export default function AdminProjectsPage() {
   const getPriorityColor = (p: string) => {
     switch (p) {
       case "HIGH": return "bg-[#DB0038]/10 text-[#DB0038] border border-[#DB0038]/30";
-      case "MEDIUM": return "bg-[#C89B3C]/10 text-[#B45309] border border-[#C89B3C]/30";
+      case "MEDIUM": return "bg-[#F7C200]/15 text-[#B45309] border border-[#F7C200]/40";
       default: return "bg-[#519DD9]/10 text-[#0284C7] border border-[#519DD9]/30";
     }
   };

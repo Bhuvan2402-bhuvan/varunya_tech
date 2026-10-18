@@ -414,7 +414,7 @@ export default function AdminFinancePage() {
         <GlassCard className="p-6 border-[#E5E2DB] bg-[#FFFFFF] space-y-3 shadow-xs">
           <div className="flex items-center justify-between">
             <span className="text-xs text-[#71757E] uppercase tracking-wider font-mono font-medium">Outstanding Receivables</span>
-            <div className="p-2 rounded-lg bg-[#F5F3EF] border border-[#E5E2DB] text-[#C89B3C]">
+            <div className="p-2 rounded-lg bg-[#F5F3EF] border border-[#E5E2DB] text-[#F7C200]">
               <Clock className="w-4 h-4" />
             </div>
           </div>
@@ -545,7 +545,7 @@ export default function AdminFinancePage() {
                     <td className="py-3.5 px-4">
                       <span className={`px-2.5 py-0.5 rounded font-mono text-[9px] font-bold ${
                         inv.status === "PAID" ? "bg-[#53BAC1]/10 text-[#0F766E] border border-[#53BAC1]/30" :
-                        inv.status === "PENDING" ? "bg-[#C89B3C]/10 text-[#B45309] border border-[#C89B3C]/30" :
+                        inv.status === "PENDING" ? "bg-[#F7C200]/15 text-[#B45309] border border-[#F7C200]/40" :
                         "bg-[#DB0038]/10 text-[#DB0038] border border-[#DB0038]/30"
                       }`}>
                         ● {inv.status}
@@ -563,7 +563,7 @@ export default function AdminFinancePage() {
                         ) : (
                           <button
                             onClick={() => handleToggleInvoiceStatus(inv.id, "PENDING")}
-                            className="px-2 py-1 bg-[#C89B3C]/10 hover:bg-[#C89B3C]/20 border border-[#C89B3C]/30 text-[#B45309] rounded text-[10px] font-bold transition"
+                            className="px-2 py-1 bg-[#F7C200]/15 hover:bg-[#F7C200]/25 border border-[#F7C200]/40 text-[#B45309] rounded text-[10px] font-bold transition"
                           >
                             Mark Pending
                           </button>
@@ -667,7 +667,7 @@ export default function AdminFinancePage() {
                     <td className="py-3.5 px-4">
                       <span className={`px-2.5 py-0.5 rounded font-mono text-[9px] font-bold ${
                         exp.status === "CLEARED" ? "bg-[#53BAC1]/10 text-[#0F766E] border border-[#53BAC1]/30" :
-                        "bg-[#C89B3C]/10 text-[#B45309] border border-[#C89B3C]/30"
+                        "bg-[#F7C200]/15 text-[#B45309] border border-[#F7C200]/40"
                       }`}>
                         ● {exp.status}
                       </span>
@@ -797,7 +797,7 @@ export default function AdminFinancePage() {
                     <div className="w-full h-2 bg-[#E5E2DB] rounded-full overflow-hidden border border-[#E5E2DB]">
                       <div 
                         className={`h-full rounded-full transition-all duration-500 ${
-                          marginPct >= 50 ? "bg-[#0F766E]" : marginPct >= 30 ? "bg-[#519DD9]" : "bg-[#C89B3C]"
+                          marginPct >= 50 ? "bg-[#0F766E]" : marginPct >= 30 ? "bg-[#519DD9]" : "bg-[#F7C200]"
                         }`}
                         style={{ width: `${Math.max(0, Math.min(100, marginPct))}%` }}
                       />

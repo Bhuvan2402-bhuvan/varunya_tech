@@ -24,31 +24,45 @@ export default function ConsultationServicesPage() {
   const [budget, setBudget] = useState("$6,000 - $12,000");
   const [scopeDetails, setScopeDetails] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const lead = {
-      id: `CALL-${Date.now().toString().slice(-4)}`,
-      fullName,
-      company: company || "Direct Client",
-      email,
-      phone,
-      serviceNeeded,
-      budgetRange: budget,
-      projectScope: `Timeline: ${timeline} | Details: ${scopeDetails}`,
-      status: "NEW",
-      createdAt: new Date().toISOString()
-    };
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
-    try {
-      const existing = localStorage.getItem("velocity_leads_data");
-      const list = existing ? JSON.parse(existing) : [];
-      list.unshift(lead);
-      localStorage.setItem("velocity_leads_data", JSON.stringify(list));
-    } catch (e) {
-      console.error(e);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError(null);
+    if (!fullName.trim() || !email.trim()) {
+      setFormError("Please provide your name and email.");
+      return;
     }
 
-    setSubmitted(true);
+    setSubmitting(true);
+    try {
+      const res = await fetch("/api/v1/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          email: email.trim(),
+          company: company.trim() || undefined,
+          phone: phone.trim() || undefined,
+          serviceNeeded,
+          budgetRange: budget,
+          projectScope: scopeDetails.trim() || "Consultation and architectural scoping request",
+          consultationDetails: `Timeline: ${timeline}`,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to submit consultation request.");
+      }
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error(err);
+      setFormError(err.message || "Failed to submit consultation request.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

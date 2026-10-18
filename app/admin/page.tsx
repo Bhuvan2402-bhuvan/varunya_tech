@@ -130,49 +130,49 @@ export default function AdminDashboardPage() {
           { title: "Monthly Recurring Revenue", value: "$148,500", change: "+24.5%", icon: DollarSign, color: "text-[#519DD9]" },
           { title: "Active 30-Day Sprints", value: "8 Active", change: "100% SLA Hit", icon: Clock, color: "text-[#53BAC1]" },
           { title: "Inbound AI Quotes (30d)", value: "142 Leads", change: "+38%", icon: Bot, color: "text-[#0F766E]" },
-          { title: "Client Satisfaction (CSAT)", value: "4.96 / 5.0", change: "SLA Certified", icon: ShieldCheck, color: "text-[#C89B3C]" },
+          { title: "Client Satisfaction (CSAT)", value: "4.96 / 5.0", change: "SLA Certified", icon: ShieldCheck, color: "text-[#F7C200]" },
         ];
       case "MANAGER":
         return [
           { title: "Sprints On Schedule", value: "94.2%", change: "+2.1% SLA", icon: Clock, color: "text-[#519DD9]" },
           { title: "Active Project Count", value: "8 Active", change: "8 Teams Assembled", icon: Briefcase, color: "text-[#53BAC1]" },
           { title: "Task Completion Rate", value: "88.6%", change: "+5.4% this week", icon: CheckCircle, color: "text-[#0F766E]" },
-          { title: "Manager CSAT score", value: "4.95 / 5.0", change: "All milestones signed", icon: ShieldCheck, color: "text-[#C89B3C]" },
+          { title: "Manager CSAT score", value: "4.95 / 5.0", change: "All milestones signed", icon: ShieldCheck, color: "text-[#F7C200]" },
         ];
       case "DEVELOPER":
         return [
           { title: "Avg API Latency", value: "48 ms", change: "Sub-100ms SLA OK", icon: Activity, color: "text-[#519DD9]" },
           { title: "Git Commits (Today)", value: "42 Commits", change: "5 active branches", icon: GitBranch, color: "text-[#53BAC1]" },
           { title: "Build Success Rate", value: "100%", change: "Last compiled: 10m ago", icon: Server, color: "text-[#0F766E]" },
-          { title: "Database Connections", value: "23 Active", change: "Connection Pool: 85% free", icon: Database, color: "text-[#C89B3C]" },
+          { title: "Database Connections", value: "23 Active", change: "Connection Pool: 85% free", icon: Database, color: "text-[#F7C200]" },
         ];
       case "DESIGNER":
         return [
           { title: "Figma Files Configured", value: "4 Active", change: "Design system v2.4", icon: Figma, color: "text-[#519DD9]" },
           { title: "Styled Components", value: "48 Tokens", change: "Synced to Tokens", icon: Palette, color: "text-[#53BAC1]" },
           { title: "Asset Exports", value: "120 Shared", change: "SVG Optimized", icon: Download, color: "text-[#0F766E]" },
-          { title: "Design CSAT", value: "4.92 / 5.0", change: "Figma Prototypes approved", icon: ShieldCheck, color: "text-[#C89B3C]" },
+          { title: "Design CSAT", value: "4.92 / 5.0", change: "Figma Prototypes approved", icon: ShieldCheck, color: "text-[#F7C200]" },
         ];
       case "SALES":
         return [
           { title: "Lead Pipeline Value", value: "$642,000", change: "+18.2% MoM", icon: DollarSign, color: "text-[#519DD9]" },
           { title: "Conversion Rate", value: "14.2%", change: "+1.8% average", icon: Percent, color: "text-[#53BAC1]" },
           { title: "Qualified Hot Leads", value: "18 Leads", change: "Win probability > 85%", icon: Bot, color: "text-[#0F766E]" },
-          { title: "Proposals Sent (30d)", value: "8 Sent", change: "SLA Response: < 24h", icon: FileCheck, color: "text-[#C89B3C]" },
+          { title: "Proposals Sent (30d)", value: "8 Sent", change: "SLA Response: < 24h", icon: FileCheck, color: "text-[#F7C200]" },
         ];
       case "HR":
         return [
           { title: "Staff Headcount", value: "14 Staff", change: "+2 hiring", icon: Users2, color: "text-[#519DD9]" },
           { title: "Active Deployments", value: "12 Assembled", change: "86% team allocation", icon: Briefcase, color: "text-[#53BAC1]" },
           { title: "Hiring Pipeline", value: "42 Candidates", change: "Next interviews: 3 today", icon: Users, color: "text-[#0F766E]" },
-          { title: "Developer Retention", value: "98.2%", change: "Industry high", icon: ShieldCheck, color: "text-[#C89B3C]" },
+          { title: "Developer Retention", value: "98.2%", change: "Industry high", icon: ShieldCheck, color: "text-[#F7C200]" },
         ];
       case "FINANCE":
         return [
           { title: "Total MRR", value: "$148,500", change: "+24.5%", icon: DollarSign, color: "text-[#519DD9]" },
           { title: "Outstanding Invoices", value: "3 Pending", change: "SLA Due in 7 days", icon: Clock, color: "text-[#53BAC1]" },
           { title: "Invoiced Volume", value: "$182,000", change: "98% collection rate", icon: FileCheck, color: "text-[#0F766E]" },
-          { title: "Stripe Payouts (Est.)", value: "$45,200", change: "Next payout: Tomorrow", icon: DollarSign, color: "text-[#C89B3C]" },
+          { title: "Stripe Payouts (Est.)", value: "$45,200", change: "Next payout: Tomorrow", icon: DollarSign, color: "text-[#F7C200]" },
         ];
     }
   };
@@ -257,10 +257,10 @@ export default function AdminDashboardPage() {
               <div className="p-3.5 bg-[#F5F3EF] border border-[#E5E2DB] space-y-2 rounded-xl">
                 <div className="flex justify-between text-xs">
                   <span className="font-bold text-[#111215]">Global Freight Logistics ERP</span>
-                  <span className="text-[#C89B3C] font-mono font-bold">Day 6 (20%)</span>
+                  <span className="text-[#F7C200] font-mono font-bold">Day 6 (20%)</span>
                 </div>
                 <div className="w-full h-2 bg-[#E5E2DB] rounded-full overflow-hidden">
-                  <div className="h-full bg-[#C89B3C] rounded-full w-[20%]" />
+                  <div className="h-full bg-[#F7C200] rounded-full w-[20%]" />
                 </div>
               </div>
             </div>

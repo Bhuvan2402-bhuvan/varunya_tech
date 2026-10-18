@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Sparkles, ArrowRight, Play, CheckCircle2, RefreshCw, Cpu, Database, Shield, Zap } from "lucide-react";
+import { Play, CheckCircle2, RefreshCw, Info } from "lucide-react";
 
 interface PipelineStep {
   id: number;
@@ -24,7 +24,7 @@ const STEPS: PipelineStep[] = [
     latencyMs: 1.2,
     accentColor: "#519DD9", // Digital Blue
     glowColor: "rgba(81, 157, 217, 0.2)",
-    description: "Inbound prompt tokenization, regex injection detection, and rate quota verification.",
+    description: "Inbound prompt tokenization, input validation, and rate quota verification.",
     payloadSnippet: `{\n  "tenantId": "org_enterprise_91",\n  "intent": "FINANCIAL_AUDIT_QUERY",\n  "safetyPassed": true,\n  "sanitizedTokens": 142\n}`
   },
   {
@@ -35,24 +35,24 @@ const STEPS: PipelineStep[] = [
     latencyMs: 14.6,
     accentColor: "#53BAC1", // Aqua Teal
     glowColor: "rgba(83, 186, 193, 0.2)",
-    description: "Generates high-dimensional vector embeddings with normalized L2 distance across 1,536 dimensions.",
+    description: "Generates high-dimensional vector embeddings with normalized distance across 1,536 dimensions.",
     payloadSnippet: `{\n  "vectorDim": 1536,\n  "embeddingSample": [0.0142, -0.0891, 0.0521, ...],\n  "normScore": 1.000\n}`
   },
   {
     id: 3,
     label: "PHASE 03",
-    name: "HNSW Vector Cosine Retrieval",
+    name: "Vector Cosine Retrieval",
     subsystem: "pgvector Index",
     latencyMs: 16.8,
     accentColor: "#53BAC1", // Aqua Teal
     glowColor: "rgba(83, 186, 193, 0.25)",
-    description: "Sub-20ms nearest-neighbor search querying isolated tenant documents with cosine threshold >= 0.82.",
+    description: "Nearest-neighbor search querying isolated client documents with cosine threshold >= 0.82.",
     payloadSnippet: `{\n  "matchedChunks": 4,\n  "topSimilarity": 0.941,\n  "sourceTable": "EnterpriseDocEmbeddings",\n  "hnswScanMs": 16.8\n}`
   },
   {
     id: 4,
     label: "PHASE 04",
-    name: "Context Compaction & Re-ranking",
+    name: "Context Compaction & Formatting",
     subsystem: "RAG Synthesizer",
     latencyMs: 3.4,
     accentColor: "#519DD9", // Digital Blue
@@ -98,52 +98,52 @@ export function StageAiPipeline() {
   const accumulatedLatency = STEPS.slice(0, activeStepIndex + 1).reduce((acc, curr) => acc + curr.latencyMs, 0);
 
   return (
-    <section id="intelligence" className="py-24 border-b border-[#E5E2DB] bg-[#FAFAF8] relative overflow-hidden">
+    <section id="intelligence" className="py-24 border-b border-[#2A2E37] bg-[#17191D] relative overflow-hidden">
       {/* Ambient digital glow */}
       <div 
-        className="absolute top-1/2 -right-32 w-96 h-96 rounded-full blur-[140px] pointer-events-none opacity-20 transition-all duration-700"
+        className="absolute top-1/2 -right-32 w-96 h-96 rounded-full blur-[160px] pointer-events-none opacity-20 transition-all duration-700"
         style={{ backgroundColor: activeStep.accentColor }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#E5E2DB] pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#2A2E37] pb-8">
           <div className="space-y-4 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] font-mono text-[10px] uppercase tracking-[0.25em] shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] font-mono text-[10px] uppercase tracking-[0.25em] shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#53BAC1] shadow-[0_0_8px_#53BAC1] animate-pulse" />
               <span className="text-[#53BAC1] font-bold">SCENE 03 // AI &amp; AUTOMATION SYSTEMS</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#111215] tracking-tight font-sans">
-              Autonomous, Structured, <span className="text-[#53BAC1]">Sub-100ms.</span>
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#EDEDED] tracking-tight font-sans">
+              Autonomous, Structured, <span className="text-[#53BAC1]">Deterministic.</span>
             </h2>
-            <p className="text-[#4A4D54] text-base font-normal leading-relaxed">
-              Aqua teal for connected nodes, data pathways, intelligent automation, and model visualizations engineered to eliminate hallucinated schema outputs.
+            <p className="text-[#A6AFBD] text-base font-normal leading-relaxed">
+              Interactive simulation demonstrating how our retrieval-augmented generation pipelines enforce Zod schema validation and eliminate hallucinated data structures.
             </p>
           </div>
 
-          <div className="font-mono text-xs text-[#71757E] shrink-0 flex items-center gap-2 bg-[#FFFFFF] px-3.5 py-2 border border-[#E5E2DB] shadow-sm">
+          <div className="font-mono text-xs text-[#A6AFBD] shrink-0 flex items-center gap-2 bg-[#202329] px-3.5 py-2 border border-[#2A2E37] shadow-sm">
             <span className="w-2 h-2 rounded-full bg-[#53BAC1]" />
-            <span>LATENCY SLA: <strong className="text-[#111215]">&lt; 100MS END-TO-END</strong></span>
+            <span>DESIGN TARGET: <strong className="text-[#EDEDED]">&lt; 100MS BENCHMARK</strong></span>
           </div>
         </div>
 
-        {/* Interactive Pipeline Visualizer Box with Glow */}
+        {/* Interactive Pipeline Visualizer Box */}
         <div 
-          className="bg-[#FFFFFF] border p-8 lg:p-12 space-y-10 shadow-xl transition-all duration-300"
+          className="bg-[#202329] border p-8 lg:p-12 space-y-10 shadow-2xl transition-all duration-300 rounded-xl"
           style={{ borderColor: activeStep.accentColor }}
         >
           
           {/* Controls Bar */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#E5E2DB] pb-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#2A2E37] pb-6">
             <div>
               <span 
                 className="font-mono text-[10px] uppercase tracking-widest block mb-1 font-bold"
                 style={{ color: activeStep.accentColor }}
               >
-                PIPELINE EXECUTION SIMULATION
+                INTERACTIVE PIPELINE SIMULATION
               </span>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#111215] font-sans">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#EDEDED] font-sans">
                 Neural Inference &amp; Vector Trace
               </h3>
             </div>
@@ -152,10 +152,10 @@ export function StageAiPipeline() {
               <button
                 onClick={runSimulation}
                 disabled={isRunningSimulation}
-                className={`px-5 py-2.5 font-mono text-xs uppercase tracking-wider font-extrabold transition-all flex items-center gap-2 border shadow-sm ${
+                className={`px-5 py-2.5 font-mono text-xs uppercase tracking-wider font-extrabold transition-all flex items-center gap-2 border shadow-sm rounded-lg ${
                   isRunningSimulation
-                    ? "bg-[#F5F3EF] text-[#71757E] border-[#E5E2DB] cursor-not-allowed"
-                    : "bg-[#111215] text-[#FFFFFF] hover:bg-[#53BAC1] hover:text-[#111215] border-[#111215]"
+                    ? "bg-[#17191D] text-[#727C8D] border-[#2A2E37] cursor-not-allowed"
+                    : "bg-[#53BAC1] text-[#17191D] hover:bg-[#3ca3aa] border-[#53BAC1] font-bold"
                 }`}
               >
                 {isRunningSimulation ? (
@@ -182,12 +182,12 @@ export function StageAiPipeline() {
                 <div
                   key={s.id}
                   onClick={() => setActiveStepIndex(idx)}
-                  className={`p-5 border transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-3 relative ${
+                  className={`p-5 border transition-all duration-300 cursor-pointer flex flex-col justify-between space-y-3 relative rounded-lg ${
                     isActive
-                      ? "bg-[#FFFFFF] scale-[1.03] shadow-lg"
+                      ? "bg-[#17191D] scale-[1.03] shadow-lg"
                       : isPast
-                      ? "bg-[#F5F3EF] border-[#E5E2DB] text-[#4A4D54]"
-                      : "bg-[#FAFAF8] border-[#E5E2DB] text-[#71757E] hover:border-[#111215]"
+                      ? "bg-[#191C21] border-[#2A2E37] text-[#A6AFBD]"
+                      : "bg-[#17191D] border-[#2A2E37] text-[#727C8D] hover:border-[#EDEDED]"
                   }`}
                   style={{
                     borderColor: isActive ? s.accentColor : undefined,
@@ -197,29 +197,29 @@ export function StageAiPipeline() {
                   <div className="flex items-center justify-between font-mono text-[10px]">
                     <span 
                       className="font-bold tracking-wider"
-                      style={{ color: isActive ? s.accentColor : "#71757E" }}
+                      style={{ color: isActive ? s.accentColor : "#727C8D" }}
                     >
                       {s.label}
                     </span>
-                    <span className="font-semibold text-[#111215]">{s.latencyMs}ms</span>
+                    <span className="font-semibold text-[#EDEDED]">{s.latencyMs}ms</span>
                   </div>
 
                   <div>
                     <div 
                       className="font-mono text-[9px] uppercase tracking-wider font-semibold"
-                      style={{ color: isActive ? s.accentColor : "#71757E" }}
+                      style={{ color: isActive ? s.accentColor : "#727C8D" }}
                     >
                       {s.subsystem}
                     </div>
-                    <div className="font-sans font-bold text-xs text-[#111215] mt-0.5 line-clamp-2">
+                    <div className="font-sans font-bold text-xs text-[#EDEDED] mt-0.5 line-clamp-2">
                       {s.name}
                     </div>
                   </div>
 
-                  <div className="pt-2 border-t border-[#E5E2DB] flex items-center justify-between text-[10px] font-mono">
+                  <div className="pt-2 border-t border-[#2A2E37] flex items-center justify-between text-[10px] font-mono">
                     <span 
                       className="font-bold"
-                      style={{ color: isActive ? s.accentColor : isPast ? "#53BAC1" : "#71757E" }}
+                      style={{ color: isActive ? s.accentColor : isPast ? "#53BAC1" : "#727C8D" }}
                     >
                       {isPast ? "COMPLETED" : isActive ? "ACTIVE" : "STANDBY"}
                     </span>
@@ -230,32 +230,32 @@ export function StageAiPipeline() {
             })}
           </div>
 
-          {/* Step Detail & Payload Inspector with White & Ivory Styling */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start bg-[#F5F3EF] border border-[#E5E2DB] p-6 sm:p-8">
+          {/* Step Detail & Payload Inspector */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start bg-[#17191D] border border-[#2A2E37] p-6 sm:p-8 rounded-lg">
             <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] border border-[#E5E2DB] font-mono text-[10px] uppercase shadow-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] font-mono text-[10px] uppercase shadow-sm">
                 <span className="font-bold" style={{ color: activeStep.accentColor }}>STAGE // {activeStep.label}</span>
-                <span className="text-[#D4D0C5]">|</span>
-                <span className="text-[#111215] font-semibold">{activeStep.subsystem}</span>
+                <span className="text-[#3B414E]">|</span>
+                <span className="text-[#EDEDED] font-semibold">{activeStep.subsystem}</span>
               </div>
 
-              <h4 className="text-xl sm:text-2xl font-extrabold text-[#111215] font-sans">
+              <h4 className="text-xl sm:text-2xl font-extrabold text-[#EDEDED] font-sans">
                 {activeStep.name}
               </h4>
 
-              <p className="text-xs text-[#4A4D54] font-normal leading-relaxed">
+              <p className="text-xs text-[#A6AFBD] font-normal leading-relaxed">
                 {activeStep.description}
               </p>
 
               <div className="grid grid-cols-2 gap-4 pt-2 font-mono text-xs">
-                <div className="p-3.5 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm">
-                  <div className="text-[10px] text-[#71757E]">STEP EXECUTION TIME</div>
+                <div className="p-3.5 bg-[#202329] border border-[#2A2E37] shadow-sm rounded-lg">
+                  <div className="text-[10px] text-[#727C8D]">STEP EXECUTION TIME</div>
                   <div className="text-base font-extrabold" style={{ color: activeStep.accentColor }}>
                     {activeStep.latencyMs} ms
                   </div>
                 </div>
-                <div className="p-3.5 bg-[#FFFFFF] border border-[#E5E2DB] shadow-sm">
-                  <div className="text-[10px] text-[#71757E]">CUMULATIVE PIPELINE</div>
+                <div className="p-3.5 bg-[#202329] border border-[#2A2E37] shadow-sm rounded-lg">
+                  <div className="text-[10px] text-[#727C8D]">CUMULATIVE TRACE</div>
                   <div className="text-base font-extrabold text-[#519DD9]">
                     {accumulatedLatency.toFixed(1)} ms
                   </div>
@@ -263,19 +263,24 @@ export function StageAiPipeline() {
               </div>
             </div>
 
-            {/* Right: Simulated JSON Payload inside clean dark terminal for high code contrast */}
+            {/* Right: Simulated JSON Payload inside clean dark terminal */}
             <div className="lg:col-span-5 space-y-2">
-              <div className="flex items-center justify-between font-mono text-[10px] text-[#71757E] uppercase">
-                <span className="text-[#53BAC1] font-bold">INTERMEDIATE TELEMETRY STREAM</span>
-                <span className="text-[#111215] font-semibold">JSON V2.1</span>
+              <div className="flex items-center justify-between font-mono text-[10px] text-[#727C8D] uppercase">
+                <span className="text-[#53BAC1] font-bold">SIMULATED PAYLOAD SCHEMA</span>
+                <span className="text-[#EDEDED] font-semibold">JSON CONTRACT</span>
               </div>
               <pre 
-                className="p-4 bg-[#181A20] border font-mono text-xs text-[#F2F4F6] overflow-x-auto leading-relaxed shadow-md"
+                className="p-4 bg-[#141518] border font-mono text-xs text-[#EDEDED] overflow-x-auto leading-relaxed shadow-md rounded-lg"
                 style={{ borderColor: activeStep.accentColor }}
               >
                 <code>{activeStep.payloadSnippet}</code>
               </pre>
             </div>
+          </div>
+
+          <div className="pt-2 flex items-center gap-2 text-[10px] font-mono text-[#727C8D]">
+            <Info className="w-3.5 h-3.5 text-[#53BAC1] shrink-0" />
+            <span>Simulation illustrates example RAG execution pipeline. Production latencies vary with model parameter size and vector index volume.</span>
           </div>
 
         </div>

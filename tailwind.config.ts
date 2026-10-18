@@ -12,64 +12,51 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        // Luxury White & Ivory Architectural System
-        ivory: {
-          canvas: "#FAFAF8",
-          DEFAULT: "#F5F3EF",
-          warm: "#F0EEE9",
-          raised: "#EBE8E1",
-          border: "#E5E2DB",
-          subtle: "#ECE9E2",
-          darkBorder: "#D4D0C5",
-        },
-        obsidian: {
-          DEFAULT: "#111215",
-          charcoal: "#1C1D22",
-          surface: "#2A2D35",
-          muted: "#4A4D54",
-          light: "#71757E",
+        // Approved VarunyaTech Brand Design System
+        brand: {
+          crimson: "#DB0038", // Critical actions & highlights
+          yellow: "#F7C200",  // Indicators, telemetry & alerts
+          blue: "#519DD9",    // Software visuals, active nodes & links
+          teal: "#53BAC1",    // Data flows & AI systems
+          softGrey: "#EDEDED",// Primary typography
+          graphite: "#17191D",// Primary foundation
+          charcoal: "#191C21",// Secondary section background
+          elevated: "#202329",// Elevated panels, cards & diagrams
         },
         graphite: {
-          black: "#FAFAF8",
-          DEFAULT: "#F5F3EF",
-          charcoal: "#F0EEE9",
-          elevated: "#FFFFFF",
-          surface: "#FFFFFF",
-          border: "#E5E2DB",
+          DEFAULT: "#17191D",
+          noir: "#141518",
+          charcoal: "#191C21",
+          elevated: "#202329",
+          surface: "#202329",
+          border: "#2A2E37",
         },
         charcoal: {
-          DEFAULT: "#F0EEE9",
-          elevated: "#FFFFFF",
+          DEFAULT: "#191C21",
+          elevated: "#202329",
+          border: "#2A2E37",
         },
-        titanium: {
-          DEFAULT: "#71757E",
-          light: "#8C909A",
-          muted: "#A0A4AE",
-        },
-        silver: {
-          DEFAULT: "#565961",
-          light: "#4A4D54",
-        },
-        platinum: {
-          DEFAULT: "#3A3D44",
-          light: "#111215",
-        },
-        ice: {
-          DEFAULT: "#111215",
-          pure: "#111215",
-          muted: "#4A4D54",
-        },
-        bluesteel: {
-          DEFAULT: "#4A5568",
-          light: "#718096",
-          dark: "#2D3748",
+        surface: {
+          DEFAULT: "#202329",
+          dark: "#17191D",
+          charcoal: "#191C21",
+          elevated: "#202329",
+          raised: "#282C34",
+          border: "#2A2E37",
+          light: "#EDEDED",
         },
         structural: {
-          border: "#E5E2DB",
-          borderSubtle: "#ECE9E2",
-          surface: "#F5F3EF",
+          border: "#2A2E37",
+          borderSubtle: "#23262E",
+          surface: "#202329",
         },
-        // Brand Digital Accents
+        tokenText: {
+          primary: "#EDEDED",
+          secondary: "#A6AFBD",
+          muted: "#727C8D",
+          dark: "#17191D",
+        },
+        // Accents mapped to approved palette
         cyan: {
           electric: "#519DD9",
           DEFAULT: "#519DD9",
@@ -77,48 +64,23 @@ const config: Config = {
         },
         cobalt: {
           DEFAULT: "#519DD9",
-          light: "#66A7E0",
-          dark: "#2A72B2",
+          light: "#6CAEE4",
+          dark: "#3B81B9",
           glow: "rgba(81, 157, 217, 0.25)",
-        },
-        ultraviolet: {
-          DEFAULT: "#815BFF",
-          light: "#A082FF",
-          dark: "#5A38C7",
-          glow: "rgba(129, 91, 255, 0.25)",
-        },
-        indigo: {
-          deep: "#29245C",
-          dark: "#1A173B",
         },
         teal: {
           digital: "#53BAC1",
           DEFAULT: "#53BAC1",
           glow: "rgba(83, 186, 193, 0.25)",
         },
-        // Official VarunyaTech Brand Tokens
-        brand: {
-          crimson: "#DB0038", // Important highlights
-          yellow: "#F7C200",  // Active states / single high-impact hero detail
-          blue: "#519DD9",    // Software visuals
-          teal: "#53BAC1",    // AI and data flows
-          gold: "#C89B3C",    // Luxury emblem gold
+        crimson: {
+          DEFAULT: "#DB0038",
+          dark: "#B5002E",
+          glow: "rgba(219, 0, 56, 0.25)",
         },
-        surface: {
-          light: "#FFFFFF",   // Crisp white cards
-          dark: "#FAFAF8",    // Main ivory canvas
-          raised: "#FFFFFF",  // Raised white panels
-          ivory: "#F5F3EF",   // Architectural ivory
-          warm: "#F0EEE9",    // Warm ivory section
-          charcoal: "#F0EEE9", 
-          border: "#E5E2DB",  // Subtle hairline border
-          indigo: "#29245C",  // Final CTA background
-        },
-        tokenText: {
-          primary: "#111215", // Dark obsidian text
-          secondary: "#4A4D54", // Architectural body text
-          muted: "#71757E",   // Meta labels
-          dark: "#111215",    
+        electricYellow: {
+          DEFAULT: "#F7C200",
+          glow: "rgba(247, 194, 0, 0.25)",
         },
       },
       fontFamily: {
@@ -128,10 +90,10 @@ const config: Config = {
         mono: ["var(--font-mono)", "JetBrains Mono", "SF Mono", "Consolas", "monospace"],
       },
       boxShadow: {
-        'subtle-elevated': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
-        'architectural': '0 20px 40px -15px rgba(0, 0, 0, 0.07)',
+        'subtle-elevated': '0 4px 20px -2px rgba(0, 0, 0, 0.35)',
+        'architectural': '0 20px 40px -15px rgba(0, 0, 0, 0.45)',
         'steel-glow': '0 0 25px -5px rgba(81, 157, 217, 0.2)',
-        'card': '0 1px 3px rgba(0,0,0,0.05), 0 10px 25px rgba(0,0,0,0.04)',
+        'card': '0 1px 3px rgba(0,0,0,0.3), 0 10px 25px rgba(0,0,0,0.25)',
       },
       animation: {
         'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',

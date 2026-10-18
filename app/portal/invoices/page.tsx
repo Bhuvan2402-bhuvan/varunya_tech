@@ -33,7 +33,7 @@ export default function ClientInvoicesPage() {
 
             <div className="flex items-center gap-3">
               <span className={`px-3 py-1 rounded-full text-xs font-mono font-bold ${
-                inv.status === "PAID" ? "bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9]" : inv.status === "PENDING" ? "bg-[#F5F3EF] border border-[#E5E2DB] text-[#C89B3C]" : "bg-[#F5F3EF] text-[#71757E]"
+                inv.status === "PAID" ? "bg-[#F5F3EF] border border-[#E5E2DB] text-[#519DD9]" : inv.status === "PENDING" ? "bg-[#F5F3EF] border border-[#E5E2DB] text-[#F7C200]" : "bg-[#F5F3EF] text-[#71757E]"
               }`}>
                 {inv.status}
               </span>
