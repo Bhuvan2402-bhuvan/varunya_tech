@@ -40,8 +40,8 @@ const NODES: SystemNode[] = [
     x: 18,
     y: 26,
     protocol: "HTTP/3 • TLS 1.3 • CDN",
-    latencyTarget: "< 10ms (Target)",
-    capacitySpec: "Scalable per Tier",
+    latencyTarget: "< 10ms P95",
+    capacitySpec: "Auto-Scaled Edge",
     patternStatus: "ARCHITECTURE TARGET",
     accentColor: "#519DD9", // Brand Digital Blue
     glowColor: "rgba(81, 157, 217, 0.25)",
@@ -58,8 +58,8 @@ const NODES: SystemNode[] = [
     x: 50,
     y: 18,
     protocol: "REST • GraphQL • JSON",
-    latencyTarget: "< 15ms (Target)",
-    capacitySpec: "Configurable / Ingress",
+    latencyTarget: "< 15ms P95",
+    capacitySpec: "Rate-Guarded Ingress",
     patternStatus: "PRODUCTION PATTERN",
     accentColor: "#519DD9", // Brand Digital Blue
     glowColor: "rgba(81, 157, 217, 0.25)",
@@ -76,8 +76,8 @@ const NODES: SystemNode[] = [
     x: 50,
     y: 54,
     protocol: "TypeScript • Node.js",
-    latencyTarget: "< 25ms (Target)",
-    capacitySpec: "Stateless / Scalable",
+    latencyTarget: "< 25ms P95",
+    capacitySpec: "Stateless Cluster",
     patternStatus: "PRODUCTION PATTERN",
     accentColor: "#53BAC1", // Brand Aqua Teal
     glowColor: "rgba(83, 186, 193, 0.25)",
@@ -94,8 +94,8 @@ const NODES: SystemNode[] = [
     x: 82,
     y: 30,
     protocol: "pgvector • Embeddings",
-    latencyTarget: "< 100ms (Target)",
-    capacitySpec: "Streaming Inference",
+    latencyTarget: "< 100ms P95",
+    capacitySpec: "Streaming Vectors",
     patternStatus: "CAPABILITY BLUEPRINT",
     accentColor: "#53BAC1", // Brand Aqua Teal
     glowColor: "rgba(83, 186, 193, 0.25)",
@@ -112,8 +112,8 @@ const NODES: SystemNode[] = [
     x: 22,
     y: 78,
     protocol: "PostgreSQL 16 • ACID",
-    latencyTarget: "< 5ms (Target)",
-    capacitySpec: "Connection Pooling",
+    latencyTarget: "< 5ms P95",
+    capacitySpec: "Pooled 100% ACID",
     patternStatus: "PRODUCTION PATTERN",
     accentColor: "#DB0038", // Brand Crimson
     glowColor: "rgba(219, 0, 56, 0.25)",
@@ -130,8 +130,8 @@ const NODES: SystemNode[] = [
     x: 80,
     y: 78,
     protocol: "OpenTelemetry Standards",
-    latencyTarget: "< 5ms (Target)",
-    capacitySpec: "Structured Spans",
+    latencyTarget: "< 5ms Ingest",
+    capacitySpec: "Distributed Spans",
     patternStatus: "PRODUCTION PATTERN",
     accentColor: "#F7C200", // Electric Yellow
     glowColor: "rgba(247, 194, 0, 0.3)",
@@ -380,7 +380,7 @@ export function HeroSystemGraph() {
               {/* Latency / Spec Pill */}
               <div className="mt-1 flex items-center justify-center">
                 <span 
-                  className="font-mono text-[8px] sm:text-[9px] px-1.5 py-0.5 bg-white border text-[#17191D] font-semibold shadow-xs"
+                  className="font-mono text-[8px] sm:text-[9px] px-1.5 py-0.5 bg-white border text-[#17191D] font-bold shadow-xs whitespace-nowrap"
                   style={{ borderColor: node.accentColor }}
                 >
                   {node.latencyTarget}
@@ -430,21 +430,28 @@ export function HeroSystemGraph() {
         </div>
 
         {/* Center: Design Metrics Telemetry (4 cols) */}
-        <div className="md:col-span-4 grid grid-cols-2 gap-3 font-mono text-xs">
-          <div className="p-3 bg-white border border-gray-200 shadow-xs space-y-1">
-            <div className="text-[9px] sm:text-[10px] text-[#6B7280] uppercase">LATENCY TARGET</div>
-            <div className="text-base sm:text-lg font-extrabold" style={{ color: activeNode.accentColor }}>
+        <div className="md:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono">
+          <div className="p-3 bg-white border border-gray-200 shadow-xs flex flex-col justify-between min-w-0">
+            <div className="text-[9px] text-[#6B7280] uppercase font-bold tracking-wider">LATENCY TARGET</div>
+            <div 
+              className="text-base sm:text-lg font-black tracking-tight whitespace-nowrap truncate py-0.5" 
+              style={{ color: activeNode.accentColor }}
+              title={activeNode.latencyTarget}
+            >
               {activeNode.latencyTarget}
             </div>
-            <div className="text-[8px] sm:text-[9px] text-[#6B7280]">DESIGN SPECIFICATION</div>
+            <div className="text-[8px] text-[#6B7280] uppercase font-medium">DESIGN SPECIFICATION</div>
           </div>
 
-          <div className="p-3 bg-white border border-gray-200 shadow-xs space-y-1">
-            <div className="text-[9px] sm:text-[10px] text-[#6B7280] uppercase">CAPACITY MODEL</div>
-            <div className="text-base sm:text-lg font-extrabold text-[#17191D]">
+          <div className="p-3 bg-white border border-gray-200 shadow-xs flex flex-col justify-between min-w-0">
+            <div className="text-[9px] text-[#6B7280] uppercase font-bold tracking-wider">CAPACITY MODEL</div>
+            <div 
+              className="text-sm sm:text-base font-bold text-[#17191D] tracking-tight whitespace-nowrap truncate py-0.5"
+              title={activeNode.capacitySpec}
+            >
               {activeNode.capacitySpec}
             </div>
-            <div className="text-[8px] sm:text-[9px] text-[#6B7280]">CONFIGURED PER TIER</div>
+            <div className="text-[8px] text-[#6B7280] uppercase font-medium">CONFIGURED PER TIER</div>
           </div>
         </div>
 
