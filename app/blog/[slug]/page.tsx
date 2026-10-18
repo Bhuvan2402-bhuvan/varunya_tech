@@ -6,8 +6,10 @@ import { getStoredBlogPosts, BlogItem } from "@/lib/data/cms-data";
 import { Button } from "@/components/ui/Button";
 import { ArrowLeft, Clock, Calendar, Tag } from "lucide-react";
 
-export default function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = use(params);
+export default function BlogPostPage({ params }: { params: { slug: string } | Promise<{ slug: string }> }) {
+  const resolvedParams = (params && typeof (params as any).then === "function") 
+    ? use(params as Promise<{ slug: string }>) 
+    : (params as { slug: string });
   const [blogs, setBlogs] = useState<BlogItem[]>([]);
 
   useEffect(() => {

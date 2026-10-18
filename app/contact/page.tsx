@@ -1,14 +1,73 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Clock, Check, ShieldCheck } from "lucide-react";
+import { Mail, Clock, Check, ShieldCheck, AlertCircle, Loader2 } from "lucide-react";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [leadReference, setLeadReference] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Form fields
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [timeline, setTimeline] = useState("30–40 Days (Standard Sprint)");
+  const [projectScope, setProjectScope] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setErrorMessage(null);
+
+    if (!fullName.trim() || !email.trim() || !projectScope.trim()) {
+      setErrorMessage("Please complete all required fields (Name, Work Email, and Project Scope).");
+      return;
+    }
+
+    if (projectScope.trim().length < 10) {
+      setErrorMessage("Please provide at least 10 characters describing your project requirements.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("/api/v1/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: fullName.trim(),
+          email: email.trim(),
+          company: company.trim() || undefined,
+          serviceNeeded: "Custom Software Architecture",
+          budgetRange: "Standard Tier ($5,000 - $15,000)",
+          projectScope: projectScope.trim(),
+          consultationDetails: `Timeline Target: ${timeline}`,
+          source: "CONTACT_FORM",
+          subject: "Direct Engineering Inquiry",
+          category: "SALES",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to persist inquiry to server.");
+      }
+
+      setLeadReference(data.leadId);
+      setSubmitted(true);
+    } catch (err: any) {
+      console.error("Contact inquiry submission error:", err);
+      setErrorMessage(
+        err.message || "Failed to submit project inquiry. Please email varunyatech@gmail.com directly."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,11 +121,11 @@ export default function ContactPage() {
           </div>
 
           <div className="p-8 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-xs space-y-4">
-            <div className="font-mono text-[10px] uppercase tracking-widest text-[#E23B52] font-bold">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-[#DB0038] font-bold">
               IP OWNERSHIP
             </div>
             <div className="flex items-center gap-3">
-              <ShieldCheck className="w-5 h-5 text-[#E23B52]" />
+              <ShieldCheck className="w-5 h-5 text-[#DB0038]" />
               <span className="font-mono text-sm font-bold text-[#111215]">100% Repository Transfer</span>
             </div>
             <p className="text-xs text-[#4A4D54] leading-relaxed">
@@ -79,32 +138,64 @@ export default function ContactPage() {
         <div className="lg:col-span-7">
           <div className="p-8 lg:p-12 bg-[#FFFFFF] border border-[#E5E2DB] rounded-2xl shadow-sm">
             {submitted ? (
-              <div className="py-16 text-center space-y-4">
+              <div className="py-16 text-center space-y-4 animate-in fade-in duration-200">
                 <div className="w-14 h-14 bg-[#F5F3EF] border border-[#E5E2DB] rounded-full flex items-center justify-center mx-auto text-[#111215]">
                   <Check className="w-6 h-6 text-[#519DD9]" />
                 </div>
                 <h2 className="text-2xl font-black uppercase text-[#111215]">Specification Received</h2>
                 <p className="text-sm text-[#4A4D54] max-w-md mx-auto">
-                  Our engineering team has received your inquiry. We will contact you at your email address to coordinate an initial technical discovery call.
+                  Our engineering team has received your inquiry. We will contact you at <strong className="text-[#111215]">{email}</strong> to coordinate an initial technical discovery call.
                 </p>
+                {leadReference && (
+                  <div className="p-3 bg-[#F9FAFB] border border-gray-200 rounded-lg inline-block text-xs font-mono text-[#519DD9] font-bold">
+                    Tracking Ref: {leadReference}
+                  </div>
+                )}
+                <div className="pt-4">
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setProjectScope("");
+                      setLeadReference(null);
+                    }}
+                    className="px-6 py-2.5 bg-[#111215] text-white hover:bg-[#519DD9] font-mono text-xs uppercase tracking-wider font-bold transition-colors rounded-xl shadow-xs"
+                  >
+                    Submit Another Inquiry
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {errorMessage && (
+                  <div className="p-3.5 bg-[#DB0038]/10 border border-[#DB0038]/30 rounded-xl flex items-center gap-2.5 text-xs text-[#DB0038] font-mono">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Your Name</label>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">
+                      Your Name *
+                    </label>
                     <input 
                       required 
                       type="text" 
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
                       placeholder="e.g. Alexander Vance" 
                       className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all" 
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Work Email</label>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">
+                      Work Email *
+                    </label>
                     <input 
                       required 
                       type="email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="e.g. alex@company.com" 
                       className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all" 
                     />
@@ -113,16 +204,26 @@ export default function ContactPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Organization</label>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">
+                      Organization (Optional)
+                    </label>
                     <input 
                       type="text" 
-                      placeholder="e.g. Enterprise Systems" 
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      placeholder="e.g. Enterprise Systems Inc" 
                       className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all" 
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Timeline Target</label>
-                    <select className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">
+                      Timeline Target
+                    </label>
+                    <select 
+                      value={timeline}
+                      onChange={(e) => setTimeline(e.target.value)}
+                      className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all"
+                    >
                       <option>30–40 Days (Standard Sprint)</option>
                       <option>Under 30 Days (Expedited)</option>
                       <option>Ongoing Engineering Retainer</option>
@@ -131,10 +232,14 @@ export default function ContactPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">Project Scope & Architecture Requirements</label>
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#4A4D54] font-semibold">
+                    Project Scope &amp; Architecture Requirements *
+                  </label>
                   <textarea 
                     required 
                     rows={5} 
+                    value={projectScope}
+                    onChange={(e) => setProjectScope(e.target.value)}
                     placeholder="Describe the software application, target features, and any required database/API integrations..." 
                     className="w-full px-4 py-3 bg-[#FAFAF8] border border-[#E5E2DB] rounded-xl text-xs text-[#111215] font-mono focus:outline-none focus:border-[#111215] focus:bg-[#FFFFFF] transition-all leading-relaxed" 
                   />
@@ -142,9 +247,17 @@ export default function ContactPage() {
 
                 <button 
                   type="submit" 
-                  className="w-full py-4 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] font-mono text-xs uppercase tracking-widest font-semibold transition-colors rounded-xl shadow-sm"
+                  disabled={loading}
+                  className="w-full py-4 bg-[#111215] text-[#FFFFFF] hover:bg-[#519DD9] font-mono text-xs uppercase tracking-widest font-semibold transition-colors rounded-xl shadow-sm flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  Submit Project Specification
+                  {loading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#519DD9]" />
+                      <span>Submitting Specification...</span>
+                    </>
+                  ) : (
+                    <span>Submit Project Specification</span>
+                  )}
                 </button>
               </form>
             )}

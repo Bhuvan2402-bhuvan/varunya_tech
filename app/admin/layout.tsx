@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { 
@@ -16,18 +16,19 @@ import {
   Key,
   CreditCard,
   Briefcase,
-  Sparkles
+  Sparkles,
+  Inbox
 } from "lucide-react";
 import { AdminSessionProvider, useAdminSession, PanelRole } from "./AdminSessionContext";
 import { Button } from "@/components/ui/Button";
 import { TimezoneClockWidget } from "@/components/timezone/TimezoneClockWidget";
 
 const ROLE_PERMISSIONS: Record<PanelRole, string[]> = {
-  ADMIN: ["/admin", "/admin/homepage", "/admin/careers", "/admin/leads", "/admin/projects", "/admin/employees", "/admin/finance", "/admin/cms"],
-  MANAGER: ["/admin", "/admin/homepage", "/admin/careers", "/admin/projects", "/admin/employees", "/admin/cms"],
+  ADMIN: ["/admin", "/admin/messages", "/admin/homepage", "/admin/careers", "/admin/leads", "/admin/projects", "/admin/employees", "/admin/finance", "/admin/cms"],
+  MANAGER: ["/admin", "/admin/messages", "/admin/homepage", "/admin/careers", "/admin/projects", "/admin/employees", "/admin/cms"],
   DEVELOPER: ["/admin", "/admin/projects"],
   DESIGNER: ["/admin", "/admin/homepage", "/admin/projects"],
-  SALES: ["/admin", "/admin/leads"],
+  SALES: ["/admin", "/admin/messages", "/admin/leads"],
   HR: ["/admin", "/admin/careers", "/admin/employees", "/admin/cms"],
   FINANCE: ["/admin", "/admin/finance"],
 };
@@ -57,6 +58,34 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const [targetRole, setTargetRole] = useState<PanelRole | null>(null);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [confirmError, setConfirmError] = useState<string | null>(null);
+
+  // Live unread message count
+  const [unreadCount, setUnreadCount] = useState<number>(0);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const fetchUnread = async () => {
+      try {
+        const token = localStorage.getItem("velocity_panel_token") || `token_${activeRole || "ADMIN"}`;
+        const res = await fetch("/api/v1/messages/unread-count", {
+          headers: { "X-Staff-Token": token },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success && typeof data.unreadCount === "number") {
+            setUnreadCount(data.unreadCount);
+          }
+        }
+      } catch (err) {
+        // Silently handle polling errors
+      }
+    };
+
+    fetchUnread();
+    const interval = setInterval(fetchUnread, 15000); // Poll every 15s
+    return () => clearInterval(interval);
+  }, [isAuthenticated, activeRole, pathname]);
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -205,6 +234,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { name: "Executive Dashboard", href: "/admin", icon: LayoutDashboard },
+    { name: "Messages & Inbox", href: "/admin/messages", icon: Inbox, badge: unreadCount },
     { name: "Homepage Customizer", href: "/admin/homepage", icon: Sparkles },
     { name: "Careers & Jobs", href: "/admin/careers", icon: Briefcase },
     { name: "CRM Lead Pipeline", href: "/admin/leads", icon: Users2 },
@@ -266,14 +296,21 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-medium transition-all ${
                     active
                       ? "bg-[#F5F3EF] border border-[#111215] text-[#111215] font-semibold shadow-xs"
                       : "text-[#4A4D54] hover:text-[#111215] hover:bg-[#F5F3EF]"
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${active ? "text-[#519DD9]" : "text-[#71757E]"}`} />
-                  {item.name}
+                  <div className="flex items-center gap-3">
+                    <Icon className={`w-4 h-4 ${active ? "text-[#519DD9]" : "text-[#71757E]"}`} />
+                    <span>{item.name}</span>
+                  </div>
+                  {typeof item.badge === "number" && item.badge > 0 && (
+                    <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-[#DB0038] text-white rounded-full leading-none shadow-xs">
+                      {item.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}

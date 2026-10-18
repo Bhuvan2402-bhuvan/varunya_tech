@@ -99,7 +99,7 @@ model Task {
 }
 
 model Lead {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   fullName      String
   email         String
   company       String?
@@ -107,9 +107,11 @@ model Lead {
   budgetRange   String
   serviceNeeded String
   projectScope  String
-  aiLeadScore   Int      @default(85)
-  status        String   @default("NEW") // NEW, CONTACTED, PROPOSAL_SENT, CLOSED_WON, CLOSED_LOST
-  createdAt     DateTime @default(now())
+  aiLeadScore   Int       @default(85)
+  status        String    @default("NEW") // NEW, CONTACTED, PROPOSAL_SENT, CLOSED_WON, CLOSED_LOST
+  createdAt     DateTime  @default(now())
+
+  messages      Message[]
 }
 
 model Quote {
@@ -232,11 +234,47 @@ model Meeting {
 }
 
 model Message {
-  id        String   @id @default(uuid())
-  senderId  String
-  sender    User     @relation(fields: [senderId], references: [id])
-  content   String
-  createdAt DateTime @default(now())
+  id          String        @id @default(uuid())
+  name        String
+  email       String
+  company     String?
+  phone       String?
+  subject     String
+  content     String
+  source      String        @default("CONTACT_FORM") // CONTACT_FORM, CONSULTATION_MODAL, HOMEPAGE_ENQUIRY, GENERAL_INQUIRY
+  category    String        @default("GENERAL") // GENERAL, SALES, CONSULTATION, SUPPORT
+  status      String        @default("NEW") // NEW, IN_PROGRESS, RESOLVED, ARCHIVED, SPAM
+  isRead      Boolean       @default(false)
+  readAt      DateTime?
+  readBy      String?
+  assignedTo  String?
+  leadId      String?
+  lead        Lead?         @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  userId      String?
+  user        User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  metadata    String?       // JSON string for technical specs, timeline, preferences, etc.
+  notes       MessageNote[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([createdAt])
+  @@index([isRead])
+  @@index([status])
+  @@index([email])
+  @@index([leadId])
+}
+
+model MessageNote {
+  id         String   @id @default(uuid())
+  messageId  String
+  message    Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  authorName String
+  authorRole String
+  content    String
+  createdAt  DateTime @default(now())
+
+  @@index([messageId])
+  @@index([createdAt])
 }
 
 model ProjectFile {

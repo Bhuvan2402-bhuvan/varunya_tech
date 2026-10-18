@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { verifyAdminSession } from '@/lib/auth/admin-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -7,25 +8,9 @@ export async function PATCH(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  const token =
-    request.headers.get('X-Staff-Token') ||
-    request.headers.get('Authorization')?.replace('Bearer ', '');
-
-  if (!token || !token.startsWith('token_')) {
-    return NextResponse.json(
-      { success: false, error: 'Unauthorized. Staff session token required.' },
-      { status: 401 }
-    );
-  }
-
-  const role = token.replace('token_', '');
-  const permittedRoles = ['ADMIN', 'SALES', 'MANAGER'];
-
-  if (!permittedRoles.includes(role)) {
-    return NextResponse.json(
-      { success: false, error: 'Forbidden. Role lacks lead update permissions.' },
-      { status: 403 }
-    );
+  const auth = verifyAdminSession(request, ['ADMIN', 'MANAGER', 'SALES']);
+  if (!auth.authenticated) {
+    return auth.response;
   }
 
   try {

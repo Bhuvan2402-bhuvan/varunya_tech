@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
+import { verifyAdminSession } from '@/lib/auth/admin-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -74,6 +75,24 @@ const InboundLeadSchema = z.object({
     .max(500)
     .optional()
     .nullable(),
+  subject: z
+    .string()
+    .trim()
+    .max(200)
+    .optional()
+    .nullable(),
+  source: z
+    .string()
+    .trim()
+    .max(80)
+    .optional()
+    .nullable(),
+  category: z
+    .string()
+    .trim()
+    .max(80)
+    .optional()
+    .nullable(),
 });
 
 /**
@@ -132,6 +151,9 @@ export async function POST(request: Request) {
       budgetRange,
       projectScope,
       consultationDetails,
+      subject,
+      source,
+      category,
     } = parsed.data;
 
     // Check for duplicate spam submissions within cooldown window
@@ -166,19 +188,58 @@ export async function POST(request: Request) {
     }
     leadScore = Math.min(leadScore, 98);
 
-    // Persist into database using Prisma Lead model
-    const savedLead = await prisma.lead.create({
-      data: {
-        fullName,
-        email: email.toLowerCase(),
-        company: company || 'Direct Client',
-        phone: phone || null,
-        serviceNeeded,
-        budgetRange: budgetRange || 'Flexible',
-        projectScope: combinedScope,
-        aiLeadScore: leadScore,
-        status: 'NEW',
-      },
+    // Atomically persist both CRM Lead and Inbox Message in a single transaction
+    const [savedLead, savedMessage] = await prisma.$transaction(async (tx: any) => {
+      const lead = await tx.lead.create({
+        data: {
+          fullName,
+          email: email.toLowerCase(),
+          company: company || 'Direct Client',
+          phone: phone || null,
+          serviceNeeded,
+          budgetRange: budgetRange || 'Flexible',
+          projectScope: combinedScope,
+          aiLeadScore: leadScore,
+          status: 'NEW',
+        },
+      });
+
+      const messageSubject =
+        subject ||
+        (consultationDetails
+          ? '1-on-1 Discovery Call Request'
+          : `Engineering Project: ${serviceNeeded}`);
+
+      const messageSource =
+        source ||
+        (consultationDetails ? 'CONSULTATION_MODAL' : 'HOMEPAGE_ENQUIRY');
+
+      const messageCategory =
+        category || (consultationDetails ? 'CONSULTATION' : 'SALES');
+
+      const message = await tx.message.create({
+        data: {
+          name: fullName,
+          email: email.toLowerCase(),
+          company: company || null,
+          phone: phone || null,
+          subject: messageSubject,
+          content: projectScope,
+          source: messageSource,
+          category: messageCategory,
+          status: 'NEW',
+          isRead: false,
+          leadId: lead.id,
+          metadata: JSON.stringify({
+            budgetRange: budgetRange || 'Flexible',
+            serviceNeeded,
+            consultationDetails: consultationDetails || null,
+            clientIp: ip,
+          }),
+        },
+      });
+
+      return [lead, message];
     });
 
     // Update rate limit tracking
@@ -194,6 +255,7 @@ export async function POST(request: Request) {
         success: true,
         message: 'Enquiry received and successfully registered with senior engineering staff.',
         leadId: savedLead.id,
+        messageId: savedMessage.id,
         createdAt: savedLead.createdAt,
       },
       { status: 201 }
@@ -215,25 +277,9 @@ export async function POST(request: Request) {
  * Requires valid X-Staff-Token or Authorization Bearer header
  */
 export async function GET(request: Request) {
-  const token =
-    request.headers.get('X-Staff-Token') ||
-    request.headers.get('Authorization')?.replace('Bearer ', '');
-
-  if (!token || !token.startsWith('token_')) {
-    return NextResponse.json(
-      { success: false, error: 'Unauthorized. Staff session token required.' },
-      { status: 401 }
-    );
-  }
-
-  const role = token.replace('token_', '');
-  const permittedRoles = ['ADMIN', 'MANAGER', 'SALES'];
-
-  if (!permittedRoles.includes(role)) {
-    return NextResponse.json(
-      { success: false, error: 'Forbidden. Role lacks lead pipeline access.' },
-      { status: 403 }
-    );
+  const auth = verifyAdminSession(request, ['ADMIN', 'MANAGER', 'SALES']);
+  if (!auth.authenticated) {
+    return auth.response;
   }
 
   try {
@@ -260,25 +306,9 @@ export async function GET(request: Request) {
  * Admin Lead Status Mutation
  */
 export async function PATCH(request: Request) {
-  const token =
-    request.headers.get('X-Staff-Token') ||
-    request.headers.get('Authorization')?.replace('Bearer ', '');
-
-  if (!token || !token.startsWith('token_')) {
-    return NextResponse.json(
-      { success: false, error: 'Unauthorized. Staff session token required.' },
-      { status: 401 }
-    );
-  }
-
-  const role = token.replace('token_', '');
-  const permittedRoles = ['ADMIN', 'SALES', 'MANAGER'];
-
-  if (!permittedRoles.includes(role)) {
-    return NextResponse.json(
-      { success: false, error: 'Forbidden. Role lacks lead update permissions.' },
-      { status: 403 }
-    );
+  const auth = verifyAdminSession(request, ['ADMIN', 'MANAGER', 'SALES']);
+  if (!auth.authenticated) {
+    return auth.response;
   }
 
   try {
