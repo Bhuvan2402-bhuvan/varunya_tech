@@ -129,28 +129,25 @@ export function ScrollingCapabilitiesBridge() {
   const [isPaused, setIsPaused] = useState(false);
 
   return (
-    <div className="relative w-full bg-[#191C21] border-b border-[#2A2E37] py-14 overflow-hidden select-none">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#17191D] via-[#191C21] to-[#17191D] opacity-90 pointer-events-none" />
-
+    <div className="relative w-full bg-[#F9FAFB] border-b border-gray-200 py-14 overflow-hidden select-none">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] font-mono text-[10px] tracking-[0.25em] text-[#519DD9] uppercase mb-2 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-200 font-mono text-[10px] tracking-[0.25em] text-[#519DD9] uppercase mb-2 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-[#519DD9] animate-pulse" />
             <span>ARCHITECTURE CAPABILITIES // 01 ➔ 02</span>
           </div>
-          <h2 className="text-xl sm:text-2xl font-black text-[#EDEDED] uppercase tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-black text-[#17191D] uppercase tracking-tight">
             Engineered Capabilities &amp; Software Subsystems
           </h2>
         </div>
 
-        <div className="flex items-center gap-4 font-mono text-[11px] text-[#A6AFBD]">
+        <div className="flex items-center gap-4 font-mono text-[11px] text-[#4B5563]">
           <span className="hidden sm:inline">
-            CAPABILITY STREAM: <strong className="text-[#EDEDED]">8 ARCHITECTURE MODULES</strong>
+            CAPABILITY STREAM: <strong className="text-[#17191D]">8 ARCHITECTURE MODULES</strong>
           </span>
           <button
             onClick={() => setIsPaused(!isPaused)}
-            className="px-3 py-1 bg-[#202329] hover:bg-[#282C34] border border-[#2A2E37] text-[#EDEDED] transition-colors shadow-sm"
+            className="px-3 py-1 bg-white hover:bg-gray-50 border border-gray-200 text-[#17191D] transition-colors shadow-xs"
           >
             {isPaused ? "▶ RESUME STREAM" : "⏸ PAUSE STREAM"}
           </button>
@@ -164,8 +161,8 @@ export function ScrollingCapabilitiesBridge() {
         onMouseLeave={() => setIsPaused(false)}
       >
         {/* Soft edge blur overlays */}
-        <div className="absolute top-0 left-0 w-16 sm:w-28 h-full bg-gradient-to-r from-[#191C21] to-transparent z-20 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-16 sm:w-28 h-full bg-gradient-to-l from-[#191C21] to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-16 sm:w-28 h-full bg-gradient-to-r from-[#F9FAFB] to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-16 sm:w-28 h-full bg-gradient-to-l from-[#F9FAFB] to-transparent z-20 pointer-events-none" />
 
         {/* Animated conveyor */}
         <div 
@@ -183,7 +180,7 @@ export function ScrollingCapabilitiesBridge() {
             return (
               <div
                 key={`${mod.id}-${idx}`}
-                className="w-[320px] sm:w-[360px] p-5 bg-[#202329] border border-[#2A2E37] hover:border-[#519DD9] transition-all duration-300 flex-shrink-0 flex flex-col justify-between group shadow-card hover:shadow-steel-glow rounded-lg"
+                className="w-[320px] sm:w-[360px] p-5 bg-white border border-gray-200 hover:border-[#519DD9] transition-all duration-300 flex-shrink-0 flex flex-col justify-between group shadow-xs hover:shadow-md rounded-lg"
                 style={{
                   borderLeftColor: mod.accent,
                   borderLeftWidth: "3px"
@@ -191,13 +188,13 @@ export function ScrollingCapabilitiesBridge() {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between font-mono text-[10px]">
-                    <span className="text-[#727C8D] tracking-widest">{mod.code}</span>
+                    <span className="text-[#6B7280] tracking-widest">{mod.code}</span>
                     <span 
                       className="px-2 py-0.5 border text-[9px] uppercase font-bold"
                       style={{ 
                         color: mod.accent, 
                         borderColor: `${mod.accent}40`,
-                        backgroundColor: "#17191D"
+                        backgroundColor: "#F9FAFB"
                       }}
                     >
                       {mod.category}
@@ -206,27 +203,27 @@ export function ScrollingCapabilitiesBridge() {
 
                   <div className="flex items-center gap-3">
                     <div 
-                      className="w-9 h-9 flex items-center justify-center border shrink-0 bg-[#17191D]"
+                      className="w-9 h-9 flex items-center justify-center border shrink-0 bg-[#F9FAFB]"
                       style={{ borderColor: `${mod.accent}50` }}
                     >
                       <Icon className="w-4 h-4" style={{ color: mod.accent }} />
                     </div>
                     <div>
-                      <h3 className="font-sans font-bold text-base text-[#EDEDED] group-hover:text-[#519DD9] transition-colors">
+                      <h3 className="font-sans font-bold text-base text-[#17191D] group-hover:text-[#519DD9] transition-colors">
                         {mod.title}
                       </h3>
-                      <div className="font-mono text-[10px] text-[#727C8D]">{mod.protocol}</div>
+                      <div className="font-mono text-[10px] text-[#6B7280]">{mod.protocol}</div>
                     </div>
                   </div>
 
-                  <p className="font-sans text-xs text-[#A6AFBD] font-normal leading-relaxed whitespace-normal line-clamp-2">
+                  <p className="font-sans text-xs text-[#4B5563] font-normal leading-relaxed whitespace-normal line-clamp-2">
                     {mod.description}
                   </p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-[#2A2E37] flex items-center justify-between font-mono">
+                <div className="pt-4 mt-4 border-t border-gray-100 flex items-center justify-between font-mono">
                   <div>
-                    <span className="text-[9px] text-[#727C8D] uppercase block">{mod.subMetric}</span>
+                    <span className="text-[9px] text-[#6B7280] uppercase block">{mod.subMetric}</span>
                     <span className="text-sm font-extrabold" style={{ color: mod.accent }}>
                       {mod.metric}
                     </span>
@@ -234,7 +231,7 @@ export function ScrollingCapabilitiesBridge() {
 
                   <a 
                     href="#architecture" 
-                    className="text-[10px] text-[#727C8D] group-hover:text-[#519DD9] flex items-center gap-1 uppercase tracking-wider transition-colors font-medium"
+                    className="text-[10px] text-[#6B7280] group-hover:text-[#519DD9] flex items-center gap-1 uppercase tracking-wider transition-colors font-medium"
                   >
                     <span>Blueprint</span>
                     <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -247,7 +244,7 @@ export function ScrollingCapabilitiesBridge() {
       </div>
 
       {/* Bottom Sub-Ticker Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 flex items-center justify-between font-mono text-[10px] text-[#727C8D] uppercase tracking-[0.2em]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 flex items-center justify-between font-mono text-[10px] text-[#6B7280] uppercase tracking-[0.2em]">
         <div className="flex items-center gap-2">
           <span className="w-1.5 h-1.5 bg-[#519DD9] rounded-full" />
           <span>MODULAR ARCHITECTURE BLUEPRINTS</span>

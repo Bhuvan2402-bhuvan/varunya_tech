@@ -36,30 +36,30 @@ export function Footer() {
 
   return (
     <>
-      <footer className="relative bg-[#191C21] border-t border-[#2A2E37] text-[#A6AFBD] text-xs font-mono overflow-hidden pt-20 pb-12 transition-colors duration-300">
+      <footer className="relative bg-[#F9FAFB] border-t border-gray-200 text-[#4B5563] text-xs font-mono overflow-hidden pt-20 pb-12 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Global Operations Time Index */}
-          <div className="mb-16 p-4 bg-[#202329] border border-[#2A2E37] shadow-sm grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
+          <div className="mb-16 p-4 bg-white border border-gray-200 shadow-xs grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-[#519DD9]" />
-              <span className="text-[#727C8D]">LONDON</span>
-              <span className="text-[#EDEDED] font-bold">{times.london || "12:00 PM"}</span>
+              <span className="text-[#6B7280]">LONDON</span>
+              <span className="text-[#17191D] font-bold">{times.london || "12:00 PM"}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-[#519DD9]" />
-              <span className="text-[#727C8D]">NEW YORK</span>
-              <span className="text-[#EDEDED] font-bold">{times.ny || "07:00 AM"}</span>
+              <span className="text-[#6B7280]">NEW YORK</span>
+              <span className="text-[#17191D] font-bold">{times.ny || "07:00 AM"}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-[#519DD9]" />
-              <span className="text-[#727C8D]">SAN FRANCISCO</span>
-              <span className="text-[#EDEDED] font-bold">{times.sf || "04:00 AM"}</span>
+              <span className="text-[#6B7280]">SAN FRANCISCO</span>
+              <span className="text-[#17191D] font-bold">{times.sf || "04:00 AM"}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-3.5 h-3.5 text-[#519DD9]" />
-              <span className="text-[#727C8D]">TOKYO</span>
-              <span className="text-[#EDEDED] font-bold">{times.tokyo || "08:00 PM"}</span>
+              <span className="text-[#6B7280]">TOKYO</span>
+              <span className="text-[#17191D] font-bold">{times.tokyo || "08:00 PM"}</span>
             </div>
           </div>
 
@@ -75,7 +75,7 @@ export function Footer() {
                   className="w-8 h-8 object-contain filter drop-shadow-[0_2px_8px_rgba(81,157,217,0.35)]"
                 />
                 <div className="flex flex-col">
-                  <span className="font-sans font-black text-lg tracking-[0.15em] text-[#EDEDED] uppercase">
+                  <span className="font-sans font-black text-lg tracking-[0.15em] text-[#17191D] uppercase">
                     VARUNYA<span className="text-[#519DD9] font-normal">TECH</span>
                   </span>
                   <span className="text-[8px] font-mono tracking-[0.2em] text-[#519DD9] uppercase -mt-0.5 font-bold">
@@ -84,7 +84,7 @@ export function Footer() {
                 </div>
               </Link>
 
-              <p className="font-sans text-xs text-[#A6AFBD] leading-relaxed max-w-sm">
+              <p className="font-sans text-xs text-[#4B5563] leading-relaxed max-w-sm">
                 We design and engineer bespoke software platforms, enterprise portals, and modern web architectures. Delivering production-grade systems within disciplined 30–40 day sprint cycles with continuous post-launch support.
               </p>
 
@@ -101,7 +101,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={item.label}
-                    className="p-2.5 bg-[#202329] border border-[#2A2E37] text-[#A6AFBD] hover:text-[#EDEDED] hover:border-[#519DD9] transition-colors shadow-sm"
+                    className="p-2.5 bg-white border border-gray-200 text-[#4B5563] hover:text-[#17191D] hover:border-[#519DD9] transition-colors shadow-xs"
                   >
                     <item.icon className="w-3.5 h-3.5" />
                   </a>
@@ -111,8 +111,8 @@ export function Footer() {
 
             {/* Col 2: Capabilities */}
             <div className="space-y-4">
-              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#EDEDED] font-bold">Capabilities</h4>
-              <ul className="space-y-2 text-[#A6AFBD]">
+              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#17191D] font-bold">Capabilities</h4>
+              <ul className="space-y-2 text-[#4B5563]">
                 <li><Link href="/services/custom-software" className="hover:text-[#519DD9] transition-colors">Custom Software</Link></li>
                 <li><Link href="/services/erp-development" className="hover:text-[#519DD9] transition-colors">ERP Platforms</Link></li>
                 <li><Link href="/services/web-development" className="hover:text-[#519DD9] transition-colors">Web Applications</Link></li>
@@ -123,8 +123,8 @@ export function Footer() {
 
             {/* Col 3: Studio */}
             <div className="space-y-4">
-              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#EDEDED] font-bold">Studio</h4>
-              <ul className="space-y-2 text-[#A6AFBD]">
+              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#17191D] font-bold">Studio</h4>
+              <ul className="space-y-2 text-[#4B5563]">
                 <li><Link href="/about" className="hover:text-[#519DD9] transition-colors">About Studio</Link></li>
                 <li><Link href="/portfolio" className="hover:text-[#519DD9] transition-colors">Selected Work</Link></li>
                 <li><Link href="/pricing" className="hover:text-[#519DD9] transition-colors">Engagement Models</Link></li>
@@ -135,22 +135,22 @@ export function Footer() {
 
             {/* Col 4: Inquiry */}
             <div className="space-y-4">
-              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#EDEDED] font-bold">Direct Inquiry</h4>
-              <p className="font-sans text-xs text-[#A6AFBD]">
+              <h4 className="text-[10px] uppercase tracking-[0.2em] text-[#17191D] font-bold">Direct Inquiry</h4>
+              <p className="font-sans text-xs text-[#4B5563]">
                 Inquire directly regarding your engineering roadmap: <br />
-                <strong className="text-[#EDEDED] font-mono">varunyatech@gmail.com</strong>
+                <strong className="text-[#17191D] font-mono">varunyatech@gmail.com</strong>
               </p>
 
               <a
                 href="mailto:varunyatech@gmail.com?subject=Project%20Inquiry%20-%20Varunya%20Technologies"
-                className="w-full py-3 bg-[#202329] border border-[#2A2E37] text-[#EDEDED] hover:border-[#519DD9] hover:bg-[#252830] text-center flex items-center justify-center gap-2 transition-colors uppercase tracking-wider text-[11px] font-semibold shadow-sm"
+                className="w-full py-3 bg-white border border-gray-200 text-[#17191D] hover:border-[#519DD9] hover:bg-gray-50 text-center flex items-center justify-center gap-2 transition-colors uppercase tracking-wider text-[11px] font-semibold shadow-xs"
               >
                 <Mail className="w-3.5 h-3.5 text-[#519DD9]" />
                 <span>varunyatech@gmail.com</span>
               </a>
 
               <div className="pt-1">
-                <Link href="/contact" className="text-[#A6AFBD] hover:text-[#EDEDED] flex items-center gap-1 transition-colors">
+                <Link href="/contact" className="text-[#4B5563] hover:text-[#17191D] flex items-center gap-1 transition-colors">
                   Contact Office <ArrowUpRight className="w-3 h-3" />
                 </Link>
               </div>
@@ -158,13 +158,13 @@ export function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="mt-16 pt-8 border-t border-[#2A2E37] flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#727C8D]">
+          <div className="mt-16 pt-8 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-[#6B7280]">
             <div>
               © {new Date().getFullYear()} Varunya Technologies. All rights reserved.
             </div>
             <div className="flex items-center gap-4 text-[10px] tracking-wider uppercase">
-              <span className="text-[#EDEDED] font-medium">30–40 DAY ARCHITECTURAL DELIVERY</span>
-              <span className="text-[#3B414E]">•</span>
+              <span className="text-[#17191D] font-medium">30–40 DAY ARCHITECTURAL DELIVERY</span>
+              <span className="text-gray-300">•</span>
               <span>CONTINUOUS CLIENT SUPPORT</span>
             </div>
           </div>

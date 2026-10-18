@@ -4,68 +4,68 @@
 
 @layer base {
   :root {
-    --background: #17191D;
-    --foreground: #EDEDED;
-    --surface-canvas: #17191D;
-    --surface-graphite: #17191D;
-    --surface-charcoal: #191C21;
-    --surface-elevated: #202329;
-    --surface-card: #202329;
-    --surface-raised: #282C34;
-    --structural-border: #2A2E37;
-    --border-subtle: #23262E;
-    --border-dark: #1E2128;
-    --text-primary: #EDEDED;
-    --text-secondary: #A6AFBD;
-    --text-muted: #727C8D;
-    --titanium: #9EACB9;
-    --silver: #828B99;
-    --platinum: #EDEDED;
-    --ice-white: #EDEDED;
+    --background: #FFFFFF;
+    --foreground: #17191D;
+    --surface-canvas: #FFFFFF;
+    --surface-graphite: #FFFFFF;
+    --surface-charcoal: #F9FAFB;
+    --surface-elevated: #FFFFFF;
+    --surface-card: #FFFFFF;
+    --surface-raised: #F3F4F6;
+    --structural-border: #E5E7EB;
+    --border-subtle: #F3F4F6;
+    --border-dark: #E5E7EB;
+    --text-primary: #17191D;
+    --text-secondary: #4B5563;
+    --text-muted: #6B7280;
+    --titanium: #374151;
+    --silver: #6B7280;
+    --platinum: #17191D;
+    --ice-white: #FFFFFF;
     --blue-steel: #519DD9;
     /* Approved Brand Colors */
     --brand-crimson: #DB0038;
     --brand-yellow: #F7C200;
     --brand-blue: #519DD9;
     --brand-teal: #53BAC1;
-    --brand-softgrey: #EDEDED;
+    --brand-softgrey: #F9FAFB;
     --brand-graphite: #17191D;
-    --brand-charcoal: #191C21;
-    --brand-elevated: #202329;
-    --deep-indigo: #161824;
+    --brand-charcoal: #F9FAFB;
+    --brand-elevated: #FFFFFF;
+    --deep-indigo: #1E293B;
   }
 
   .dark {
-    --background: #17191D;
-    --foreground: #EDEDED;
-    --surface-canvas: #17191D;
-    --surface-graphite: #17191D;
-    --surface-charcoal: #191C21;
-    --surface-elevated: #202329;
-    --surface-card: #202329;
-    --surface-raised: #282C34;
-    --structural-border: #2A2E37;
-    --border-subtle: #23262E;
-    --border-dark: #1E2128;
-    --text-primary: #EDEDED;
-    --text-secondary: #A6AFBD;
-    --text-muted: #727C8D;
-    --titanium: #9EACB9;
-    --silver: #828B99;
-    --platinum: #EDEDED;
-    --ice-white: #EDEDED;
+    --background: #FFFFFF;
+    --foreground: #17191D;
+    --surface-canvas: #FFFFFF;
+    --surface-graphite: #FFFFFF;
+    --surface-charcoal: #F9FAFB;
+    --surface-elevated: #FFFFFF;
+    --surface-card: #FFFFFF;
+    --surface-raised: #F3F4F6;
+    --structural-border: #E5E7EB;
+    --border-subtle: #F3F4F6;
+    --border-dark: #E5E7EB;
+    --text-primary: #17191D;
+    --text-secondary: #4B5563;
+    --text-muted: #6B7280;
+    --titanium: #374151;
+    --silver: #6B7280;
+    --platinum: #17191D;
+    --ice-white: #FFFFFF;
     --blue-steel: #519DD9;
   }
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
-  background-color: #17191D;
-  color: #EDEDED;
+  background-color: #FFFFFF;
+  color: #17191D;
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
@@ -75,87 +75,87 @@ body {
 
 /* Architectural Grid & Structural Dividers */
 .border-structural {
-  border-color: #2A2E37;
+  border-color: #E5E7EB;
 }
 
 .bg-graphite-noir {
-  background-color: #141518;
+  background-color: #FFFFFF;
 }
 
 .bg-graphite {
-  background-color: #17191D;
+  background-color: #FFFFFF;
 }
 
 .bg-charcoal {
-  background-color: #191C21;
+  background-color: #F9FAFB;
 }
 
 .bg-elevated {
-  background-color: #202329;
+  background-color: #FFFFFF;
 }
 
-/* Subtle Architectural Grid Pattern on Dark Graphite */
+/* Subtle Architectural Grid Pattern on Clean White Background */
 .bg-architectural-grid {
   background-size: 64px 64px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
 }
 
 .bg-architectural-grid-subtle {
   background-size: 80px 80px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
-/* Luminous Architectural Mesh on Dark Foundation */
+/* Luminous Architectural Mesh on White Foundation */
 .bg-digital-mesh {
-  background-color: #17191D;
+  background-color: #FFFFFF;
   background-image: 
-    radial-gradient(ellipse at 50% -10%, rgba(81, 157, 217, 0.12), transparent 60%),
-    radial-gradient(ellipse at 85% 25%, rgba(83, 186, 193, 0.09), transparent 50%),
-    radial-gradient(ellipse at 15% 65%, rgba(219, 0, 56, 0.06), transparent 55%),
-    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    radial-gradient(ellipse at 50% -10%, rgba(81, 157, 217, 0.08), transparent 60%),
+    radial-gradient(ellipse at 85% 25%, rgba(83, 186, 193, 0.06), transparent 50%),
+    radial-gradient(ellipse at 15% 65%, rgba(219, 0, 56, 0.04), transparent 55%),
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
   background-size: 100% 100%, 100% 100%, 100% 100%, 80px 80px, 80px 80px;
 }
 
 .glow-cyan {
-  box-shadow: 0 10px 30px -5px rgba(81, 157, 217, 0.25);
+  box-shadow: 0 10px 30px -5px rgba(81, 157, 217, 0.18);
 }
 
 .glow-cobalt {
-  box-shadow: 0 10px 30px -5px rgba(81, 157, 217, 0.25);
+  box-shadow: 0 10px 30px -5px rgba(81, 157, 217, 0.18);
 }
 
 .glow-teal {
-  box-shadow: 0 10px 30px -5px rgba(83, 186, 193, 0.25);
+  box-shadow: 0 10px 30px -5px rgba(83, 186, 193, 0.18);
 }
 
 .glow-crimson {
-  box-shadow: 0 10px 30px -5px rgba(219, 0, 56, 0.25);
+  box-shadow: 0 10px 30px -5px rgba(219, 0, 56, 0.18);
 }
 
 .glow-yellow {
-  box-shadow: 0 10px 30px -5px rgba(247, 194, 0, 0.25);
+  box-shadow: 0 10px 30px -5px rgba(247, 194, 0, 0.18);
 }
 
 .text-gradient-cyan {
-  background: linear-gradient(135deg, #EDEDED 0%, #519DD9 60%, #53BAC1 100%);
+  background: linear-gradient(135deg, #17191D 0%, #519DD9 70%, #53BAC1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-electric {
-  background: linear-gradient(135deg, #EDEDED 20%, #519DD9 65%, #F7C200 100%);
+  background: linear-gradient(135deg, #17191D 20%, #519DD9 65%, #DB0038 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Light Editorial Contrast Panel */
+/* Light Editorial Section */
 .editorial-panel-light {
-  background-color: #EDEDED;
+  background-color: #F9FAFB;
   color: #17191D;
 }
 
@@ -166,7 +166,7 @@ body {
 }
 
 .editorial-panel-light p {
-  color: #333842;
+  color: #4B5563;
 }
 
 /* Architectural typography */
@@ -174,23 +174,23 @@ body {
   font-family: var(--font-editorial), "Playfair Display", "Cormorant Garamond", Georgia, serif;
 }
 
-/* Dark Minimal Luxury Scrollbar */
+/* Light Clean Scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #17191D;
+  background: #F9FAFB;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2A2E37;
+  background: #D1D5DB;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3B414E;
+  background: #9CA3AF;
 }
 
 /* Focus Accessibility */

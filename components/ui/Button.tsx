@@ -24,13 +24,13 @@ export function Button({
   const baseStyles = "inline-flex items-center justify-center font-mono text-xs uppercase tracking-wider transition-all duration-200 active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none cursor-pointer";
 
   const variants = {
-    primary: "bg-[#519DD9] text-[#17191D] hover:bg-[#3d8ac4] font-bold shadow-sm",
-    crimson: "bg-[#DB0038] text-[#FFFFFF] hover:bg-[#b5002e] font-bold shadow-sm",
-    gradient: "bg-gradient-to-r from-[#519DD9] to-[#53BAC1] text-[#17191D] hover:opacity-95 font-bold shadow-sm",
-    secondary: "bg-[#202329] text-[#EDEDED] hover:bg-[#282C34] border border-[#2A2E37]",
-    outline: "bg-transparent border border-[#2A2E37] text-[#EDEDED] hover:border-[#519DD9] hover:bg-[#202329]",
-    ghost: "bg-transparent text-[#A6AFBD] hover:text-[#EDEDED] hover:bg-[#202329]",
-    steel: "bg-[#202329] text-[#519DD9] hover:bg-[#282C34] border border-[#519DD9]/40 font-bold",
+    primary: "bg-[#519DD9] text-[#FFFFFF] hover:bg-[#3d8ac4] font-bold shadow-xs",
+    crimson: "bg-[#DB0038] text-[#FFFFFF] hover:bg-[#b5002e] font-bold shadow-xs",
+    gradient: "bg-gradient-to-r from-[#519DD9] to-[#53BAC1] text-[#FFFFFF] hover:opacity-95 font-bold shadow-xs",
+    secondary: "bg-white text-[#17191D] hover:bg-gray-50 border border-gray-300 shadow-xs",
+    outline: "bg-transparent border border-gray-300 text-[#17191D] hover:border-[#519DD9] hover:bg-gray-50",
+    ghost: "bg-transparent text-[#4B5563] hover:text-[#17191D] hover:bg-gray-100",
+    steel: "bg-[#519DD9]/10 text-[#0066AA] hover:bg-[#519DD9]/20 border border-[#519DD9]/30 font-bold",
   };
 
   const sizes = {

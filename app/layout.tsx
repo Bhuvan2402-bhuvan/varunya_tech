@@ -40,8 +40,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth selection:bg-[#519DD9]/30 selection:text-[#EDEDED]">
-      <body className={`${inter.variable} ${editorial.variable} antialiased bg-[#17191D] text-[#EDEDED] min-h-screen flex flex-col selection:bg-[#519DD9]/30 selection:text-[#EDEDED]`}>
+    <html lang="en" className="scroll-smooth selection:bg-[#519DD9]/20 selection:text-[#17191D]">
+      <body className={`${inter.variable} ${editorial.variable} antialiased bg-white text-[#17191D] min-h-screen flex flex-col selection:bg-[#519DD9]/20 selection:text-[#17191D]`}>
         <ClientLayoutWrapper>{children}</ClientLayoutWrapper>
       </body>
     </html>

@@ -30,7 +30,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="py-16 lg:py-24 space-y-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#FAFAF8] text-[#111215]">
+    <div className="py-16 lg:py-24 space-y-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white text-[#111215]">
       
       {/* Header Hero */}
       <div className="space-y-6 max-w-3xl">

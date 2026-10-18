@@ -48,33 +48,33 @@ export function Modal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-[#0B0C0E]/80 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
         onClick={onClose}
       />
 
       {/* Modal Dialog Content */}
       <div
         className={clsx(
-          "relative w-full z-10 bg-[#191C21] border border-[#2A2E37] rounded-2xl shadow-2xl overflow-hidden text-[#EDEDED]",
+          "relative w-full z-10 bg-white border border-gray-200 rounded-2xl shadow-2xl overflow-hidden text-[#17191D]",
           "animate-in zoom-in-95 duration-200",
           maxWidthClasses[maxWidth]
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#2A2E37] bg-[#202329]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-[#F9FAFB]">
           {title ? (
-            <h3 className="text-base sm:text-lg font-bold text-[#EDEDED] tracking-wide font-display">{title}</h3>
+            <h3 className="text-base sm:text-lg font-bold text-[#17191D] tracking-wide font-display">{title}</h3>
           ) : <div />}
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#A6AFBD] hover:text-[#EDEDED] hover:bg-[#282C34] transition-colors"
+            className="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Body */}
-        <div className="p-6 max-h-[80vh] overflow-y-auto text-[#A6AFBD]">{children}</div>
+        <div className="p-6 max-h-[80vh] overflow-y-auto text-[#4B5563]">{children}</div>
       </div>
     </div>
   );

@@ -31,7 +31,7 @@ export default function PortfolioPage() {
   });
 
   return (
-    <div className="py-16 lg:py-24 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-[#FAFAF8] text-[#111215]">
+    <div className="py-16 lg:py-24 space-y-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-white text-[#111215]">
       {/* Header */}
       <div className="space-y-4 max-w-3xl">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#FFFFFF] border border-[#E5E2DB] rounded-full font-mono text-[11px] uppercase tracking-[0.2em] text-[#4A4D54] shadow-xs">

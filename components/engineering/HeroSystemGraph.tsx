@@ -168,18 +168,18 @@ export function HeroSystemGraph() {
   };
 
   return (
-    <div className="w-full bg-[#202329] border border-[#2A2E37] relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.45)] flex flex-col group rounded-xl">
+    <div className="w-full bg-white border border-gray-200 relative overflow-hidden shadow-sm flex flex-col group rounded-xl">
       
       {/* Dimensional Ambient Backlight Layer */}
       <div 
-        className="absolute inset-0 pointer-events-none transition-all duration-700 opacity-25"
+        className="absolute inset-0 pointer-events-none transition-all duration-700 opacity-20"
         style={{
           background: `radial-gradient(circle at ${effectiveNode.x}% ${effectiveNode.y}%, ${effectiveNode.glowColor}, transparent 65%)`
         }}
       />
 
       {/* Top Console Bar */}
-      <div className="px-4 sm:px-5 py-3 bg-[#191C21] border-b border-[#2A2E37] flex items-center justify-between font-mono text-[11px] text-[#A6AFBD] select-none z-10">
+      <div className="px-4 sm:px-5 py-3 bg-[#F9FAFB] border-b border-gray-200 flex items-center justify-between font-mono text-[11px] text-[#4B5563] select-none z-10">
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-full bg-[#519DD9] shadow-[0_0_8px_#519DD9] animate-pulse" />
@@ -187,19 +187,19 @@ export function HeroSystemGraph() {
             <span className="w-2 h-2 rounded-full bg-[#DB0038]" />
             <span className="w-2 h-2 rounded-full bg-[#F7C200]" />
           </div>
-          <span className="text-[#EDEDED] font-bold tracking-wider">SYSTEM ARCHITECTURE // BLUEPRINT TOPOLOGY</span>
-          <span className="hidden sm:inline text-[#3B414E]">|</span>
+          <span className="text-[#17191D] font-bold tracking-wider">SYSTEM ARCHITECTURE // BLUEPRINT TOPOLOGY</span>
+          <span className="hidden sm:inline text-gray-300">|</span>
           <span className="hidden sm:inline text-[#519DD9] font-semibold">CLICK NODES TO INSPECT</span>
         </div>
 
         <div className="flex items-center gap-3 text-[10px]">
-          <span className="hidden md:flex items-center gap-1.5 text-[#53BAC1] font-semibold">
+          <span className="hidden md:flex items-center gap-1.5 text-[#0F766E] font-semibold">
             <CheckCircle2 className="w-3.5 h-3.5 text-[#53BAC1]" />
             <span>REPRESENTATIVE BLUEPRINT</span>
           </span>
           <button
             onClick={() => setSimulationSpeed(prev => prev === "normal" ? "boost" : "normal")}
-            className="px-2.5 py-1 bg-[#202329] hover:bg-[#282C34] border border-[#2A2E37] text-[#EDEDED] transition-all font-mono shadow-sm"
+            className="px-2.5 py-1 bg-white hover:bg-gray-50 border border-gray-200 text-[#17191D] transition-all font-mono shadow-xs"
           >
             DATA FLOW: {simulationSpeed === "boost" ? "⚡ 2.0x FLOW" : "● 1.0x NOMINAL"}
           </button>
@@ -207,7 +207,7 @@ export function HeroSystemGraph() {
       </div>
 
       {/* Interactive Visual Graph Canvas */}
-      <div className="relative w-full h-[340px] sm:h-[380px] lg:h-[400px] bg-[#17191D] bg-digital-mesh overflow-hidden">
+      <div className="relative w-full h-[340px] sm:h-[380px] lg:h-[400px] bg-white bg-digital-mesh overflow-hidden">
         
         {/* SVG Interconnecting Vector Paths */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
@@ -237,7 +237,7 @@ export function HeroSystemGraph() {
           {/* Edge -> Gateway (Blue) */}
           <line 
             x1="18%" y1="26%" x2="50%" y2="18%" 
-            stroke={effectiveNode.id === "node-edge" || effectiveNode.id === "node-gateway" ? "#519DD9" : "#2A2E37"} 
+            stroke={effectiveNode.id === "node-edge" || effectiveNode.id === "node-gateway" ? "#519DD9" : "#E5E7EB"} 
             strokeWidth={effectiveNode.id === "node-edge" || effectiveNode.id === "node-gateway" ? 2.5 : 1.2} 
             strokeDasharray={effectiveNode.id === "node-edge" || effectiveNode.id === "node-gateway" ? "none" : "6 4"} 
           />
@@ -245,7 +245,7 @@ export function HeroSystemGraph() {
           {/* Edge -> DB (Crimson) */}
           <line 
             x1="18%" y1="26%" x2="22%" y2="78%" 
-            stroke={effectiveNode.id === "node-edge" || effectiveNode.id === "node-db" ? "#DB0038" : "#2A2E37"} 
+            stroke={effectiveNode.id === "node-edge" || effectiveNode.id === "node-db" ? "#DB0038" : "#E5E7EB"} 
             strokeWidth={effectiveNode.id === "node-edge" || effectiveNode.id === "node-db" ? 2 : 1} 
             strokeDasharray="4 4" 
           />
@@ -253,14 +253,14 @@ export function HeroSystemGraph() {
           {/* Gateway -> Compute (Blue to Teal) */}
           <line 
             x1="50%" y1="18%" x2="50%" y2="54%" 
-            stroke={effectiveNode.id === "node-gateway" || effectiveNode.id === "node-compute" ? "#519DD9" : "#2A2E37"} 
+            stroke={effectiveNode.id === "node-gateway" || effectiveNode.id === "node-compute" ? "#519DD9" : "#E5E7EB"} 
             strokeWidth={effectiveNode.id === "node-gateway" || effectiveNode.id === "node-compute" ? 2.5 : 1.5} 
           />
 
           {/* Gateway -> AI (Teal) */}
           <line 
             x1="50%" y1="18%" x2="82%" y2="30%" 
-            stroke={effectiveNode.id === "node-gateway" || effectiveNode.id === "node-ai" ? "#53BAC1" : "#2A2E37"} 
+            stroke={effectiveNode.id === "node-gateway" || effectiveNode.id === "node-ai" ? "#53BAC1" : "#E5E7EB"} 
             strokeWidth={effectiveNode.id === "node-gateway" || effectiveNode.id === "node-ai" ? 2 : 1.2} 
             strokeDasharray="4 4" 
           />
@@ -268,7 +268,7 @@ export function HeroSystemGraph() {
           {/* Compute -> DB (Teal to Crimson) */}
           <line 
             x1="50%" y1="54%" x2="22%" y2="78%" 
-            stroke={effectiveNode.id === "node-compute" || effectiveNode.id === "node-db" ? "url(#grad-teal-crimson)" : "#2A2E37"} 
+            stroke={effectiveNode.id === "node-compute" || effectiveNode.id === "node-db" ? "url(#grad-teal-crimson)" : "#E5E7EB"} 
             strokeWidth={effectiveNode.id === "node-compute" || effectiveNode.id === "node-db" ? 2.5 : 1.5} 
           />
 
@@ -291,7 +291,7 @@ export function HeroSystemGraph() {
           {/* AI -> Telemetry (Teal/Yellow) */}
           <line 
             x1="82%" y1="30%" x2="80%" y2="78%" 
-            stroke={effectiveNode.id === "node-ai" || effectiveNode.id === "node-telemetry" ? "#53BAC1" : "#2A2E37"} 
+            stroke={effectiveNode.id === "node-ai" || effectiveNode.id === "node-telemetry" ? "#53BAC1" : "#E5E7EB"} 
             strokeWidth={effectiveNode.id === "node-ai" || effectiveNode.id === "node-telemetry" ? 2 : 1} 
             strokeDasharray="4 4" 
           />
@@ -339,12 +339,12 @@ export function HeroSystemGraph() {
                 />
               )}
 
-              {/* Node Card Button in Elevated Dark Surface */}
+              {/* Node Card Button in Clean Light Surface */}
               <div
                 className={`flex items-center gap-2 sm:gap-3 px-2.5 py-1.5 sm:px-3.5 sm:py-2 transition-all duration-300 border ${
                   isActive
-                    ? "bg-[#202329] shadow-2xl scale-105"
-                    : "bg-[#191C21] border-[#2A2E37] hover:border-[#EDEDED] shadow-sm hover:bg-[#202329]"
+                    ? "bg-white shadow-xl scale-105"
+                    : "bg-white border-gray-200 hover:border-gray-400 shadow-xs hover:bg-gray-50"
                 }`}
                 style={{
                   borderColor: isActive ? node.accentColor : undefined,
@@ -371,7 +371,7 @@ export function HeroSystemGraph() {
                     </span>
                     <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full" style={{ backgroundColor: node.accentColor }} />
                   </div>
-                  <span className="font-sans font-bold text-[11px] sm:text-xs text-[#EDEDED] whitespace-nowrap">
+                  <span className="font-sans font-bold text-[11px] sm:text-xs text-[#17191D] whitespace-nowrap">
                     {node.name}
                   </span>
                 </div>
@@ -380,7 +380,7 @@ export function HeroSystemGraph() {
               {/* Latency / Spec Pill */}
               <div className="mt-1 flex items-center justify-center">
                 <span 
-                  className="font-mono text-[8px] sm:text-[9px] px-1.5 py-0.5 bg-[#191C21] border text-[#EDEDED] font-semibold shadow-sm"
+                  className="font-mono text-[8px] sm:text-[9px] px-1.5 py-0.5 bg-white border text-[#17191D] font-semibold shadow-xs"
                   style={{ borderColor: node.accentColor }}
                 >
                   {node.latencyTarget}
@@ -399,7 +399,7 @@ export function HeroSystemGraph() {
 
       {/* Active Node Detail Inspector Drawer */}
       <div 
-        className="p-4 sm:p-6 bg-[#191C21] border-t border-[#2A2E37] grid grid-cols-1 md:grid-cols-12 gap-5 items-center relative transition-all duration-300"
+        className="p-4 sm:p-6 bg-[#F9FAFB] border-t border-gray-200 grid grid-cols-1 md:grid-cols-12 gap-5 items-center relative transition-all duration-300"
         style={{
           borderTopColor: activeNode.accentColor
         }}
@@ -408,7 +408,7 @@ export function HeroSystemGraph() {
         <div className="md:col-span-5 space-y-2">
           <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
             <span 
-              className="px-2.5 py-0.5 border font-bold text-[#17191D]"
+              className="px-2.5 py-0.5 border font-bold text-white"
               style={{
                 backgroundColor: activeNode.accentColor,
                 borderColor: activeNode.accentColor
@@ -417,44 +417,44 @@ export function HeroSystemGraph() {
               TIER: {activeNode.type}
             </span>
             <span style={{ color: activeNode.accentColor }}>●</span>
-            <span className="text-[#EDEDED] font-bold">{activeNode.patternStatus}</span>
+            <span className="text-[#17191D] font-bold">{activeNode.patternStatus}</span>
           </div>
 
-          <h3 className="font-sans text-lg sm:text-xl font-extrabold text-[#EDEDED] tracking-tight">
+          <h3 className="font-sans text-lg sm:text-xl font-extrabold text-[#17191D] tracking-tight">
             {activeNode.name}
           </h3>
 
-          <p className="font-sans text-xs text-[#A6AFBD] leading-relaxed">
+          <p className="font-sans text-xs text-[#4B5563] leading-relaxed">
             {activeNode.details}
           </p>
         </div>
 
         {/* Center: Design Metrics Telemetry (4 cols) */}
         <div className="md:col-span-4 grid grid-cols-2 gap-3 font-mono text-xs">
-          <div className="p-3 bg-[#202329] border border-[#2A2E37] shadow-sm space-y-1">
-            <div className="text-[9px] sm:text-[10px] text-[#727C8D] uppercase">LATENCY TARGET</div>
+          <div className="p-3 bg-white border border-gray-200 shadow-xs space-y-1">
+            <div className="text-[9px] sm:text-[10px] text-[#6B7280] uppercase">LATENCY TARGET</div>
             <div className="text-base sm:text-lg font-extrabold" style={{ color: activeNode.accentColor }}>
               {activeNode.latencyTarget}
             </div>
-            <div className="text-[8px] sm:text-[9px] text-[#727C8D]">DESIGN SPECIFICATION</div>
+            <div className="text-[8px] sm:text-[9px] text-[#6B7280]">DESIGN SPECIFICATION</div>
           </div>
 
-          <div className="p-3 bg-[#202329] border border-[#2A2E37] shadow-sm space-y-1">
-            <div className="text-[9px] sm:text-[10px] text-[#727C8D] uppercase">CAPACITY MODEL</div>
-            <div className="text-base sm:text-lg font-extrabold text-[#EDEDED]">
+          <div className="p-3 bg-white border border-gray-200 shadow-xs space-y-1">
+            <div className="text-[9px] sm:text-[10px] text-[#6B7280] uppercase">CAPACITY MODEL</div>
+            <div className="text-base sm:text-lg font-extrabold text-[#17191D]">
               {activeNode.capacitySpec}
             </div>
-            <div className="text-[8px] sm:text-[9px] text-[#727C8D]">CONFIGURED PER TIER</div>
+            <div className="text-[8px] sm:text-[9px] text-[#6B7280]">CONFIGURED PER TIER</div>
           </div>
         </div>
 
         {/* Right: Technical Protocol Specs (3 cols) */}
-        <div className="md:col-span-3 space-y-2 border-l md:border-[#2A2E37] md:pl-5">
-          <div className="font-mono text-[10px] text-[#727C8D] uppercase tracking-wider font-bold">
+        <div className="md:col-span-3 space-y-2 border-l md:border-gray-200 md:pl-5">
+          <div className="font-mono text-[10px] text-[#6B7280] uppercase tracking-wider font-bold">
             PROTOCOL &amp; STANDARDS:
           </div>
           <div 
-            className="font-mono text-xs text-[#EDEDED] bg-[#202329] px-2.5 py-1.5 border font-semibold shadow-sm"
+            className="font-mono text-xs text-[#17191D] bg-white px-2.5 py-1.5 border font-semibold shadow-xs"
             style={{ borderColor: activeNode.accentColor }}
           >
             {activeNode.protocol}
@@ -463,7 +463,7 @@ export function HeroSystemGraph() {
             {activeNode.specs.map((spec, i) => (
               <span 
                 key={i} 
-                className="font-mono text-[8px] sm:text-[9px] px-2 py-0.5 bg-[#202329] border border-[#2A2E37] text-[#A6AFBD]"
+                className="font-mono text-[8px] sm:text-[9px] px-2 py-0.5 bg-white border border-gray-200 text-[#4B5563]"
               >
                 {spec}
               </span>
@@ -473,7 +473,7 @@ export function HeroSystemGraph() {
       </div>
 
       {/* Credibility Footer Bar */}
-      <div className="px-4 py-2 bg-[#17191D] border-t border-[#2A2E37] flex items-center justify-between text-[10px] font-mono text-[#727C8D]">
+      <div className="px-4 py-2 bg-white border-t border-gray-200 flex items-center justify-between text-[10px] font-mono text-[#6B7280]">
         <div className="flex items-center gap-1.5">
           <Info className="w-3 h-3 text-[#519DD9]" />
           <span>Diagram illustrates representative architecture patterns engineered for client projects. Performance targets depend on infrastructure sizing.</span>

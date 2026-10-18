@@ -18,69 +18,69 @@ const config: Config = {
           yellow: "#F7C200",  // Indicators, telemetry & alerts
           blue: "#519DD9",    // Software visuals, active nodes & links
           teal: "#53BAC1",    // Data flows & AI systems
-          softGrey: "#EDEDED",// Primary typography
-          graphite: "#17191D",// Primary foundation
-          charcoal: "#191C21",// Secondary section background
-          elevated: "#202329",// Elevated panels, cards & diagrams
+          softGrey: "#F9FAFB",// Secondary subtle section background
+          graphite: "#17191D",// Primary typography
+          charcoal: "#F9FAFB",// Secondary section background
+          elevated: "#FFFFFF",// Elevated panels, cards & diagrams
         },
         graphite: {
           DEFAULT: "#17191D",
-          noir: "#141518",
-          charcoal: "#191C21",
-          elevated: "#202329",
-          surface: "#202329",
-          border: "#2A2E37",
+          noir: "#FFFFFF",
+          charcoal: "#F9FAFB",
+          elevated: "#FFFFFF",
+          surface: "#FFFFFF",
+          border: "#E5E7EB",
         },
         charcoal: {
-          DEFAULT: "#191C21",
-          elevated: "#202329",
-          border: "#2A2E37",
+          DEFAULT: "#F9FAFB",
+          elevated: "#FFFFFF",
+          border: "#E5E7EB",
         },
         surface: {
-          DEFAULT: "#202329",
-          dark: "#17191D",
-          charcoal: "#191C21",
-          elevated: "#202329",
-          raised: "#282C34",
-          border: "#2A2E37",
-          light: "#EDEDED",
+          DEFAULT: "#FFFFFF",
+          dark: "#FFFFFF",
+          charcoal: "#F9FAFB",
+          elevated: "#FFFFFF",
+          raised: "#F3F4F6",
+          border: "#E5E7EB",
+          light: "#FFFFFF",
         },
         structural: {
-          border: "#2A2E37",
-          borderSubtle: "#23262E",
-          surface: "#202329",
+          border: "#E5E7EB",
+          borderSubtle: "#F3F4F6",
+          surface: "#FFFFFF",
         },
         tokenText: {
-          primary: "#EDEDED",
-          secondary: "#A6AFBD",
-          muted: "#727C8D",
+          primary: "#17191D",
+          secondary: "#4B5563",
+          muted: "#6B7280",
           dark: "#17191D",
         },
         // Accents mapped to approved palette
         cyan: {
           electric: "#519DD9",
           DEFAULT: "#519DD9",
-          glow: "rgba(81, 157, 217, 0.25)",
+          glow: "rgba(81, 157, 217, 0.2)",
         },
         cobalt: {
           DEFAULT: "#519DD9",
           light: "#6CAEE4",
           dark: "#3B81B9",
-          glow: "rgba(81, 157, 217, 0.25)",
+          glow: "rgba(81, 157, 217, 0.2)",
         },
         teal: {
           digital: "#53BAC1",
           DEFAULT: "#53BAC1",
-          glow: "rgba(83, 186, 193, 0.25)",
+          glow: "rgba(83, 186, 193, 0.2)",
         },
         crimson: {
           DEFAULT: "#DB0038",
           dark: "#B5002E",
-          glow: "rgba(219, 0, 56, 0.25)",
+          glow: "rgba(219, 0, 56, 0.2)",
         },
         electricYellow: {
           DEFAULT: "#F7C200",
-          glow: "rgba(247, 194, 0, 0.25)",
+          glow: "rgba(247, 194, 0, 0.2)",
         },
       },
       fontFamily: {
@@ -90,10 +90,10 @@ const config: Config = {
         mono: ["var(--font-mono)", "JetBrains Mono", "SF Mono", "Consolas", "monospace"],
       },
       boxShadow: {
-        'subtle-elevated': '0 4px 20px -2px rgba(0, 0, 0, 0.35)',
-        'architectural': '0 20px 40px -15px rgba(0, 0, 0, 0.45)',
-        'steel-glow': '0 0 25px -5px rgba(81, 157, 217, 0.2)',
-        'card': '0 1px 3px rgba(0,0,0,0.3), 0 10px 25px rgba(0,0,0,0.25)',
+        'subtle-elevated': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+        'architectural': '0 20px 40px -15px rgba(0, 0, 0, 0.07)',
+        'steel-glow': '0 0 20px -3px rgba(81, 157, 217, 0.15)',
+        'card': '0 1px 3px rgba(0,0,0,0.04), 0 10px 25px rgba(0,0,0,0.03)',
       },
       animation: {
         'fade-in': 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
@@ -108,4 +108,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;

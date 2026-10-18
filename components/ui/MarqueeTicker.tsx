@@ -29,10 +29,10 @@ export function MarqueeTicker({
   const iconList = [Sparkles, Zap, Shield, Award, Terminal, Code2, Cpu];
 
   return (
-    <div className={`relative overflow-hidden w-full py-4 bg-[#0A0A0C]/90 border-y border-white/10 ${className}`}>
+    <div className={`relative overflow-hidden w-full py-4 bg-white/90 border-y border-gray-200 ${className}`}>
       {/* Side Fades */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#070708] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#070708] to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
       <div
         className={`flex whitespace-nowrap gap-8 w-max ${
@@ -45,11 +45,11 @@ export function MarqueeTicker({
           return (
             <div
               key={idx}
-              className="flex items-center gap-4 text-sm sm:text-base font-mono tracking-widest uppercase font-bold text-slate-300 hover:text-[#FF5500] transition-colors cursor-default"
+              className="flex items-center gap-4 text-sm sm:text-base font-mono tracking-widest uppercase font-bold text-[#17191D] hover:text-[#519DD9] transition-colors cursor-default"
             >
-              <Icon className="w-4 h-4 text-[#FF5500]" />
+              <Icon className="w-4 h-4 text-[#519DD9]" />
               <span>{text}</span>
-              <span className="text-[#FF007F] font-black">•</span>
+              <span className="text-[#DB0038] font-black">•</span>
             </div>
           );
         })}

@@ -98,33 +98,33 @@ export function StageArchitecture() {
   const [selectedPattern, setSelectedPattern] = useState<ArchitecturePattern>(PATTERNS[0]);
 
   return (
-    <section id="architecture" className="py-24 border-b border-[#2A2E37] bg-[#191C21] relative overflow-hidden">
+    <section id="architecture" className="py-24 border-b border-gray-200 bg-white relative overflow-hidden">
       {/* Dimensional Ambient Backlight */}
       <div 
-        className="absolute top-1/4 -right-40 w-96 h-96 rounded-full blur-[160px] pointer-events-none opacity-20 transition-all duration-700"
+        className="absolute top-1/4 -right-40 w-96 h-96 rounded-full blur-[160px] pointer-events-none opacity-15 transition-all duration-700"
         style={{ backgroundColor: selectedPattern.accentColor }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#2A2E37] pb-8">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-gray-200 pb-8">
           <div className="space-y-4 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#202329] border border-[#2A2E37] font-mono text-[10px] uppercase tracking-[0.25em] shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#F9FAFB] border border-gray-200 font-mono text-[10px] uppercase tracking-[0.25em] shadow-xs">
               <span className="w-2 h-2 rounded-full bg-[#519DD9] shadow-[0_0_8px_#519DD9] animate-pulse" />
               <span className="text-[#519DD9] font-bold">SCENE 02 // TECHNOLOGY &amp; CAPABILITIES</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#EDEDED] tracking-tight font-sans">
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#17191D] tracking-tight font-sans">
               Decoupled, Resilient, <span className="text-[#519DD9]">Engineered to Last.</span>
             </h2>
-            <p className="text-[#A6AFBD] text-base font-normal leading-relaxed">
+            <p className="text-[#4B5563] text-base font-normal leading-relaxed">
               Explore the architectural patterns VarunyaTech designs and delivers for client systems, balancing modularity, security, and performance.
             </p>
           </div>
 
-          <div className="font-mono text-xs text-[#A6AFBD] shrink-0 flex items-center gap-2 bg-[#202329] px-3.5 py-2 border border-[#2A2E37] shadow-sm">
+          <div className="font-mono text-xs text-[#4B5563] shrink-0 flex items-center gap-2 bg-[#F9FAFB] px-3.5 py-2 border border-gray-200 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-[#519DD9]" />
-            <span>DISCIPLINE: <strong className="text-[#EDEDED]">ARCHITECTURE BLUEPRINTS</strong></span>
+            <span>DISCIPLINE: <strong className="text-[#17191D]">ARCHITECTURE BLUEPRINTS</strong></span>
           </div>
         </div>
 
@@ -138,8 +138,8 @@ export function StageArchitecture() {
                 onClick={() => setSelectedPattern(p)}
                 className={`p-6 text-left border transition-all duration-300 flex flex-col justify-between relative group rounded-xl ${
                   isSelected
-                    ? "bg-[#202329] shadow-2xl scale-[1.02]"
-                    : "bg-[#17191D] border-[#2A2E37] hover:border-[#EDEDED] shadow-sm hover:bg-[#202329]"
+                    ? "bg-white shadow-xl scale-[1.02]"
+                    : "bg-white border-gray-200 hover:border-gray-400 shadow-xs hover:bg-[#F9FAFB]"
                 }`}
                 style={{
                   borderColor: isSelected ? p.accentColor : undefined,
@@ -160,23 +160,23 @@ export function StageArchitecture() {
                     />
                   </div>
 
-                  <h3 className="font-sans font-extrabold text-xl text-[#EDEDED] group-hover:text-[#519DD9] transition-colors">
+                  <h3 className="font-sans font-extrabold text-xl text-[#17191D] group-hover:text-[#519DD9] transition-colors">
                     {p.name}
                   </h3>
-                  <p className="font-sans text-xs text-[#A6AFBD] font-normal line-clamp-2 leading-relaxed">
+                  <p className="font-sans text-xs text-[#4B5563] font-normal line-clamp-2 leading-relaxed">
                     {p.tagline}
                   </p>
                 </div>
 
-                <div className="pt-4 mt-6 border-t border-[#2A2E37] flex items-center justify-between text-xs font-mono">
+                <div className="pt-4 mt-6 border-t border-gray-100 flex items-center justify-between text-xs font-mono">
                   <span 
                     className="font-bold tracking-wider"
-                    style={{ color: isSelected ? p.accentColor : "#727C8D" }}
+                    style={{ color: isSelected ? p.accentColor : "#6B7280" }}
                   >
                     {isSelected ? "[ ACTIVE BLUEPRINT ]" : "INSPECT TOPOLOGY"}
                   </span>
                   <ArrowRight 
-                    className={`w-4 h-4 transition-transform ${isSelected ? "translate-x-1" : "text-[#727C8D]"}`} 
+                    className={`w-4 h-4 transition-transform ${isSelected ? "translate-x-1" : "text-[#6B7280]"}`} 
                     style={{ color: isSelected ? p.accentColor : undefined }}
                   />
                 </div>
@@ -187,10 +187,10 @@ export function StageArchitecture() {
 
         {/* Selected Blueprint Detail Display */}
         <div 
-          className="bg-[#202329] border p-8 lg:p-12 space-y-10 shadow-2xl transition-all duration-300 rounded-xl"
+          className="bg-[#F9FAFB] border p-8 lg:p-12 space-y-10 shadow-md transition-all duration-300 rounded-xl"
           style={{ borderColor: selectedPattern.accentColor }}
         >
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-[#2A2E37] pb-6">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 border-b border-gray-200 pb-6">
             <div>
               <span 
                 className="font-mono text-[10px] uppercase tracking-widest block mb-1 font-bold"
@@ -198,10 +198,10 @@ export function StageArchitecture() {
               >
                 TOPOLOGY SPECIFICATION // {selectedPattern.id.toUpperCase()}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#EDEDED] font-sans">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-[#17191D] font-sans">
                 {selectedPattern.name}
               </h3>
-              <p className="text-sm text-[#A6AFBD] font-normal mt-2 max-w-2xl leading-relaxed">
+              <p className="text-sm text-[#4B5563] font-normal mt-2 max-w-2xl leading-relaxed">
                 {selectedPattern.description}
               </p>
             </div>
@@ -209,8 +209,8 @@ export function StageArchitecture() {
             {/* Benchmarks Pill Grid */}
             <div className="flex flex-wrap items-center gap-4">
               {selectedPattern.benchmarks.map((b, idx) => (
-                <div key={idx} className="p-3.5 bg-[#17191D] border border-[#2A2E37] font-mono text-center min-w-[130px] shadow-sm rounded-lg">
-                  <div className="text-[9px] text-[#727C8D] uppercase tracking-wider">{b.label}</div>
+                <div key={idx} className="p-3.5 bg-white border border-gray-200 font-mono text-center min-w-[130px] shadow-xs rounded-lg">
+                  <div className="text-[9px] text-[#6B7280] uppercase tracking-wider">{b.label}</div>
                   <div className="text-sm font-extrabold mt-0.5" style={{ color: selectedPattern.accentColor }}>
                     {b.val}
                   </div>
@@ -221,7 +221,7 @@ export function StageArchitecture() {
 
           {/* 4-Tier Visual Architecture Stack */}
           <div className="space-y-4">
-            <div className="font-mono text-xs text-[#EDEDED] uppercase tracking-widest flex items-center gap-2 font-bold">
+            <div className="font-mono text-xs text-[#17191D] uppercase tracking-widest flex items-center gap-2 font-bold">
               <Layers className="w-4 h-4 text-[#519DD9]" />
               <span>LAYER-BY-LAYER SUBSYSTEM SPECIFICATIONS</span>
             </div>
@@ -230,18 +230,18 @@ export function StageArchitecture() {
               {selectedPattern.topology.map((layer, idx) => (
                 <div 
                   key={idx} 
-                  className="p-6 bg-[#17191D] border border-[#2A2E37] flex flex-col justify-between space-y-4 relative group hover:border-[#519DD9] transition-all hover:bg-[#1C1F26] shadow-sm rounded-lg"
+                  className="p-6 bg-white border border-gray-200 flex flex-col justify-between space-y-4 relative group hover:border-[#519DD9] transition-all hover:bg-gray-50 shadow-xs rounded-lg"
                 >
                   <div className="space-y-2">
-                    <div className="flex items-center justify-between font-mono text-[10px] text-[#727C8D]">
+                    <div className="flex items-center justify-between font-mono text-[10px] text-[#6B7280]">
                       <span className="font-bold" style={{ color: layer.accent }}>TIER 0{idx + 1}</span>
                       <span className="w-2 h-2 rounded-full" style={{ backgroundColor: layer.accent }} />
                     </div>
-                    <div className="font-mono text-xs font-extrabold text-[#EDEDED] tracking-wider uppercase">
+                    <div className="font-mono text-xs font-extrabold text-[#17191D] tracking-wider uppercase">
                       {layer.tier}
                     </div>
                     <div 
-                      className="text-[11px] font-mono px-2.5 py-1 border font-semibold truncate bg-[#202329]"
+                      className="text-[11px] font-mono px-2.5 py-1 border font-semibold truncate bg-[#F9FAFB]"
                       style={{ 
                         color: layer.accent,
                         borderColor: `${layer.accent}40`,
@@ -251,7 +251,7 @@ export function StageArchitecture() {
                     </div>
                   </div>
 
-                  <p className="text-xs text-[#A6AFBD] font-normal leading-relaxed pt-2 border-t border-[#2A2E37]">
+                  <p className="text-xs text-[#4B5563] font-normal leading-relaxed pt-2 border-t border-gray-100">
                     {layer.role}
                   </p>
                 </div>
@@ -259,12 +259,11 @@ export function StageArchitecture() {
             </div>
           </div>
 
-          <div className="pt-2 flex items-center gap-2 text-[10px] font-mono text-[#727C8D]">
+          <div className="pt-2 flex items-center gap-2 text-[10px] font-mono text-[#6B7280]">
             <Info className="w-3.5 h-3.5 text-[#519DD9] shrink-0" />
             <span>Specifications represent architecture design targets. Actual implementation is configured per customer SLA and hosting environment.</span>
           </div>
         </div>
-
       </div>
     </section>
   );
